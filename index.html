@@ -195,8 +195,15 @@
       <div>
         <span class="back" id="backBtn">← Volver</span>
         <div class="series-header">
-          <span id="lastWatched" style="margin-left:20px; font-size:14px; color:#bbf; font-weight:600;">Último capítulo visto: ninguno</span>
-          <div class="big-cover" id="detailCover"></div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div class="big-cover" id="detailCover"></div>
+            <div>
+              <h2 id="detailTitle"></h2>
+              <div class="meta" id="detailMeta"></div>
+            </div>
+          </div>
+          <span id="lastWatched" style="margin-left:auto; font-size:14px; color:#bbf; font-weight:600;">Último capítulo visto: ninguno</span>
+        </div>
           <div>
             <h2 id="detailTitle"></h2>
             <div class="meta" id="detailMeta"></div>
@@ -216,6 +223,7 @@
     const data = [
       {
         title: "Ben 10",
+        imdb: "https://www.imdb.com/es/title/tt0760437/ratings/?ref_=ext_shr_lnk",
         coverImg: "https://occ-0-8407-2218.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQ1s0vDBlEwQzqGayxfyqaKtOoDBMENT5Gb5Wk4hIwTyNz9Iax2hJcLfFqlC9wN7GAEubsoGTxZcT1cWz2B9Gx4EVz8wfxPsYPat.jpg?r=54a",
         seasons: [
           {
@@ -291,64 +299,177 @@
       },
       {
         title: "Las Sombrias Aventuras de Billy Y Mandy",
+        imdb: "https://www.imdb.com/es/title/tt0292800/?ref_=ext_shr_lnk",
         coverImg: "https://m.media-amazon.com/images/S/pv-target-images/5005c756c1996dd1ee63c5e98dda8d3e11229ef588d1e3e7e746c04e4e9e9924.jpg",
         seasons: []
       },
       {
         title: "Scooby Doo Misterios S.A",
+        imdb: "https://www.imdb.com/es/title/tt1660055/?ref_=ext_shr_lnk",
         coverImg: "https://occ-0-8407-2218.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABSXRk1jfrzzTcKdrNMpV6rDB6LrfGS9FSZ3R2_rUwrddfFlH9R2OQUpStQ4jcuou1j2BY600JY-75-2wtQ-PHpy3yLL1qWv-L0Xx.jpg?r=a35",
         seasons: []
       },
       {
         title: "Ed, Edd y Eddy",
+        imdb: "https://www.imdb.com/es/title/tt0184111/?ref_=ext_shr_lnk",
         coverImg: "https://uvn-brightspot.s3.amazonaws.com/assets/vixes/btg/7-dudas-existenciales-que-nos-dejo-el-programa-ed-edd-y-eddy-2.jpg",
         seasons: []
       },
       {
         title: "Looney Tunes",
+        imdb: "https://www.imdb.com/es/title/tt0088491/?ref_=ext_shr_lnk",
         coverImg: "https://img.asmedia.epimg.net/resizer/v2/QCAWZGENVVFYHNKGFTQHSOQSGE.jpg?auth=b45a8203595e64a1ac5c12bec25d82116925b671cb7ba4ec35f2ec9194bcc503&width=1472&height=828&smart=true",
         seasons: []
       },
       {
         title: "Los padrinos mágicos",
+        imdb: "https://www.imdb.com/es/title/tt0235918/?ref_=ext_shr_lnk",
         coverImg: "https://imagenes.atresplayer.com/atp/clipping/cmsimages02/2017/11/02/BE07CCA4-071B-498D-B0D6-6769FD3AE96E//720x540.jpg",
         seasons: []
       },
       {
         title: "Las Maravillosas Desventuras de FlapJack",
+        imdb: "https://www.imdb.com/es/title/tt1178180/?ref_=ext_shr_lnk",
         coverImg: "https://beam-images.warnermediacdn.com/BEAM_LWM_DELIVERABLES/6f1381c9-9946-4f8c-9267-de1fddbac365/19192fe4-6ee2-11ef-bb0b-0afff21f57b1?host=wbd-images.prod-vod.h264.io&partner=beamcom",
         seasons: []
       },
       {
         title: "Danny Phantom",
+        imdb: "https://www.imdb.com/es/title/tt0366005/?ref_=ext_shr_lnk",
         coverImg: "https://static0.cbrimages.com/wordpress/wp-content/uploads/2025/05/danny-phantom-theory.jpg?w=1200&h=675&fit=crop",
         seasons: []
       },
       {
         title: "KND: Los Chicos Del Barrio",
+        imdb: "https://www.imdb.com/es/title/tt0312109/?ref_=ext_shr_lnk",
         coverImg: "https://www.thecoffeetoons.com/wp-content/uploads/geekmi_-_2022-08-25t092627_999.jpg_1902800913.webp",
         seasons: []
       },
       {
         title: "El Laboratorio de Dexter",
+        imdb: "https://www.imdb.com/es/title/tt0115157/?ref_=ext_shr_lnk",
         coverImg: "https://www.ecartelera.com/images/img/209600/209685_el-laboratorio-de-dexter.jpg",
         seasons: []
       },
       {
         title: "Las Chicas Superpoderosas",
+        imdb: "https://www.imdb.com/es/title/tt0175058/?ref_=ext_shr_lnk",
         coverImg: "https://www.fucsia.co/resizer/v2/4UR47UZZ4BHMFEDKQWC5FN472Y.jpg?auth=ad9c60dce6d7b3ca7743f6da1147aa189813c0fe594e1138c49e9e06f96c0c98&smart=true&quality=75&width=1280",
         seasons: [
           {
             name: "Temporada 1",
-            episodes: [
-              { title: "Monkey See Doggie Do, Mommy Fearest", url: "https://cubeembed.rpmvid.com/#a9deb" },
-              { title: "Insect Inside, Powerpuff Bluff", url: "https://cubeembed.rpmvid.com/#x5gh5" }
-            ]
-          }
-        ]
-      },
+      episodes: [
+        { title: "Conviértanse en Perros / Mamá Más Temible", url: "https://cubeembed.rpmvid.com/#a9deb" },
+        { title: "Insectos por Dentro / Falsas Powerpuff", url: "https://cubeembed.rpmvid.com/#x5gh5" },
+        { title: "Octi Malvado / Salud", url: "https://cubeembed.rpmvid.com/#wys1c" },
+        { title: "Rompecorazones / Lógica Difusa", url: "https://cubeembed.rpmvid.com/#yr6hv" },
+        { title: "Sustos Disco / Abracadaver", url: "https://cubeembed.rpmvid.com/#uzwt5" },
+        { title: "Telefonazos / Amor Duro", url: "https://cubeembed.rpmvid.com/#a9dug" },
+        { title: "Competencia Mayor / El Ascenso de Mojo", url: "https://cubeembed.rpmvid.com/#98x9w" },
+        { title: "Pega y Desperdicia / Dolor de Hielo", url: "https://cubeembed.rpmvid.com/#tj1tv" },
+        { title: "Bombombiciosa / Los Hechos Desnudos", url: "https://cubeembed.rpmvid.com/#3ne3n" },
+        { title: "El Hombre Gato / Destituir a Fuzzy", url: "https://cubeembed.rpmvid.com/#wyswx" },
+        { title: "Otro Día con Mojo / Mimo al Cambio", url: "https://cubeembed.rpmvid.com/#a9daf" },
+        { title: "Los Chicos Revoltosos", url: "https://cubeembed.rpmvid.com/#yr6yj" },
+        { title: "Oh No, Dínamo", url: "https://cubeembed.rpmvid.com/#x5gxj" }
+      ]
+    },
+    {
+      name: "Temporada 2",
+      episodes: [
+        { title: "Presumida y Lejos / Escuela en Peligro", url: "https://cubeembed.rpmvid.com/#bmtbh" },
+        { title: "Colecciónala / Villano de Cena", url: "https://cubeembed.rpmvid.com/#dxid3" },
+        { title: "Fiesta de Cumpleaños / Muy Cansadas para Luchar", url: "https://cubeembed.rpmvid.com/#majm1" },
+        { title: "Come tus Verdes / Suciedad Total", url: "https://cubeembed.rpmvid.com/#l3clx" },
+        { title: "Esquema de Sueños / Si Duermes Pierdes", url: "https://cubeembed.rpmvid.com/#6ku6z" },
+        { title: "Esclaviza el Día / Los Dos Mojos", url: "https://cubeembed.rpmvid.com/#ce5nm" },
+        { title: "Una Pétalo Especial / Horario de Verano", url: "https://cubeembed.rpmvid.com/#uzdlj" },
+        { title: "Trabajo de Mojo / Pelea de Mascotas", url: "https://cubeembed.rpmvid.com/#kl9ox" },
+        { title: "Amigo Imaginario / Cootie Gras", url: "https://cubeembed.rpmvid.com/#3nt6m" },
+        { title: "La Mejor Aventura de Día Lluvioso / Solo Postre", url: "https://cubeembed.rpmvid.com/#hi6ee" },
+        { title: "Hermana Retorcida / Tapar Todo", url: "https://cubeembed.rpmvid.com/#kl9he" },
+        { title: "Demonio de la Velocidad / Mojo con Abstinencia", url: "https://cubeembed.rpmvid.com/#tjwlz" },
+        { title: "Algo es una Señorita / Durmiendo con el Enemigo", url: "https://cubeembed.rpmvid.com/#fhpcs" }
+      ]
+    },
+    {
+      name: "Temporada 3",
+      episodes: [
+        { title: "Arcos Caídos / El Gran Evento", url: "https://cubeembed.rpmvid.com/#1hstc" },
+        { title: "Pueblo y Fuera / Temor Infantil", url: "https://cubeembed.rpmvid.com/#osbve" },
+        { title: "Crisis Cruzada", url: "https://cubeembed.rpmvid.com/#jdy3x" },
+        { title: "Bombovisión / Comprado y Regañado", url: "https://cubeembed.rpmvid.com/#6kaym" },
+        { title: "Ramita y Todo / Desastre Policial", url: "https://cubeembed.rpmvid.com/#gqlxq" },
+        { title: "Tres Niñas y un Monstruo / Monkey See Doggy Dos", url: "https://cubeembed.rpmvid.com/#nujsv" },
+        { title: "Joya del Pasillo / Superceroes", url: "https://cubeembed.rpmvid.com/#yrgzn" },
+        { title: "El Dulce es Dandy / Catástrofe", url: "https://cubeembed.rpmvid.com/#a9cgx" },
+        { title: "Globos Calientes / Estrategias R Us", url: "https://cubeembed.rpmvid.com/#bmuyg" },
+        { title: "Powerprof", url: "https://cubeembed.rpmvid.com/#l3819" },
+        { title: "Decadencia Moral / Conozcan a los Beat Alls", url: "https://cubeembed.rpmvid.com/#6kaew" },
+        { title: "El Mojo de Aspiradora / Igualdad de Lucha", url: "https://cubeembed.rpmvid.com/#fopt6" }
+      ]
+    },
+    {
+      name: "Temporada 4",
+      episodes: [
+        { title: "Estafa de Película", url: "https://cubeembed.rpmvid.com/#a9cfe" },
+        { title: "Vuelve Jojo", url: "https://cubeembed.rpmvid.com/#6kaeq" },
+        { title: "Refugio Caótico / Almuerzo de Poder", url: "https://cubeembed.rpmvid.com/#fopug" },
+        { title: "Acertijo de Él", url: "https://cubeembed.rpmvid.com/#bmuxz" },
+        { title: "Parentesco Forzado", url: "https://cubeembed.rpmvid.com/#bmue1" },
+        { title: "Bala Perdida", url: "https://cubeembed.rpmvid.com/#hi633" },
+        { title: "Imítalo", url: "https://cubeembed.rpmvid.com/#uzd1k" },
+        { title: "Tiza Total", url: "https://cubeembed.rpmvid.com/#mazjl" },
+        { title: "Solo Miembros", url: "https://cubeembed.rpmvid.com/#osb3l" },
+        { title: "Superamigos", url: "https://cubeembed.rpmvid.com/#x5fgo" },
+        { title: "Nano del Norte", url: "https://cubeembed.rpmvid.com/#yrg6o" }
+      ]
+    },
+    {
+      name: "Temporada 5",
+      episodes: [
+        { title: "Enamorada del Profe / No Tan Genial Bombón", url: "https://cubeembed.rpmvid.com/#jdyx6" },
+        { title: "PoderNoia", url: "https://cubeembed.rpmvid.com/#a9c8p" },
+        { title: "MonstraCiudad / Callen al Cachorro", url: "https://cubeembed.rpmvid.com/#l38nf" },
+        { title: "Brindis en la Ciudad / Divide y Conquista", url: "https://cubeembed.rpmvid.com/#gqlpt" },
+        { title: "Alarma de Ladrón / Boda Relámpago", url: "https://cubeembed.rpmvid.com/#8tvj6" },
+        { title: "Salvar a Mojo / Criatura Suplente", url: "https://cubeembed.rpmvid.com/#uzdch" },
+        { title: "Los Chicos Revoltosos Regresan", url: "https://cubeembed.rpmvid.com/#98eti" },
+        { title: "Pee Pee Girls / Juguetes de Niño", url: "https://cubeembed.rpmvid.com/#zcxtg" },
+        { title: "Semilla del Mal / Ciudad Clipsville", url: "https://cubeembed.rpmvid.com/#maz3i" },
+        { title: "Mentir en Casa / Chico Burbuja", url: "https://cubeembed.rpmvid.com/#98eat" },
+        { title: "Un Documental PPG / Niñas al Límite", url: "https://cubeembed.rpmvid.com/#a9cmi" },
+        { title: "Maldiciones / Bang por tu Dinero", url: "https://cubeembed.rpmvid.com/#bmuzm" },
+        { title: "Tratamiento Silencioso / Dulce y Agrio", url: "https://cubeembed.rpmvid.com/#3ntzd" },
+        { title: "Primates / Golpe de Estado", url: "https://cubeembed.rpmvid.com/#wyifw" },
+        { title: "Me Hace Zen / Di Tío", url: "https://cubeembed.rpmvid.com/#yrgqi" }
+      ]
+    },
+    {
+      name: "Temporada 6",
+      episodes: [
+        { title: "Caos Apestoso / Vive y Deja Dínamo", url: "https://cubeembed.rpmvid.com/#a9cu6" },
+        { title: "Mo Linguista / Ups, Lo Hice Otra Vez", url: "https://cubeembed.rpmvid.com/#wyi1h" },
+        { title: "Una Historia Inventada", url: "https://cubeembed.rpmvid.com/#qp3kz" },
+        { title: "Malinterpretando / Alcalde Nocturno", url: "https://cubeembed.rpmvid.com/#osbqg" },
+        { title: "Batalla por la Custodia / Ciudad de Locos", url: "https://cubeembed.rpmvid.com/#nujno" },
+        { title: "Aspiraciones", url: "https://cubeembed.rpmvid.com/#8tv8o" },
+        { title: "Ese No es Mi Bebé / El Mono Dice", url: "https://cubeembed.rpmvid.com/#98e91" },
+        { title: "Grito Solar / Ciudad Gruñona", url: "https://cubeembed.rpmvid.com/#yrgyv" },
+        { title: "Occidente en Pedazos", url: "https://cubeembed.rpmvid.com/#gqlg9" },
+        { title: "Mezcla Loca PPG / Mástil en Acción", url: "https://cubeembed.rpmvid.com/#6ka6j" },
+        { title: "A Puro Bosque / ¿Cuál es la Gran Idea?", url: "https://cubeembed.rpmvid.com/#98e9j" },
+        { title: "Nada Especial / Vecindario", url: "https://cubeembed.rpmvid.com/#ev1eh" },
+        { title: "Veo un Dibujo en tu Futuro / Octi Perdido", url: "https://cubeembed.rpmvid.com/#8tjmh" },
+        { title: "La Pelea Antes de Navidad", url: "https://cubeembed.rpmvid.com/#zce3h" },
+        { title: "¡Las PPG Mandan!", url: "https://cubeembed.rpmvid.com/#98tbw" }
+      ]
+    }
+  ]
+},
       {
         title: "Bob Esponja",
+        imdb: "https://www.imdb.com/es/title/tt0206512/?ref_=ext_shr_lnk",
         coverImg: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8413c1f5647d1911e492009feb",
         seasons: [
           {
@@ -452,6 +573,10 @@
       detailsView.style.display = "block";
       detailTitle.textContent = s.title;
       detailMeta.textContent = s.seasons.length + " temporada(s)";
+      if (s.imdb) {
+        detailMeta.innerHTML += `<br>⭐ 7.4 / 10 en IMDb<br><a href="${s.imdb}" target="_blank" style="color:#1e88ff;font-weight:bold;text-decoration:none;">Ver en IMDb</a>`;
+      }
+      //(s)";
       detailCover.style.backgroundImage = `url('${s.coverImg}')`;
       detailCover.style.backgroundSize = "cover";
       detailCover.style.backgroundPosition = "center";
