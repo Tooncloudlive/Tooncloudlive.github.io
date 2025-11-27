@@ -4,25 +4,28 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ToonCloud+</title>
-  <link rel="icon" type="image/png" href="https://i.ebayimg.com/images/g/-poAAOSwHDdciVlj/s-l400.png" />
+  <!-- FAVICON ACTUALIZADO -->
+  <link rel="icon" href="https://i.imgur.com/XAHG8BW.png" type="image/png"> 
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    /* Usando Inter como fuente base */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
     :root { --bg: #f6f5f2; --card: #ffffff; --muted: #6b6b6b; --accent: #1e88ff; }
     * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', Arial, sans-serif;
       margin: 0;
       background: linear-gradient(to bottom, var(--bg), #ffe6f7);
       color: #111;
     }
+    /* Estilos del header */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 999;
-
-      padding: 28px 36px;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       gap: 20px;
@@ -30,15 +33,43 @@
       color: white;
       box-shadow: 0 4px 18px rgba(0,0,0,0.15);
     }
-    h1 { font-size: 22px; margin: 0; }
+    .header-logo {
+      height: 48px; 
+      width: auto;
+      transition: opacity 0.2s;
+    }
+    header a { 
+        cursor: pointer;
+        text-decoration: none;
+    }
+    header a:hover .header-logo {
+        opacity: 0.85; 
+    }
+    
+    /* Estilo de la barra de búsqueda en el header */
+    .header-search-input {
+      flex-grow: 1; 
+      max-width: 300px; 
+      padding: 8px 14px;
+      border-radius: 20px; 
+      border: none;
+      background: rgba(255, 255, 255, 0.9); 
+      color: #333;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-left: 10px;
+    }
+    .header-search-input::placeholder { color: #aaa; }
+    
+    /* Contenedor principal */
     .container { max-width: 1100px; margin: 28px auto; padding: 0 20px; }
 
+    /* Grid para las tarjetas de series */
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
     .card {
       position:relative; z-index:1;
       background: var(--card);
       border-radius: 16px;
-      padding: 0;
       box-shadow: 0 6px 20px rgba(16,24,40,0.12);
       cursor: pointer;
       display: flex;
@@ -77,70 +108,12 @@
       padding: 6px 10px;
       border-radius: 6px;
       backdrop-filter: blur(2px);
+      font-size: 16px;
     }
     .title { margin: 16px; font-size: 18px; line-height: 1.1; flex-grow: 1; }
     .meta { color: var(--muted); font-size: 13px; margin: 0 16px 16px; }
 
-    .back { display: inline-block; margin-bottom: 12px; color: var(--accent); cursor: pointer; }
-    .series-header { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
-    .big-cover { width: 160px; height: 100px; border-radius: 10px; background-size: cover; background-position: center; }
-    .seasons { margin-top: 18px; }
-    .season { background: var(--card); padding: 12px; border-radius: 10px; margin-bottom: 12px; }
-    .episode { display: flex; justify-content: flex-start; align-items: center; padding: 8px 4px; border-radius: 8px; }
-
-    /* Botón tipo "pill" con flecha, todos mismo tamaño */
-    .episode a {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-width: 240px;
-      height: 44px;
-      padding: 0 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #8b7bff, #b993ff);
-      box-shadow: 0 10px 20px rgba(139, 123, 255, 0.45);
-      color: #fff;
-      font-weight: 600;
-      font-size: 14px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .episode a::after {
-      content: "→";
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      font-size: 14px;
-    }
-    .episode a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 30px rgba(139, 123, 255, 0.6);
-    }
-    .episode a:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 16px rgba(139, 123, 255, 0.35);
-    }
-
-    @media (max-width: 600px) {
-      .series-header { flex-direction: column; align-items: flex-start; }
-      .cover { height: 100px; }
-      .big-cover { width: 100%; height: 80px; }
-    }
-    .reactive-frame {
-      width: 100%;
-      padding: 4px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #ffcf4d, #ff88e8, #8b7bff);
-    }
+    /* Estilos del reproductor de video en detalles */
     .reactive-frame iframe {
       width: 100%;
       height: 480px;
@@ -148,78 +121,365 @@
       border: none;
       display: block;
     }
-
-</style>
+    
+    /* ESTILOS ESPECÍFICOS DE LIVE TOONS (SIN CAMBIOS) */
+    #liveToonsCard { border: 3px solid #ff4fa3; padding: 0; }
+    #liveToonsCard .live-iframe-wrapper {
+        height: 150px;
+        border-radius: 13px 13px 0 0; 
+        overflow: hidden;
+        position: relative;
+        background: #000;
+        padding: 0;
+    }
+    #liveToonsCard iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+        pointer-events: none; 
+    }
+    .live-label {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 10;
+        background: rgba(255, 79, 163, 0.9);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: bold;
+        text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    }
+    #liveToonsCard .title { margin-top: 8px; font-size: 16px; color: #ff4fa3; }
+    
+    /* Estilos del modal de Login/Registro */
+    #loginScreen {
+      transition: opacity 0.4s ease-out; 
+    }
+    #loginBox {
+      transition: transform 0.4s ease-out; 
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 380px;
+    }
+    .tab-button {
+      padding: 10px 20px;
+      border: none;
+      background: none;
+      font-weight: bold;
+      cursor: pointer;
+      color: #999;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-bottom 0.2s;
+    }
+    .tab-button.active {
+      color: #ff4fa3;
+      border-bottom: 3px solid #ff4fa3;
+    }
+    .input-field {
+      width: 100%; 
+      padding: 12px 14px; 
+      border-radius: 10px; 
+      border: 1px solid #ddd; 
+      margin: 10px 0; 
+      font-size: 15px;
+    }
+    .auth-button {
+      width: 100%; 
+      padding: 12px; 
+      border: none; 
+      background: #ff4fa3; 
+      color: white; 
+      font-weight: bold; 
+      border-radius: 12px; 
+      font-size: 16px; 
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .auth-button:hover {
+      background: #e04f9e;
+    }
+    .loading-spinner {
+        display: none;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #ff4fa3;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .error-message { color: #dc2626; margin-top: 10px; font-size: 14px; }
+    
+    /* Responsive design */
+    @media (max-width: 600px) {
+      header { padding: 10px 15px; }
+      .header-logo { height: 38px; }
+      .header-search-input { max-width: 150px; }
+      .grid { grid-template-columns: 1fr; }
+      #loginBox { width: 90%; padding: 30px 20px; }
+      .card { min-height: 180px; }
+    }
+  </style>
 </head>
 <body>
+  <!-- REPRODUCTOR FLOTANTE -->
+  <div id="fullscreenToon" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/90 opacity-0 transition-opacity duration-300">
+    <div class="fullscreen-iframe-container w-full h-full relative">
+      <!-- Ahora closeFullscreenToon es global -->
+      <button id="closeLiveBtn" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150" onclick="closeFullscreenToon()">✕</button>
+    </div>
+  </div>
+  
+  <!-- MODAL DE AUTENTICACIÓN -->
+  <div id="loginScreen" style="position:fixed; inset:0; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom, #ffe6f7, #fff); z-index:9999;">
+    <div id="loginBox">
+      <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+ Logo" style="width: 120px; height: auto; margin-bottom: 20px;">
+      
+      <!-- Tabs para Iniciar Sesión / Registrarse -->
+      <div class="flex justify-around mb-6 border-b border-gray-200">
+        <button id="tabSignIn" class="tab-button active">Iniciar Sesión</button>
+        <button id="tabRegister" class="tab-button">Registrarse</button>
+      </div>
 
-  <!-- LOGIN -->
-  <div id="loginScreen" style="position:fixed; inset:0; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom,#ffe6f7,#fff); z-index:9999;">
-    <div style="background:white; padding:40px; border-radius:20px; box-shadow:0 4px 30px rgba(0,0,0,0.12); text-align:center; width:360px;">
-      <h2 style="color:#ff4fa3; margin-bottom:6px; font-size:26px;">ToonCloud+</h2>
-      <h3 style="margin:0; color:#444; font-weight:600;">Iniciar sesión</h3>
+      <div id="authContent">
+        <!-- Contenido de Iniciar Sesión (por defecto) -->
+        <div id="signInView">
+          <input type="email" id="signInEmail" placeholder="Correo Electrónico" class="input-field" />
+          <input type="password" id="signInPassword" placeholder="Contraseña" class="input-field" />
+          <button id="signInBtn" class="auth-button">Iniciar Sesión</button>
+        </div>
 
-      <input type="text" placeholder="Usuario" style="width:100%; padding:12px 14px; border-radius:10px; border:1px solid #ddd; margin:22px 0; font-size:15px;" />
+        <!-- Contenido de Registrarse (oculto) -->
+        <div id="registerView" style="display:none;">
+          <input type="email" id="registerEmail" placeholder="Correo Electrónico" class="input-field" />
+          <input type="password" id="registerPassword" placeholder="Contraseña (mínimo 6 caracteres)" class="input-field" />
+          <button id="registerBtn" class="auth-button">Registrarse</button>
+        </div>
+        
+        <div id="authMessage" class="error-message"></div>
+        <div id="authSpinner" class="loading-spinner"></div>
+      </div>
 
-      <button id="loginBtn" style="width:100%; padding:12px; border:none; background:#ff4fa3; color:white; font-weight:bold; border-radius:12px; font-size:16px; cursor:pointer;">Entrar</button>
+      <button id="guestBtn" class="auth-button" style="background:#888; margin-top:20px;">Acceder como Invitado</button>
 
-      <p style="margin-top:14px; color:#666; font-size:13px;">Acceso exclusivo para usuarios habilitados</p>
     </div>
   </div>
 
-
+  <!-- HEADER -->
   <header>
-    <h1>ToonCloud+</h1>
-    <div style="font-size:14px; color:#f7e6f9; margin-top:4px;">Series que crearon una generación • Tu portal definitivo</div>
-    <a href="https://instagram.com" target="_blank" style="margin-left:auto; display:flex; align-items:center; text-decoration:none;">
-      <img src="https://img.icons8.com/ios11/512/FFFFFF/instagram-new.png" alt="Instagram" style="width:32px; height:32px;">
+    <!-- FIX: showListView ahora está en window.showListView -->
+    <a href="#" onclick="window.showListView(); return false;"> 
+      <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+ Logo" class="header-logo" />
     </a>
+    <div style="font-size:14px; color:#f7e6f9;">ToonCloud+</div>
+    
+    <input id="searchBar" type="text" placeholder="Buscar series..." class="header-search-input">
+    
+    <div id="userStatus" style="margin-left:auto; font-size:14px; color:white; display:flex; align-items:center; gap:10px;">
+      <span id="userIdDisplay" class="font-semibold text-sm rounded-full bg-pink-500 px-3 py-1 text-white shadow-md">Cargando...</span>
+      <button id="signOutBtn" class="bg-white text-pink-500 text-xs px-3 py-1 rounded-full font-bold shadow-md hover:bg-gray-100 transition duration-150" style="display:none;">Salir</button>
+    </div>
   </header>
 
-  <main class="container" style="margin-top:120px;">
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container" style="margin-top:90px;">
+    
     <div class="recommend" style="background: #ffe6f7; padding: 18px 20px; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); margin-bottom: 25px;">
       <h2 style="margin:0 0 8px 0; color:#d63384;">🫵 Recomendación</h2>
-      <p style="margin:0; font-size:15px; color:#444;">Para mejorar tu experiencia, recomendamos instalar esta extensión de navegador (algunos capítulos pueden tener publicidad, y el AdBlock ayuda a bloquearla):</p>
+      <p style="margin:0; font-size:15px; color:#444;">Para mejorar tu experiencia, recomendamos instalar esta extensión de navegador:</p>
       <a href="https://chromewebstore.google.com/detail/gighmmpiobklfepjocnamgkkbiglidom?utm_source=item-share-cb" target="_blank" style="display:inline-block; margin-top:10px; background:#ff4f9e; color:white; padding:8px 14px; border-radius:8px; text-decoration:none; font-weight:bold;">➤ Instalar extensión</a>
     </div>
 
-    <div style="margin-bottom:20px; display:flex; justify-content:center;">
-      <input id="searchBar" type="text" placeholder="Buscar series..." style="width:100%; max-width:400px; padding:10px 14px; border-radius:10px; border:1px solid #ccc; font-size:15px; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
-    </div>
-
+    <!-- VISTA DE LISTA -->
     <section id="listView">
       <div class="grid" id="seriesGrid"></div>
     </section>
 
+    <!-- VISTA DE DETALLES -->
     <section id="detailsView" style="display:none">
       <div>
-        <span class="back" id="backBtn">← Volver</span>
-        <div class="series-header">
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <div class="big-cover" id="detailCover"></div>
-            <div>
-              <h2 id="detailTitle"></h2>
-              <div class="meta" id="detailMeta"></div>
-            </div>
-          </div>
-          <span id="lastWatched" style="margin-left:auto; font-size:14px; color:#bbf; font-weight:600;">Último capítulo visto: ninguno</span>
-        </div>
+        <span class="text-blue-500 font-semibold cursor-pointer" id="backBtn">← Volver</span>
+        <div class="series-header flex gap-4 items-center my-4">
+          <div class="big-cover bg-gray-300 w-40 h-24 rounded-lg" id="detailCover" style="background-size: cover; background-position: center;"></div>
           <div>
-            <h2 id="detailTitle"></h2>
-            <div class="meta" id="detailMeta"></div>
+            <h2 id="detailTitle" class="text-2xl font-bold"></h2>
+            <div class="meta text-gray-500 text-sm" id="detailMeta"></div>
           </div>
+          <span id="lastWatched" class="ml-auto text-sm text-purple-600 font-semibold">Último capítulo visto: ninguno</span>
         </div>
+        
+        <div id="iframeContainer" class="bg-gray-200 rounded-xl p-2 mb-5"></div>
+
+        <div id="episodeControls" class="flex justify-between mb-5">
+            <button id="prevBtn" class="nav-btn bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-lg font-bold" disabled>← Anterior</button>
+            <button id="nextBtn" class="nav-btn bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-lg font-bold" disabled>Siguiente →</button>
+        </div>
+        
         <div class="seasons" id="seasonsContainer"></div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer style="text-align:center; padding:20px; color:#888; font-size:12px;">
     created by N_777
   </footer>
 
-  <script>
-    // Datos de ejemplo (incluye Bob Esponja con temporadas y capítulos)
+  <script type="module">
+    // --- IMPORTACIONES DE FIREBASE ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    
+    // Habilitar logs de debug
+    setLogLevel('Debug');
+    
+    // Configuración de Canvas y Firebase (Lectura de variables globales)
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+    // Inicialización
+    let app = null;
+    let db = null;
+    let auth = null;
+    let currentUserId = null;
+    let isAuthReady = false;
+    
+    // Referencias DOM
+    const loginScreen = document.getElementById('loginScreen');
+    const authMessage = document.getElementById('authMessage');
+    const authSpinner = document.getElementById('authSpinner');
+    const userIdDisplay = document.getElementById('userIdDisplay');
+    const signOutBtn = document.getElementById('signOutBtn');
+
+    // --- LÓGICA DE FIREBASE Y AUTHENTICATION ---
+
+    // Manejador de Errores de Firebase
+    function handleAuthError(error) {
+        authSpinner.style.display = 'none';
+        let message = "Ocurrió un error desconocido. Inténtalo de nuevo.";
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                message = "El correo electrónico ya está en uso. Intenta iniciar sesión.";
+                break;
+            case 'auth/invalid-email':
+                message = "El formato del correo electrónico no es válido.";
+                break;
+            case 'auth/weak-password':
+                message = "La contraseña debe tener al menos 6 caracteres.";
+                break;
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+                message = "Correo o contraseña incorrectos.";
+                break;
+            case 'auth/operation-not-allowed':
+                message = "El inicio de sesión por correo/contraseña no está habilitado.";
+                break;
+            default:
+                console.error("Firebase Auth Error:", error.code, error.message);
+                message = `Error de autenticación: ${error.message}`;
+        }
+        authMessage.textContent = message;
+        setTimeout(() => { authMessage.textContent = ''; }, 5000);
+    }
+    
+    // Función para garantizar que Firebase esté inicializado antes de la autenticación
+    function checkFirebaseReady() {
+        if (!auth) {
+            console.error("Firebase Auth no está listo.");
+            return false;
+        }
+        return true;
+    }
+
+    // 1. Registro de Usuario (Email/Password)
+    async function registerUser(email, password) {
+        if (!checkFirebaseReady()) return;
+        authMessage.textContent = '';
+        authSpinner.style.display = 'block';
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            
+            // Crear un documento de perfil en Firestore
+            const userRef = doc(db, `/artifacts/${appId}/users/${user.uid}/data/profile`);
+            await setDoc(userRef, {
+                email: user.email,
+                createdAt: new Date(),
+                isPremium: false,
+                lastLogin: new Date()
+            });
+            
+            authSpinner.style.display = 'none';
+        } catch (error) {
+            handleAuthError(error);
+        }
+    }
+
+    // 2. Inicio de Sesión de Usuario (Email/Password)
+    async function signInUser(email, password) {
+        if (!checkFirebaseReady()) return;
+        authMessage.textContent = '';
+        authSpinner.style.display = 'block';
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            authSpinner.style.display = 'none';
+        } catch (error) {
+            handleAuthError(error);
+        }
+    }
+    
+    // 3. Inicio de Sesión de Invitado
+    async function signInGuest() {
+        if (!auth) {
+             try {
+                // Intento de inicialización de emergencia si auth es nulo por alguna razón
+                if (app === null) {
+                    app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    auth = getAuth(app);
+                }
+             } catch (e) {
+                console.error("Fallo al re-inicializar Firebase para invitado:", e);
+                authMessage.textContent = "Error al conectar con el servidor de autenticación.";
+                return;
+             }
+        }
+
+        authMessage.textContent = '';
+        authSpinner.style.display = 'block';
+        try {
+            await signInAnonymously(auth);
+            authSpinner.style.display = 'none';
+        } catch (error) {
+            handleAuthError(error);
+        }
+    }
+    
+    // 4. Cierre de Sesión
+    signOutBtn.addEventListener('click', async () => {
+        if (!auth) return;
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Error al cerrar sesión:", error);
+        }
+    });
+
+    // --- LÓGICA DE LA APLICACIÓN (EXISTENTE) ---
+    
+    // Datos de ejemplo
     const data = [
       {
         title: "Johnny Bravo",
@@ -1643,6 +1903,13 @@
       }
     ];
 
+    // Variables de estado del reproductor
+    let currentSeriesEpisodes = []; 
+    let currentEpisodeIndex = -1; 
+    let liveToonEpisode = null;
+    let allEpisodes = [];
+
+    // Referencias a elementos DOM (complementarias)
     const grid = document.getElementById("seriesGrid");
     const listView = document.getElementById("listView");
     const detailsView = document.getElementById("detailsView");
@@ -1651,99 +1918,357 @@
     const detailMeta = document.getElementById("detailMeta");
     const detailCover = document.getElementById("detailCover");
     const seasonsContainer = document.getElementById("seasonsContainer");
+    const iframeContainer = document.getElementById("iframeContainer"); 
+    const prevBtn = document.getElementById("prevBtn"); 
+    const nextBtn = document.getElementById("nextBtn"); 
+    const fullscreenToon = document.getElementById("fullscreenToon");
+    const searchBar = document.getElementById("searchBar");
+    
+    // --- LÓGICA DE VISTAS ---
+
+    function flattenEpisodes(series) {
+      const episodes = [];
+      series.seasons.forEach(season => {
+        season.episodes.forEach((ep, epIndex) => {
+          episodes.push({
+            title: ep.title,
+            url: ep.url,
+            seasonName: season.name,
+            seriesTitle: series.title,
+            seriesIndex: series.seriesIndex,
+            episodeIndex: epIndex 
+          });
+        });
+      });
+      return episodes;
+    }
+    
+    function startLiveToons() {
+        if (allEpisodes.length === 0) {
+            data.forEach(s => {
+              const flattened = flattenEpisodes(s).map((ep, index) => ({
+                ...ep, 
+                globalIndex: allEpisodes.length + index 
+              }));
+              allEpisodes = allEpisodes.concat(flattened);
+            });
+        }
+        if (allEpisodes.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allEpisodes.length);
+            liveToonEpisode = allEpisodes[randomIndex];
+        } else {
+            liveToonEpisode = null;
+        }
+    }
+
+    function handleLiveToonsClick() {
+      if (liveToonEpisode) {
+        // Añadir cachebust para forzar la recarga
+        const liveUrl = liveToonEpisode.url + "?autoplay=1&cachebust=" + Math.random(); 
+        const iframeHtml = `
+            <iframe 
+                src='${liveUrl}' 
+                scrolling='no' 
+                allowfullscreen 
+                webkitallowfullscreen 
+                mozallowfullscreen 
+                allow='autoplay; fullscreen; encrypted-media; picture-in-picture'
+                class="w-full h-full"
+            ></iframe>
+        `;
+        
+        const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
+        // Re-adjuntar el botón de cierre para asegurar que el evento esté ligado
+        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>` + iframeHtml;
+        
+        fullscreenToon.classList.add('opacity-100');
+        fullscreenToon.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    // Hacemos esta función global
+    window.closeFullscreenToon = function() {
+        // Limpiar el iframe para detener la reproducción
+        const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
+        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>`;
+        
+        fullscreenToon.classList.remove('opacity-100');
+        setTimeout(() => { fullscreenToon.style.display = 'none'; }, 300);
+        document.body.style.overflow = '';
+
+        // Actualizar la grilla principal
+        startLiveToons();
+        if (isAuthReady) renderGrid(); 
+    }
+
+    function loadEpisode(index) {
+      if (index < 0 || index >= currentSeriesEpisodes.length) return; 
+
+      currentEpisodeIndex = index;
+      const episode = currentSeriesEpisodes[index];
+      
+      iframeContainer.innerHTML = `
+        <div class='reactive-frame'>
+            <iframe id="mainIframe" src='${episode.url}' scrolling='no' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
+        </div>
+      `;
+      
+      document.getElementById("lastWatched").textContent = `Último capítulo visto: ${episode.seasonName} - ${episode.title}`;
+
+      prevBtn.disabled = (currentEpisodeIndex === 0);
+      nextBtn.disabled = (currentEpisodeIndex === currentSeriesEpisodes.length - 1);
+      
+      iframeContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function prevEpisode() {
+      if (currentEpisodeIndex > 0) loadEpisode(currentEpisodeIndex - 1);
+    }
+
+    function nextEpisode() {
+      if (currentEpisodeIndex < currentSeriesEpisodes.length - 1) loadEpisode(currentEpisodeIndex + 1);
+    }
+
+    prevBtn.addEventListener("click", prevEpisode);
+    nextBtn.addEventListener("click", nextEpisode);
+
 
     function renderGrid(seriesList = data) {
       grid.innerHTML = "";
-      seriesList.forEach((s, i) => {
+      
+      if (!liveToonEpisode) {
+          startLiveToons(); 
+      }
+      
+      // 1. Live Toons Card
+      if (liveToonEpisode) {
+          const liveUrl = liveToonEpisode.url + "?autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&cachebust=" + Math.random(); 
+          
+          const liveToonsCard = document.createElement("div");
+          liveToonsCard.id = "liveToonsCard";
+          liveToonsCard.className = "card";
+          liveToonsCard.innerHTML = `
+              <div class="live-iframe-wrapper">
+                  <div class="live-label">🔴 EN VIVO</div>
+                  <iframe 
+                      src='${liveUrl}' 
+                      scrolling='no' 
+                      allowfullscreen 
+                      webkitallowfullscreen 
+                      mozallowfullscreen 
+                      allow='autoplay; encrypted-media; picture-in-picture'
+                  ></iframe>
+              </div>
+              <div class="title" style="margin-top:8px;">Reproduciendo ahora</div>
+              <div class="meta">Toca para reproducir con audio</div>
+          `;
+          liveToonsCard.addEventListener("click", handleLiveToonsClick);
+          grid.appendChild(liveToonsCard);
+      }
+
+      // 2. Resto de las series
+      seriesList.forEach((s) => {
         const card = document.createElement("div");
         card.className = "card";
         card.innerHTML = `
-          <img class="network-logo" src="${s.network==='cn' ? 'https://w7.pngwing.com/pngs/289/648/png-transparent-cartoon-network-too-cartoon-network-arabic-television-channel-1682-television-text-logo.png' : s.network==='nick' ? 'https://1000marcas.net/wp-content/uploads/2020/03/logo-Nickelodeon.png' : ''}" style="position:absolute; top:8px; right:8px; width:38px; height:auto; z-index:20;" />
+          <img class="network-logo" src="${s.network==='cn' ? 'https://logoeps.com/wp-content/uploads/2013/01/cartoon-network-logo-vector.png' : s.network==='nick' ? 'https://1000marcas.net/wp-content/uploads/2020/03/logo-Nickelodeon.png' : ''}" style="position:absolute; top:8px; right:8px; width:38px; height:auto; z-index:20; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));" />
           <div class="cover" style="background-image:url('${s.coverImg}')">
             <div class="cover-title">${s.title}</div>
           </div>
           <div class="title">${s.title}</div>
           <div class="meta">${s.seasons.length} temporada(s)</div>
         `;
-        card.addEventListener("click", () => openSeries(data.indexOf(s)));
+        // Encontrar el índice de la serie en la lista de datos original
+        const seriesIndex = data.findIndex(item => item.seriesIndex === s.seriesIndex);
+        if (seriesIndex !== -1) {
+            card.addEventListener("click", () => openSeries(seriesIndex));
+        }
         grid.appendChild(card);
       });
     }
 
-    function openSeries(index) {
+    function showListView() {
+      detailsView.classList.remove("active"); 
+      if (fullscreenToon.classList.contains('opacity-100')) closeFullscreenToon(); 
+
+      startLiveToons(); 
+      renderGrid(); 
+      setTimeout(() => {
+        detailsView.style.display = "none";
+        listView.style.display = "block";
+        currentSeriesEpisodes = []; 
+        currentEpisodeIndex = -1;
+      }, 400); 
+    }
+    
+    // Hacemos la función global para que pueda ser llamada desde el `onclick` del HTML
+    window.showListView = showListView; 
+
+    function openSeries(index, initialEpisodeIndex = 0) {
+      if (fullscreenToon.classList.contains('opacity-100')) closeFullscreenToon();
+      
       const s = data[index];
+      currentSeriesEpisodes = flattenEpisodes(s);
+      
       listView.style.display = "none";
       detailsView.style.display = "block";
+      setTimeout(() => { detailsView.classList.add("active"); }, 10); 
+      
       detailTitle.textContent = s.title;
       detailMeta.textContent = s.seasons.length + " temporada(s)";
       if (s.imdb) {
-        detailMeta.innerHTML += `<br>⭐ 7.4 / 10 en IMDb<br><a href="${s.imdb}" target="_blank" style="color:#1e88ff;font-weight:bold;text-decoration:none;">Ver en IMDb</a>`;
+        detailMeta.innerHTML += `<br>⭐ ${s.title === "Bob Esponja" ? "7.9" : s.title === "Coraje, el perro cobarde" ? "8.3" : s.title === "Johnny Bravo" ? "7.4" : "-"} / 10 en IMDb<br><a href="${s.imdb}" target="_blank" class="text-blue-500 font-bold no-underline hover:underline">Ver en IMDb</a>`;
       }
-      //(s)";
       detailCover.style.backgroundImage = `url('${s.coverImg}')`;
-      detailCover.style.backgroundSize = "cover";
-      detailCover.style.backgroundPosition = "center";
 
       seasonsContainer.innerHTML = "";
+      let absoluteIndex = 0; 
+      
       s.seasons.forEach((season) => {
         const div = document.createElement("div");
-        div.className = "season";
+        div.className = "season bg-white p-3 rounded-xl mb-3 shadow-md";
         const h = document.createElement("h3");
         h.textContent = season.name;
+        h.className = "text-xl font-semibold mb-3 text-pink-600";
         div.appendChild(h);
 
         season.episodes.forEach((ep) => {
           const epDiv = document.createElement("div");
-          epDiv.className = "episode";
-          epDiv.style.flexDirection = "column";
-          epDiv.style.alignItems = "flex-start";
+          epDiv.className = "episode flex flex-col items-start mb-2";
+          
+          const btn = document.createElement("button"); 
+          btn.className = "pill-button mt-1 w-full sm:w-auto px-5 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-full font-bold transition duration-150 shadow-lg"; 
+          btn.innerHTML = `${ep.title} <span class="ml-2 inline-block">▶</span>`; 
+          
+          btn.addEventListener("click", ((i) => () => { loadEpisode(i); })(absoluteIndex));
 
-          const iframeBox = document.createElement("div");
-          iframeBox.style.display = "none";
-          iframeBox.style.width = "100%";
-          iframeBox.style.marginBottom = "12px";
-
-          const btn = document.createElement("button");
-          btn.textContent = ep.title;
-          btn.style.cssText = "min-width:240px;height:44px;padding:0 22px;border-radius:999px;background:linear-gradient(135deg,#8b7bff,#b993ff);box-shadow:0 10px 20px rgba(139,123,255,0.45);color:#fff;font-weight:600;font-size:14px;border:none;cursor:pointer;white-space:nowrap;";
-
-          btn.addEventListener("click", () => {
-            document.getElementById("lastWatched").textContent = `Último capítulo visto: ${ep.title}`;
-            iframeBox.innerHTML = `<div class='reactive-frame'><iframe src='${ep.url}' scrolling='no' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div>`;
-            iframeBox.style.display = iframeBox.style.display === "none" ? "block" : "none";
-          });("click", () => {
-            iframeBox.innerHTML = `<div class='reactive-frame'><iframe src='${ep.url}' scrolling='no' allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div>`;
-            iframeBox.style.display = iframeBox.style.display === "none" ? "block" : "none";
-          });
-
-          epDiv.appendChild(iframeBox);
           epDiv.appendChild(btn);
           div.appendChild(epDiv);
+          
+          absoluteIndex++; 
         });
 
-        seasonsContainer.appendChild(div);(div);(div);
+        seasonsContainer.appendChild(div);
       });
+
+      if (currentSeriesEpisodes.length > 0) {
+        const safeIndex = initialEpisodeIndex >= 0 && initialEpisodeIndex < currentSeriesEpisodes.length 
+                            ? initialEpisodeIndex 
+                            : 0;
+        loadEpisode(safeIndex); 
+      } else {
+        iframeContainer.innerHTML = "<p class='text-center text-pink-600 font-bold mt-5'>Esta serie aún no tiene capítulos disponibles.</p>";
+        document.getElementById("lastWatched").textContent = `Último capítulo visto: Ninguno`;
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+      }
     }
 
-    backBtn.addEventListener("click", () => {
-      detailsView.style.display = "none";
-      listView.style.display = "block";
-    });
+    backBtn.addEventListener("click", showListView);
 
-    // Buscador
-    document.getElementById("searchBar").addEventListener("input", function() {
+    searchBar.addEventListener("input", function() {
       const term = this.value.toLowerCase();
       const filtered = data.filter(s => s.title.toLowerCase().includes(term));
       renderGrid(filtered);
     });
-
-    // Login
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      document.getElementById('loginScreen').style.display = 'none';
+    
+    // --- LÓGICA DE INTERFAZ DEL MODAL ---
+    document.getElementById('tabSignIn').addEventListener('click', () => {
+        document.getElementById('tabSignIn').classList.add('active');
+        document.getElementById('tabRegister').classList.remove('active');
+        document.getElementById('signInView').style.display = 'block';
+        document.getElementById('registerView').style.display = 'none';
+        authMessage.textContent = ''; // Limpiar mensaje de error
     });
 
-    // Render inicial
-    renderGrid();
+    document.getElementById('tabRegister').addEventListener('click', () => {
+        document.getElementById('tabRegister').classList.add('active');
+        document.getElementById('tabSignIn').classList.remove('active');
+        document.getElementById('signInView').style.display = 'none';
+        document.getElementById('registerView').style.display = 'block';
+        authMessage.textContent = ''; // Limpiar mensaje de error
+    });
+
+    document.getElementById('signInBtn').addEventListener('click', () => {
+        const email = document.getElementById('signInEmail').value;
+        const password = document.getElementById('signInPassword').value;
+        signInUser(email, password);
+    });
+
+    document.getElementById('registerBtn').addEventListener('click', () => {
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        registerUser(email, password);
+    });
+    
+    document.getElementById('guestBtn').addEventListener('click', signInGuest);
+
+    // --- INICIALIZACIÓN DE LA APLICACIÓN (CORREGIDA) ---
+    async function initializeAppAndAuth() {
+        if (Object.keys(firebaseConfig).length === 0) {
+            console.warn("Firebase no está configurado. La autenticación será anónima por defecto.");
+            isAuthReady = true;
+            loginScreen.style.display = 'none';
+            userIdDisplay.textContent = "Invitado (Sin Config)";
+            signOutBtn.style.display = 'none'; 
+            startLiveToons();
+            renderGrid();
+            return;
+        } 
+        
+        try {
+            // 1. Inicializar la app, Firestore y Auth
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app); 
+            
+            // 2. Intentar autenticación inicial con token o anónima
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+            if (initialAuthToken) {
+                try {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } catch (error) {
+                    console.warn("Fallo el inicio de sesión con token, intentando anónimo:", error);
+                    await signInAnonymously(auth); 
+                }
+            } else {
+                // Siempre intentar anónimo si no hay token para mantener la UX sin bloqueo
+                await signInAnonymously(auth);
+            }
+
+            // 3. Establecer el escuchador de estado de autenticación
+            onAuthStateChanged(auth, (user) => {
+                isAuthReady = true;
+                if (user) {
+                    currentUserId = user.uid;
+                    // Ocultar modal de login
+                    loginScreen.style.display = 'none';
+                    // Actualizar UI del usuario
+                    userIdDisplay.textContent = user.isAnonymous ? "Invitado" : user.email ? user.email.split('@')[0] : `User ID: ${user.uid.substring(0, 8)}...`;
+                    signOutBtn.style.display = 'inline-block';
+                    // Renderizar contenido
+                    startLiveToons();
+                    renderGrid();
+                } else {
+                    currentUserId = null;
+                    // Mostrar la pantalla de login
+                    loginScreen.style.display = 'flex';
+                    userIdDisplay.textContent = "Offline";
+                    signOutBtn.style.display = 'none';
+                    grid.innerHTML = '<p class="text-center text-gray-500 mt-10">Inicia sesión o regístrate para ver las series.</p>';
+                }
+            });
+
+        } catch (e) {
+            console.error("Error FATAL al inicializar Firebase. Posiblemente configuración inválida.", e);
+            userIdDisplay.textContent = "Error de App";
+            authMessage.textContent = "Error crítico de configuración. Revisa la consola.";
+        }
+    }
+
+    initializeAppAndAuth();
   </script>
 </body>
 </html>
