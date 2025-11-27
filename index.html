@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ToonCloud+</title>
-  <!-- FAVICON ACTUALIZADO -->
   <link rel="icon" href="https://i.imgur.com/XAHG8BW.png" type="image/png"> 
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -122,7 +121,7 @@
       display: block;
     }
     
-    /* ESTILOS ESPECÍFICOS DE LIVE TOONS (SIN CAMBIOS) */
+    /* ESTILOS ESPECÍFICOS DE LIVE TOONS */
     #liveToonsCard { border: 3px solid #ff4fa3; padding: 0; }
     #liveToonsCard .live-iframe-wrapper {
         height: 150px;
@@ -233,35 +232,28 @@
   </style>
 </head>
 <body>
-  <!-- REPRODUCTOR FLOTANTE -->
   <div id="fullscreenToon" class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/90 opacity-0 transition-opacity duration-300">
     <div class="fullscreen-iframe-container w-full h-full relative">
-      <!-- Ahora closeFullscreenToon es global -->
       <button id="closeLiveBtn" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150" onclick="closeFullscreenToon()">✕</button>
     </div>
   </div>
   
-  <!-- MODAL DE AUTENTICACIÓN -->
   <div id="loginScreen" style="position:fixed; inset:0; display:flex; justify-content:center; align-items:center; background:linear-gradient(to bottom, #ffe6f7, #fff); z-index:9999;">
     <div id="loginBox">
       <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+ Logo" style="width: 120px; height: auto; margin-bottom: 20px;">
       
-      <!-- Tabs para Iniciar Sesión / Registrarse -->
       <div class="flex justify-around mb-6 border-b border-gray-200">
         <button id="tabSignIn" class="tab-button active">Iniciar Sesión</button>
         <button id="tabRegister" class="tab-button">Registrarse</button>
       </div>
 
       <div id="authContent">
-        <!-- Contenido de Iniciar Sesión (por defecto) -->
         <div id="signInView">
-          <!-- Nota: El input de Email ahora acepta el código de administrador (42308481) -->
           <input type="email" id="signInEmail" placeholder="Correo Electrónico o Código Admin" class="input-field" />
           <input type="password" id="signInPassword" placeholder="Contraseña" class="input-field" />
           <button id="signInBtn" class="auth-button">Iniciar Sesión</button>
         </div>
 
-        <!-- Contenido de Registrarse (oculto) -->
         <div id="registerView" style="display:none;">
           <input type="email" id="registerEmail" placeholder="Correo Electrónico" class="input-field" />
           <input type="password" id="registerPassword" placeholder="Contraseña (mínimo 6 caracteres)" class="input-field" />
@@ -277,13 +269,10 @@
     </div>
   </div>
 
-  <!-- HEADER -->
   <header>
-    <!-- FIX: showListView ahora está en window.showListView -->
     <a href="#" onclick="window.showListView(); return false;"> 
       <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+ Logo" class="header-logo" />
     </a>
-    <!-- Título y eslogan actualizado -->
     <div style="font-size:14px; color:white;">
         <span class="font-bold">ToonCloud+</span>
         <span class="text-xs font-light tracking-wider opacity-90 block leading-tight">Series que crearon una generación • Tu portal definitivo</span>
@@ -297,7 +286,6 @@
     </div>
   </header>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <main class="container" style="margin-top:90px;">
     
     <div class="recommend" style="background: #ffe6f7; padding: 18px 20px; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); margin-bottom: 25px;">
@@ -306,12 +294,10 @@
       <a href="https://chromewebstore.google.com/detail/gighmmpiobklfepjocnamgkkbiglidom?utm_source=item-share-cb" target="_blank" style="display:inline-block; margin-top:10px; background:#ff4f9e; color:white; padding:8px 14px; border-radius:8px; text-decoration:none; font-weight:bold;">➤ Instalar extensión</a>
     </div>
 
-    <!-- VISTA DE LISTA -->
     <section id="listView">
       <div class="grid" id="seriesGrid"></div>
     </section>
 
-    <!-- VISTA DE DETALLES -->
     <section id="detailsView" style="display:none">
       <div>
         <span class="text-blue-500 font-semibold cursor-pointer" id="backBtn">← Volver</span>
@@ -336,7 +322,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer style="text-align:center; padding:20px; color:#888; font-size:12px;">
     created by N_777
   </footer>
@@ -363,7 +348,7 @@
     let auth = null;
     let currentUserId = null;
     let isAuthReady = false;
-    let isAdmin = false; // Nueva variable de estado para el administrador
+    let isAdmin = false; 
     
     // Referencias DOM
     const loginScreen = document.getElementById('loginScreen');
@@ -446,16 +431,13 @@
         if (emailInput === ADMIN_SECRET_CODE) {
             console.log("Acceso de administrador detectado. Iniciar sesión como invitado.");
             isAdmin = true;
-            // Para mantener la lógica de la app y Firebase, iniciamos sesión anónimamente.
-            // onAuthStateChanged se encargará de actualizar la UI.
-            await signInGuest();
+            await signInGuest(true); 
             authSpinner.style.display = 'none';
             return; 
         }
         // --- FIN LÓGICA DE ADMINISTRADOR ---
         
         try {
-            // Se asume que si no es el código secreto, debe ser un correo electrónico válido para Firebase.
             await signInWithEmailAndPassword(auth, emailInput, password);
             isAdmin = false;
             authSpinner.style.display = 'none';
@@ -465,7 +447,7 @@
     }
     
     // 3. Inicio de Sesión de Invitado
-    async function signInGuest() {
+    async function signInGuest(skipSpinner = false) {
         if (!auth) {
              try {
                 if (app === null) {
@@ -481,11 +463,11 @@
         }
 
         authMessage.textContent = '';
-        authSpinner.style.display = 'block';
+        if (!skipSpinner) authSpinner.style.display = 'block';
         try {
             await signInAnonymously(auth);
-            isAdmin = false; // Un invitado normal no es admin
-            authSpinner.style.display = 'none';
+            if (!isAdmin) isAdmin = false; 
+            if (!skipSpinner) authSpinner.style.display = 'none';
         } catch (error) {
             handleAuthError(error);
         }
@@ -496,7 +478,6 @@
         if (!auth) return;
         try {
             await signOut(auth);
-            // Restablecer el estado de administrador al salir
             isAdmin = false;
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
@@ -505,9 +486,10 @@
 
     // --- LÓGICA DE LA APLICACIÓN (EXISTENTE) ---
     
-    // Datos de ejemplo
+    // Datos de ejemplo: Con seriesIndex único para el FIX
     const data = [
       {
+        seriesIndex: 0, 
         title: "Johnny Bravo",
         coverImg: "https://occ-0-8407-2218.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABfa-8XMZhudBY8R49oIuPgK3Js-cFYB_LFxV5ysKID9uSb-LoAJmDPw602XyDvCFP88Mgq4F7Wu6YTD5_WpjUWIpk0cXz-647M1E.jpg?r=c95",
         seasons: []
@@ -1928,12 +1910,19 @@
         ]
       }
     ];
+    // Asegurarse de que las series tengan el índice para la búsqueda
+    data.forEach((s, index) => {
+        if (typeof s.seriesIndex === 'undefined') {
+            s.seriesIndex = index;
+        }
+    });
+
 
     // Variables de estado del reproductor
-    let currentSeriesEpisodes = []; 
+    let currentSeriesEpisodes = []; // Contiene SOLO los episodios de la serie actual
     let currentEpisodeIndex = -1; 
     let liveToonEpisode = null;
-    let allEpisodes = [];
+    let allEpisodes = []; // Lista global usada solo para Live Toons
 
     // Referencias a elementos DOM (complementarias)
     const grid = document.getElementById("seriesGrid");
@@ -2029,10 +2018,11 @@
     }
 
     function loadEpisode(index) {
+      // Verificación crucial para no exceder los límites de la serie actual
       if (index < 0 || index >= currentSeriesEpisodes.length) return; 
 
       currentEpisodeIndex = index;
-      const episode = currentSeriesEpisodes[index];
+      const episode = currentSeriesEpisodes[index]; // <-- Usa SOLO los episodios de la serie actual
       
       iframeContainer.innerHTML = `
         <div class='reactive-frame'>
@@ -2105,11 +2095,12 @@
           <div class="title">${s.title}</div>
           <div class="meta">${s.seasons.length} temporada(s)</div>
         `;
-        // Encontrar el índice de la serie en la lista de datos original
-        const seriesIndex = data.findIndex(item => item.seriesIndex === s.seriesIndex);
-        if (seriesIndex !== -1) {
-            card.addEventListener("click", () => openSeries(seriesIndex));
-        }
+        
+        const seriesId = s.seriesIndex; 
+        
+        // Se usa una función anónima para capturar el valor correcto de seriesId
+        card.addEventListener("click", () => openSeries(seriesId));
+
         grid.appendChild(card);
       });
     }
@@ -2134,7 +2125,13 @@
     function openSeries(index, initialEpisodeIndex = 0) {
       if (fullscreenToon.classList.contains('opacity-100')) closeFullscreenToon();
       
-      const s = data[index];
+      const s = data.find(item => item.seriesIndex === index);
+      if (!s) {
+        console.error("Serie no encontrada con el índice:", index);
+        return;
+      }
+      
+      // *** ESTA LÍNEA ES CLAVE: Sólo carga los episodios de la serie 's' ***
       currentSeriesEpisodes = flattenEpisodes(s);
       
       listView.style.display = "none";
@@ -2167,6 +2164,7 @@
           btn.className = "pill-button mt-1 w-full sm:w-auto px-5 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-full font-bold transition duration-150 shadow-lg"; 
           btn.innerHTML = `${ep.title} <span class="ml-2 inline-block">▶</span>`; 
           
+          // El botón llama a loadEpisode con el índice ABSOLUTO dentro de currentSeriesEpisodes
           btn.addEventListener("click", ((i) => () => { loadEpisode(i); })(absoluteIndex));
 
           epDiv.appendChild(btn);
@@ -2195,7 +2193,8 @@
 
     searchBar.addEventListener("input", function() {
       const term = this.value.toLowerCase();
-      const filtered = data.filter(s => s.title.toLowerCase().includes(term));
+      // Filtrar por el título de la serie
+      const filtered = data.filter(s => s.title.toLowerCase().includes(term)); 
       renderGrid(filtered);
     });
     
@@ -2230,7 +2229,7 @@
     
     document.getElementById('guestBtn').addEventListener('click', signInGuest);
 
-    // --- INICIALIZACIÓN DE LA APLICACIÓN (CORREGIDA) ---
+    // --- INICIALIZACIÓN DE LA APLICACIÓN (FIX DEL LOGIN) ---
     async function initializeAppAndAuth() {
         if (Object.keys(firebaseConfig).length === 0) {
             console.warn("Firebase no está configurado. La autenticación será anónima por defecto.");
@@ -2249,27 +2248,23 @@
             db = getFirestore(app);
             auth = getAuth(app); 
             
-            // 2. Intentar autenticación inicial con token o anónima
+            // 2. Intentar autenticación inicial con token (si existe)
             const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
             if (initialAuthToken) {
                 try {
                     await signInWithCustomToken(auth, initialAuthToken);
                 } catch (error) {
-                    console.warn("Fallo el inicio de sesión con token, intentando anónimo:", error);
-                    await signInAnonymously(auth); 
+                    console.warn("Fallo el inicio de sesión con token, se esperará al usuario.");
                 }
-            } else {
-                // Siempre intentar anónimo si no hay token para mantener la UX sin bloqueo
-                await signInAnonymously(auth);
-            }
+            } 
 
             // 3. Establecer el escuchador de estado de autenticación
             onAuthStateChanged(auth, (user) => {
                 isAuthReady = true;
                 if (user) {
                     currentUserId = user.uid;
-                    // Ocultar modal de login
+                    // Ocultar modal de login si está logueado
                     loginScreen.style.display = 'none';
                     // Actualizar UI del usuario
                     userIdDisplay.textContent = user.isAnonymous ? "Invitado" : user.email ? user.email.split('@')[0] : `User ID: ${user.uid.substring(0, 8)}...`;
@@ -2279,7 +2274,7 @@
                     renderGrid();
                 } else {
                     currentUserId = null;
-                    // Mostrar la pantalla de login
+                    // Mostrar la pantalla de login para que el usuario elija
                     loginScreen.style.display = 'flex';
                     userIdDisplay.textContent = "Offline";
                     signOutBtn.style.display = 'none';
