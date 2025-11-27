@@ -255,7 +255,8 @@
       <div id="authContent">
         <!-- Contenido de Iniciar Sesión (por defecto) -->
         <div id="signInView">
-          <input type="email" id="signInEmail" placeholder="Correo Electrónico" class="input-field" />
+          <!-- Nota: El input de Email ahora acepta el código de administrador (42308481) -->
+          <input type="email" id="signInEmail" placeholder="Correo Electrónico o Código Admin" class="input-field" />
           <input type="password" id="signInPassword" placeholder="Contraseña" class="input-field" />
           <button id="signInBtn" class="auth-button">Iniciar Sesión</button>
         </div>
@@ -282,7 +283,11 @@
     <a href="#" onclick="window.showListView(); return false;"> 
       <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+ Logo" class="header-logo" />
     </a>
-    <div style="font-size:14px; color:#f7e6f9;">ToonCloud+</div>
+    <!-- Título y eslogan actualizado -->
+    <div style="font-size:14px; color:white;">
+        <span class="font-bold">ToonCloud+</span>
+        <span class="text-xs font-light tracking-wider opacity-90 block leading-tight">Series que crearon una generación • Tu portal definitivo</span>
+    </div>
     
     <input id="searchBar" type="text" placeholder="Buscar series..." class="header-search-input">
     
@@ -345,6 +350,9 @@
     // Habilitar logs de debug
     setLogLevel('Debug');
     
+    // CONFIGURACIÓN SECRETA DEL ADMINISTRADOR: El usuario solo debe ingresar "42308481"
+    const ADMIN_SECRET_CODE = "42308481"; 
+    
     // Configuración de Canvas y Firebase (Lectura de variables globales)
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
     const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
@@ -355,6 +363,7 @@
     let auth = null;
     let currentUserId = null;
     let isAuthReady = false;
+    let isAdmin = false; // Nueva variable de estado para el administrador
     
     // Referencias DOM
     const loginScreen = document.getElementById('loginScreen');
@@ -428,12 +437,27 @@
     }
 
     // 2. Inicio de Sesión de Usuario (Email/Password)
-    async function signInUser(email, password) {
+    async function signInUser(emailInput, password) {
         if (!checkFirebaseReady()) return;
         authMessage.textContent = '';
         authSpinner.style.display = 'block';
+
+        // --- LÓGICA DE ACCESO DEL ADMINISTRADOR SECRETO ---
+        if (emailInput === ADMIN_SECRET_CODE) {
+            console.log("Acceso de administrador detectado. Iniciar sesión como invitado.");
+            isAdmin = true;
+            // Para mantener la lógica de la app y Firebase, iniciamos sesión anónimamente.
+            // onAuthStateChanged se encargará de actualizar la UI.
+            await signInGuest();
+            authSpinner.style.display = 'none';
+            return; 
+        }
+        // --- FIN LÓGICA DE ADMINISTRADOR ---
+        
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            // Se asume que si no es el código secreto, debe ser un correo electrónico válido para Firebase.
+            await signInWithEmailAndPassword(auth, emailInput, password);
+            isAdmin = false;
             authSpinner.style.display = 'none';
         } catch (error) {
             handleAuthError(error);
@@ -444,7 +468,6 @@
     async function signInGuest() {
         if (!auth) {
              try {
-                // Intento de inicialización de emergencia si auth es nulo por alguna razón
                 if (app === null) {
                     app = initializeApp(firebaseConfig);
                     db = getFirestore(app);
@@ -461,6 +484,7 @@
         authSpinner.style.display = 'block';
         try {
             await signInAnonymously(auth);
+            isAdmin = false; // Un invitado normal no es admin
             authSpinner.style.display = 'none';
         } catch (error) {
             handleAuthError(error);
@@ -472,6 +496,8 @@
         if (!auth) return;
         try {
             await signOut(auth);
+            // Restablecer el estado de administrador al salir
+            isAdmin = false;
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
