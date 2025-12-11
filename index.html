@@ -131,12 +131,14 @@
         background: #000;
         padding: 0;
     }
-    #liveToonsCard iframe {
+    /* Usar etiqueta video en lugar de iframe para el live */
+    #liveToonsCard video {
         width: 100%;
         height: 100%;
         border: none;
         display: block;
-        pointer-events: none; 
+        /* pointer-events: none; - Desactivado para permitir controles si se usan */
+        object-fit: cover;
     }
     .live-label {
         position: absolute;
@@ -3936,8 +3938,10 @@
     // Variables de estado del reproductor
     let currentSeriesEpisodes = []; // Contiene SOLO los episodios de la serie actual
     let currentEpisodeIndex = -1; 
-    let liveToonEpisode = null;
-    let allEpisodes = []; // Lista global usada solo para Live Toons
+    
+    // --- NUEVA URL DE LIVE TOONS (VIDEO MP4) ---
+    const liveToonVideoUrl = "https://d11yroxq8unnbt.cloudfront.net/t9joiu%2Fpreview%2F73647379%2Fmain_x360.mp4?response-content-disposition=inline%3Bfilename%3D%22main_x360.mp4%22%3B&response-content-type=video%2Fmp4&Expires=1765511761&Signature=LHPhX8mNYvIrzay1cry-xXvJdAsPbSKqrDNd-Is0q7LabgXbv3OI3fmK3zx~cbbI84iAm294q38Sqlkl8X~zHnjLL4S6kHbdc3tmzz3TbmHrIDSGfIy3ekN0d0yAoa2sLAE1JEjb4gPSF7XlAx4yuk-akbcPFgrGbFHBhJVPwt3LQhYQ0GYlAy55tX8pfnxZYVQXGgGDPh7QAA-np-QRTciBV9TYWqFWtLx1MNqcJZFWZxvSHUf4-1wKPmVYNMyBNGRpvnkPMNhYy~J9zDgNwlX1kbOI6k~BQwEaYg-q5IahsiAMo5C4efM9JsRN0EBC9zT99rdIrtduAwaED1z8qw__&Key-Pair-Id=APKAJT5WQLLEOADKLHBQ";
+    // ------------------------------------------
 
     // Referencias a elementos DOM (complementarias)
     const grid = document.getElementById("seriesGrid");
@@ -3956,70 +3960,38 @@
     
     // --- LÓGICA DE VISTAS ---
 
-    function flattenEpisodes(series) {
-      const episodes = [];
-      series.seasons.forEach(season => {
-        season.episodes.forEach((ep, epIndex) => {
-          episodes.push({
-            title: ep.title,
-            url: ep.url,
-            seasonName: season.name,
-            seriesTitle: series.title,
-            seriesIndex: series.seriesIndex,
-            episodeIndex: epIndex 
-          });
-        });
-      });
-      return episodes;
-    }
-    
-    function startLiveToons() {
-        if (allEpisodes.length === 0) {
-            data.forEach(s => {
-              const flattened = flattenEpisodes(s).map((ep, index) => ({
-                ...ep, 
-                globalIndex: allEpisodes.length + index 
-              }));
-              allEpisodes = allEpisodes.concat(flattened);
-            });
-        }
-        if (allEpisodes.length > 0) {
-            const randomIndex = Math.floor(Math.random() * allEpisodes.length);
-            liveToonEpisode = allEpisodes[randomIndex];
-        } else {
-            liveToonEpisode = null;
-        }
-    }
-
     function handleLiveToonsClick() {
-      if (liveToonEpisode) {
-        // Añadir cachebust para forzar la recarga
-        const liveUrl = liveToonEpisode.url + "?autoplay=1&cachebust=" + Math.random(); 
-        const iframeHtml = `
-            <iframe 
-                src='${liveUrl}' 
-                scrolling='no' 
-                allowfullscreen 
-                webkitallowfullscreen 
-                mozallowfullscreen 
-                allow='autoplay; fullscreen; encrypted-media; picture-in-picture'
-                class="w-full h-full"
-            ></iframe>
+      // Usamos el elemento <video> en el modal de pantalla completa
+      const videoHtml = `
+            <video 
+                id="liveVideoFullscreen"
+                src='${liveToonVideoUrl}' 
+                autoplay 
+                loop
+                controls 
+                playsinline
+                class="w-full h-full object-contain"
+            ></video>
         `;
         
         const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
         // Re-adjuntar el botón de cierre para asegurar que el evento esté ligado
-        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>` + iframeHtml;
+        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>` + videoHtml;
         
         fullscreenToon.classList.add('opacity-100');
         fullscreenToon.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-      }
     }
     
     // Hacemos esta función global
     window.closeFullscreenToon = function() {
-        // Limpiar el iframe para detener la reproducción
+        // Detener y limpiar el reproductor de video
+        const videoElement = document.getElementById('liveVideoFullscreen');
+        if (videoElement) {
+            videoElement.pause();
+            videoElement.src = ""; // Liberar el recurso
+        }
+        
         const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
         container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>`;
         
@@ -4027,8 +3999,6 @@
         setTimeout(() => { fullscreenToon.style.display = 'none'; }, 300);
         document.body.style.overflow = '';
 
-        // Actualizar la grilla principal
-        startLiveToons();
         if (isAuthReady) renderGrid(); 
     }
 
@@ -4068,28 +4038,22 @@
     function renderGrid(seriesList = data) {
       grid.innerHTML = "";
       
-      if (!liveToonEpisode) {
-          startLiveToons(); 
-      }
-      
       // 1. Live Toons Card
-      if (liveToonEpisode) {
-          const liveUrl = liveToonEpisode.url + "?autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&cachebust=" + Math.random(); 
-          
+      // Usamos el elemento <video> en la tarjeta de Live Toons
+      if (liveToonVideoUrl) {
           const liveToonsCard = document.createElement("div");
           liveToonsCard.id = "liveToonsCard";
           liveToonsCard.className = "card";
           liveToonsCard.innerHTML = `
               <div class="live-iframe-wrapper">
                   <div class="live-label">🔴 EN VIVO</div>
-                  <iframe 
-                      src='${liveUrl}' 
-                      scrolling='no' 
-                      allowfullscreen 
-                      webkitallowfullscreen 
-                      mozallowfullscreen 
-                      allow='autoplay; encrypted-media; picture-in-picture'
-                  ></iframe>
+                  <video 
+                      src='${liveToonVideoUrl}' 
+                      autoplay 
+                      loop
+                      muted
+                      playsinline
+                  ></video>
               </div>
               <div class="title" style="margin-top:8px;">Reproduciendo ahora</div>
               <div class="meta">Toca para reproducir con audio</div>
@@ -4124,7 +4088,6 @@
       detailsView.classList.remove("active"); 
       if (fullscreenToon.classList.contains('opacity-100')) closeFullscreenToon(); 
 
-      startLiveToons(); 
       renderGrid(); 
       setTimeout(() => {
         detailsView.style.display = "none";
@@ -4144,6 +4107,24 @@
       if (!s) {
         console.error("Serie no encontrada con el índice:", index);
         return;
+      }
+      
+      // Función auxiliar para aplanar episodios (Mantenida ya que es necesaria para openSeries)
+      function flattenEpisodes(series) {
+          const episodes = [];
+          series.seasons.forEach(season => {
+            season.episodes.forEach((ep, epIndex) => {
+              episodes.push({
+                title: ep.title,
+                url: ep.url,
+                seasonName: season.name,
+                seriesTitle: series.title,
+                seriesIndex: series.seriesIndex,
+                episodeIndex: epIndex 
+              });
+            });
+          });
+          return episodes;
       }
       
       // *** ESTA LÍNEA ES CLAVE: Sólo carga los episodios de la serie 's' ***
@@ -4252,7 +4233,6 @@
             loginScreen.style.display = 'none';
             userIdDisplay.textContent = "Invitado (Sin Config)";
             signOutBtn.style.display = 'none'; 
-            startLiveToons();
             renderGrid();
             return;
         } 
@@ -4285,7 +4265,6 @@
                     userIdDisplay.textContent = user.isAnonymous ? "Invitado" : user.email ? user.email.split('@')[0] : `User ID: ${user.uid.substring(0, 8)}...`;
                     signOutBtn.style.display = 'inline-block';
                     // Renderizar contenido
-                    startLiveToons();
                     renderGrid();
                 } else {
                     currentUserId = null;
