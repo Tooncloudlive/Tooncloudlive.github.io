@@ -131,14 +131,12 @@
         background: #000;
         padding: 0;
     }
-    /* Usar etiqueta video en lugar de iframe para el live */
-    #liveToonsCard video {
+    #liveToonsCard iframe {
         width: 100%;
         height: 100%;
         border: none;
         display: block;
-        /* pointer-events: none; - Desactivado para permitir controles si se usan */
-        object-fit: cover;
+        pointer-events: none; 
     }
     .live-label {
         position: absolute;
@@ -3938,10 +3936,8 @@
     // Variables de estado del reproductor
     let currentSeriesEpisodes = []; // Contiene SOLO los episodios de la serie actual
     let currentEpisodeIndex = -1; 
-    
-    // --- NUEVA URL DE LIVE TOONS (VIDEO MP4) ---
-    const liveToonVideoUrl = "https://geo.dailymotion.com/player.html?video=x9vjg6m";
-    // ------------------------------------------
+    let liveToonEpisode = null;
+    let allEpisodes = []; // Lista global usada solo para Live Toons
 
     // Referencias a elementos DOM (complementarias)
     const grid = document.getElementById("seriesGrid");
@@ -3960,38 +3956,70 @@
     
     // --- LÓGICA DE VISTAS ---
 
+    function flattenEpisodes(series) {
+      const episodes = [];
+      series.seasons.forEach(season => {
+        season.episodes.forEach((ep, epIndex) => {
+          episodes.push({
+            title: ep.title,
+            url: ep.url,
+            seasonName: season.name,
+            seriesTitle: series.title,
+            seriesIndex: series.seriesIndex,
+            episodeIndex: epIndex 
+          });
+        });
+      });
+      return episodes;
+    }
+    
+    function startLiveToons() {
+        if (allEpisodes.length === 0) {
+            data.forEach(s => {
+              const flattened = flattenEpisodes(s).map((ep, index) => ({
+                ...ep, 
+                globalIndex: allEpisodes.length + index 
+              }));
+              allEpisodes = allEpisodes.concat(flattened);
+            });
+        }
+        if (allEpisodes.length > 0) {
+            const randomIndex = Math.floor(Math.random() * allEpisodes.length);
+            liveToonEpisode = allEpisodes[randomIndex];
+        } else {
+            liveToonEpisode = null;
+        }
+    }
+
     function handleLiveToonsClick() {
-      // Usamos el elemento <video> en el modal de pantalla completa
-      const videoHtml = `
-            <video 
-                id="liveVideoFullscreen"
-                src='${liveToonVideoUrl}' 
-                autoplay 
-                loop
-                controls 
-                playsinline
-                class="w-full h-full object-contain"
-            ></video>
+      if (liveToonEpisode) {
+        // Añadir cachebust para forzar la recarga
+        const liveUrl = liveToonEpisode.url + "?autoplay=1&cachebust=" + Math.random(); 
+        const iframeHtml = `
+            <iframe 
+                src='${liveUrl}' 
+                scrolling='no' 
+                allowfullscreen 
+                webkitallowfullscreen 
+                mozallowfullscreen 
+                allow='autoplay; fullscreen; encrypted-media; picture-in-picture'
+                class="w-full h-full"
+            ></iframe>
         `;
         
         const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
         // Re-adjuntar el botón de cierre para asegurar que el evento esté ligado
-        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>` + videoHtml;
+        container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>` + iframeHtml;
         
         fullscreenToon.classList.add('opacity-100');
         fullscreenToon.style.display = 'flex';
         document.body.style.overflow = 'hidden';
+      }
     }
     
     // Hacemos esta función global
     window.closeFullscreenToon = function() {
-        // Detener y limpiar el reproductor de video
-        const videoElement = document.getElementById('liveVideoFullscreen');
-        if (videoElement) {
-            videoElement.pause();
-            videoElement.src = ""; // Liberar el recurso
-        }
-        
+        // Limpiar el iframe para detener la reproducción
         const container = fullscreenToon.querySelector('.fullscreen-iframe-container');
         container.innerHTML = `<button id="closeLiveBtn" onclick="closeFullscreenToon()" class="absolute top-4 right-4 z-50 text-white text-3xl p-2 bg-black/50 rounded-full hover:bg-black/70 transition duration-150">✕</button>`;
         
@@ -3999,6 +4027,8 @@
         setTimeout(() => { fullscreenToon.style.display = 'none'; }, 300);
         document.body.style.overflow = '';
 
+        // Actualizar la grilla principal
+        startLiveToons();
         if (isAuthReady) renderGrid(); 
     }
 
@@ -4038,22 +4068,28 @@
     function renderGrid(seriesList = data) {
       grid.innerHTML = "";
       
+      if (!liveToonEpisode) {
+          startLiveToons(); 
+      }
+      
       // 1. Live Toons Card
-      // Usamos el elemento <video> en la tarjeta de Live Toons
-      if (liveToonVideoUrl) {
+      if (liveToonEpisode) {
+          const liveUrl = liveToonEpisode.url + "?autoplay=1&mute=1&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&cachebust=" + Math.random(); 
+          
           const liveToonsCard = document.createElement("div");
           liveToonsCard.id = "liveToonsCard";
           liveToonsCard.className = "card";
           liveToonsCard.innerHTML = `
               <div class="live-iframe-wrapper">
                   <div class="live-label">🔴 EN VIVO</div>
-                  <video 
-                      src='${liveToonVideoUrl}' 
-                      autoplay 
-                      loop
-                      muted
-                      playsinline
-                  ></video>
+                  <iframe 
+                      src='${liveUrl}' 
+                      scrolling='no' 
+                      allowfullscreen 
+                      webkitallowfullscreen 
+                      mozallowfullscreen 
+                      allow='autoplay; encrypted-media; picture-in-picture'
+                  ></iframe>
               </div>
               <div class="title" style="margin-top:8px;">Reproduciendo ahora</div>
               <div class="meta">Toca para reproducir con audio</div>
@@ -4088,6 +4124,7 @@
       detailsView.classList.remove("active"); 
       if (fullscreenToon.classList.contains('opacity-100')) closeFullscreenToon(); 
 
+      startLiveToons(); 
       renderGrid(); 
       setTimeout(() => {
         detailsView.style.display = "none";
@@ -4107,24 +4144,6 @@
       if (!s) {
         console.error("Serie no encontrada con el índice:", index);
         return;
-      }
-      
-      // Función auxiliar para aplanar episodios (Mantenida ya que es necesaria para openSeries)
-      function flattenEpisodes(series) {
-          const episodes = [];
-          series.seasons.forEach(season => {
-            season.episodes.forEach((ep, epIndex) => {
-              episodes.push({
-                title: ep.title,
-                url: ep.url,
-                seasonName: season.name,
-                seriesTitle: series.title,
-                seriesIndex: series.seriesIndex,
-                episodeIndex: epIndex 
-              });
-            });
-          });
-          return episodes;
       }
       
       // *** ESTA LÍNEA ES CLAVE: Sólo carga los episodios de la serie 's' ***
@@ -4233,6 +4252,7 @@
             loginScreen.style.display = 'none';
             userIdDisplay.textContent = "Invitado (Sin Config)";
             signOutBtn.style.display = 'none'; 
+            startLiveToons();
             renderGrid();
             return;
         } 
@@ -4265,6 +4285,7 @@
                     userIdDisplay.textContent = user.isAnonymous ? "Invitado" : user.email ? user.email.split('@')[0] : `User ID: ${user.uid.substring(0, 8)}...`;
                     signOutBtn.style.display = 'inline-block';
                     // Renderizar contenido
+                    startLiveToons();
                     renderGrid();
                 } else {
                     currentUserId = null;
