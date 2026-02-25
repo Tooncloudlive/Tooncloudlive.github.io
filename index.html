@@ -42,10 +42,67 @@
             to { opacity: 1; transform: scale(1); backdrop-filter: blur(15px); }
         }
 
+        /* --- ADBLOCK BANNER --- */
+        .adblock-banner {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 42, 117, 0.15);
+            border-bottom: 1px solid rgba(255, 42, 117, 0.4);
+            color: #fff;
+            text-align: center;
+            padding: 8px 45px 8px 20px;
+            font-size: 12px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+        }
+        .adblock-banner a {
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 4px 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .adblock-banner a:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 0 10px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        .close-banner {
+            position: absolute;
+            right: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            opacity: 0.7;
+            transition: 0.3s;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .close-banner:hover {
+            opacity: 1;
+            background: rgba(255,255,255,0.1);
+        }
+
         /* --- NAVBAR --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px; position: absolute; top: 0; width: 100%; z-index: 10; box-sizing: border-box;
+            padding: 20px 40px; width: 100%; z-index: 10; box-sizing: border-box;
             flex-wrap: wrap; gap: 15px;
             background: linear-gradient(to bottom, rgba(15, 16, 20, 0.95), transparent);
         }
@@ -124,6 +181,7 @@
         .hero {
             height: 75vh; position: relative; display: flex; align-items: center; padding: 0 40px;
             background-size: cover; background-position: center top; transition: background-image 1s ease-in-out;
+            margin-top: -10px;
         }
         .hero::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -263,11 +321,11 @@
         .iframe-box { width: 100%; height: 100%; box-shadow: 0 0 50px rgba(0,0,0,0.9); }
         .iframe-box iframe { width: 100%; height: 100%; border: none; }
 
-        /* --- FOOTER REDISEÑADO (NUEVO) --- */
+        /* --- FOOTER REDISEÑADO --- */
         .main-footer {
             background: rgba(10, 10, 14, 0.8);
             border-top: 1px solid var(--glass-border);
-            padding: 25px 40px;
+            padding: 40px 40px 25px;
             margin-top: 40px;
             backdrop-filter: blur(10px);
         }
@@ -277,7 +335,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 25px;
         }
         .footer-top {
             display: flex;
@@ -295,17 +353,8 @@
             color: white;
             transition: 0.3s;
         }
-        .footer-logo img {
-            height: 30px;
-            filter: brightness(0) invert(1); /* Logo en blanco */
-            opacity: 0.9;
-        }
-        .footer-logo span {
-            font-weight: 800;
-            font-size: 18px;
-            letter-spacing: -0.5px;
-        }
-        .footer-logo:hover { opacity: 0.7; }
+        .footer-logo img { height: 30px; filter: brightness(0) invert(1); opacity: 0.9; }
+        .footer-logo span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
 
         .footer-social {
             display: flex;
@@ -328,14 +377,101 @@
         }
         .footer-social svg { width: 18px; height: 18px; fill: white; }
 
+        /* --- SECCIÓN DE LOGOS DE COLABORADORES --- */
+        .footer-collabs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            opacity: 0.6;
+            transition: 0.3s;
+            padding: 10px 0;
+        }
+        .footer-collabs:hover { opacity: 1; }
+        .footer-collabs span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sec); width: 100%; text-align: center; margin-bottom: -15px; }
+        .collab-logo { height: 22px; filter: grayscale(100%) brightness(1.5); transition: 0.3s; cursor: help; }
+        .collab-logo:hover { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
+
         .footer-disclaimer {
             font-size: 11px;
-            color: #666;
+            color: #555;
             text-align: center;
             line-height: 1.6;
             max-width: 800px;
             border-top: 1px solid rgba(255,255,255,0.03);
             padding-top: 15px;
+        }
+
+        /* --- MODAL DE ADVERTENCIA TRANSLÚCIDO --- */
+        .language-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.4s ease;
+        }
+
+        .language-card {
+            background: rgba(25, 26, 31, 0.85);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 28px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255, 42, 117, 0.2);
+            animation: fadeInModal 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .language-card h3 {
+            color: var(--accent);
+            margin-top: 10px;
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .language-card p {
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .warning-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+
+        .close-warning {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            cursor: pointer;
+            font-size: 22px;
+            color: var(--text-sec);
+            transition: 0.3s;
+        }
+
+        .close-warning:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .footer-msg {
+            margin-top: 25px;
+            font-size: 13px !important;
+            color: var(--text-sec) !important;
+        }
+
+        .footer-msg strong {
+            color: var(--accent);
         }
 
         /* --- RESPONSIVE DESKTOP --- */
@@ -358,11 +494,28 @@
             .iframe-box { width: 85%; height: auto; padding-bottom: 47.81%; position: relative; border-radius: 16px; overflow: hidden; }
             .iframe-box iframe { position: absolute; top: 0; left: 0; }
             .footer-top { flex-direction: row; }
-            .footer-disclaimer { font-size: 12px; }
         }
     </style>
 </head>
 <body>
+
+    <div id="language-warning" class="language-modal">
+        <div class="language-card">
+            <span class="close-warning" onclick="closeWarning()">✕</span>
+            <div class="warning-icon">🌐</div>
+            <h3 id="warn-title">¡Hola Comunidad Hispana!</h3>
+            <p id="warn-text">Queremos pedirles disculpas: por el momento, la mayoría de nuestras series solo están disponibles en su <strong>idioma original (inglés)</strong>.</p>
+            <p id="warn-subtext">Estamos trabajando duro y en las próximas actualizaciones activaremos la opción de <strong>lenguaje español</strong> para que todos puedan disfrutar por igual.</p>
+            <p class="footer-msg">¡Gracias por su paciencia! <br> <strong>Equipo ToonCloud+ TV</strong></p>
+            <button class="btn" onclick="closeWarning()">Entendido</button>
+        </div>
+    </div>
+
+    <div class="adblock-banner" id="adblock-banner">
+        <span data-i18n="adblock_text">Recomendado: Instala esta extensión para bloquear la molesta publicidad de los servidores de video externos.</span>
+        <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=es" target="_blank" data-i18n="adblock_btn">Instalar uBlock</a>
+        <div class="close-banner" onclick="closeBanner()">✕</div>
+    </div>
 
     <nav>
         <div class="logo-container"><img src="https://i.imgur.com/XAHG8BW.png" onclick="location.reload()"></div>
@@ -461,6 +614,14 @@
                     @tooncloudtv
                 </a>
             </div>
+
+            <div class="footer-collabs">
+                <span>Power By & Collaboration</span>
+                <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="TMDB" class="collab-logo" title="Datos por The Movie Database">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" alt="GitHub" class="collab-logo" title="Hospedado en GitHub">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/UBlock_Origin_logo.svg/1024px-UBlock_Origin_logo.svg.png" alt="uBlock" class="collab-logo" title="Bloqueo de anuncios recomendado">
+            </div>
+
             <div class="footer-disclaimer">
                 <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un índice de contenido multimedia. No alojamos, almacenamos ni subimos ningún archivo de video en nuestros servidores. Todo el contenido visualizado es proporcionado por servicios de terceros totalmente ajenos a nosotros. El uso de esta plataforma es responsabilidad del usuario final.
             </div>
@@ -469,37 +630,30 @@
 
     <div id="details-screen">
         <span class="close-details" onclick="closeDetails()">✕</span>
-        
         <div class="details-content-wrapper">
             <div class="details-header">
                 <img id="det-poster" class="details-poster" src="">
                 <div class="details-info" style="flex: 1;">
                     <h1 id="det-title" style="margin-top:0; font-size: 38px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; text-shadow: 1px 2px 10px rgba(0,0,0,0.8);"></h1>
                     <h4 id="det-tagline" style="margin-top:0; font-style: italic; color: #ff7aa5; font-weight: 400; font-size: 16px; margin-bottom: 15px;"></h4>
-                    
                     <div id="det-meta" class="meta-tags"></div>
-
                     <div id="det-extra-info" style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px);">
                         <div class="extra-info-text" id="det-creators"></div>
                         <div class="extra-info-text" id="det-networks"></div>
                         <div class="extra-info-text" id="det-runtime"></div>
                     </div>
-
                     <p id="det-desc" style="color: #ddd; line-height: 1.7; font-size: 15px; margin-bottom: 30px; max-width: 850px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);"></p>
-                    
                     <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
                         <select id="season-select" class="lang-select" onchange="loadEpisodes()" style="width: 100%; max-width: 250px; padding: 14px; font-size: 14px; font-weight: 600; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);"></select>
                         <button id="fav-btn" class="btn" style="margin-bottom: 0; width: auto; padding: 14px 25px; font-size: 13px;" onclick="toggleFavorite()">❤️ Guardar en Favoritos</button>
                     </div>
                 </div>
             </div>
-
             <div class="cast-section">
-                <h3 class="section-title" data-i18n="cast" style="font-size: 20px; margin-bottom: 20px;">Reparto Principal</h3>
+                <h3 class="section-title" data-i18n="cast">Reparto Principal</h3>
                 <div id="cast-list" class="cast-scroll"></div>
             </div>
-
-            <h2 class="section-title" data-i18n="episodes" style="font-size: 24px; margin-bottom: 25px;">Episodios</h2>
+            <h2 class="section-title" data-i18n="episodes">Episodios</h2>
             <div id="episodes-list" class="episodes-grid"></div>
         </div>
     </div>
@@ -510,6 +664,39 @@
     </div>
 
     <script>
+        // --- FUNCIÓN PARA ADVERTENCIA DE IDIOMA ---
+        function closeWarning() {
+            const warning = document.getElementById('language-warning');
+            warning.style.opacity = '0';
+            setTimeout(() => {
+                warning.style.display = 'none';
+            }, 400);
+            // Guardamos en el navegador que ya lo vio para que no moleste en cada recarga
+            localStorage.setItem('language_warning_seen', 'true');
+        }
+
+        // Lógica para mostrarlo solo si no lo ha cerrado antes
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('language_warning_seen') === 'true') {
+                const warning = document.getElementById('language-warning');
+                if(warning) warning.style.display = 'none';
+            }
+        });
+
+        // --- FUNCION PARA OCULTAR BANNER ---
+        function closeBanner() {
+            const banner = document.getElementById('adblock-banner');
+            banner.style.marginTop = `-${banner.offsetHeight}px`;
+            banner.style.opacity = '0';
+            setTimeout(() => { banner.style.display = 'none'; }, 300);
+            localStorage.setItem('adblock_banner_hidden', 'true');
+        }
+
+        if(localStorage.getItem('adblock_banner_hidden') === 'true') {
+            document.getElementById('adblock-banner').style.display = 'none';
+        }
+
+        // --- RESTO DEL SCRIPT ORIGINAL ---
         let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
         let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || []; 
 
@@ -575,8 +762,8 @@
         let selectedShow = null;
 
         const translations = {
-            'es-MX': { all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar serie...', episodes: 'Episodios', season: 'Temporada', chapter: 'Cap.', results: 'Resultados: ', cast: 'Reparto Principal', status: 'Estado', my_favorites: 'Mis Favoritos ❤️', save_fav: '❤️ Guardar en Favoritos', remove_fav: '💔 Quitar de Favoritos', creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duración Ep.:' },
-            'en-US': { all: 'ALL', suggested: 'Suggested Series', search: 'Search shows...', episodes: 'Episodes', season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Main Cast', status: 'Status', my_favorites: 'My Favorites ❤️', save_fav: '❤️ Save to Favorites', remove_fav: '💔 Remove from Favorites', creator: 'Created by:', networks: 'Networks:', runtime: 'Ep. Runtime:' }
+            'es-MX': { all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar serie...', episodes: 'Episodios', season: 'Temporada', chapter: 'Cap.', results: 'Resultados: ', cast: 'Reparto Principal', status: 'Estado', my_favorites: 'Mis Favoritos ❤️', save_fav: '❤️ Guardar en Favoritos', remove_fav: '💔 Quitar de Favoritos', creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duración Ep.:', adblock_text: 'Recomendado: Instala esta extensión para bloquear la molesta publicidad de los servidores de video externos.', adblock_btn: 'Instalar uBlock' },
+            'en-US': { all: 'ALL', suggested: 'Suggested Series', search: 'Search shows...', episodes: 'Episodes', season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Main Cast', status: 'Status', my_favorites: 'My Favorites ❤️', save_fav: '❤️ Save to Favorites', remove_fav: '💔 Remove from Favorites', creator: 'Created by:', networks: 'Networks:', runtime: 'Ep. Runtime:', adblock_text: 'Recommended: Install this extension to block annoying ads from external video servers.', adblock_btn: 'Install uBlock' }
         };
 
         function updateCounter() {
