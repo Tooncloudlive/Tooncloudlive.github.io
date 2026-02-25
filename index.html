@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToonCloud+TV - Series animadas de tu infancia online</title>
+    <title>ToonCloud+ TV</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
@@ -158,14 +158,13 @@
             border-radius: 12px; display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 8px; flex-shrink: 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            position: relative; /* Para anclar el contador numérico */
+            position: relative; 
         }
         .brand-item:hover:not(.disabled) { transform: translateY(-4px); background: rgba(255,255,255,0.15); box-shadow: 0 8px 15px rgba(0,0,0,0.4); }
         .brand-item.active { background: rgba(255, 42, 117, 0.2); border-color: var(--accent); box-shadow: 0 5px 20px var(--accent-glow); }
         .brand-item img { max-width: 100%; max-height: 100%; filter: brightness(200%) grayscale(50%); transition: 0.3s; }
         .brand-item:hover:not(.disabled) img, .brand-item.active img { filter: none; }
 
-        /* --- CONTADORES EN BOTONES --- */
         .brand-count {
             position: absolute;
             top: -6px; right: -6px;
@@ -180,22 +179,9 @@
             letter-spacing: 0;
         }
 
-        /* --- BOTONES DESHABILITADOS (Anime / Películas) --- */
-        .brand-item.disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-            flex-direction: column;
-            gap: 2px;
-        }
+        .brand-item.disabled { cursor: not-allowed; opacity: 0.6; flex-direction: column; gap: 2px; }
         .brand-item.disabled:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.3); transform: none; }
-        .coming-soon-text {
-            font-size: 8px;
-            color: var(--accent);
-            text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
+        .coming-soon-text { font-size: 8px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; text-align: center; }
 
         /* --- CAROUSEL --- */
         .section-container { padding: 0 40px 45px; }
@@ -250,7 +236,6 @@
         .extra-info-text { font-size: 13px; color: #bbb; margin-bottom: 5px; line-height: 1.5; }
         .extra-info-text span { color: #fff; font-weight: 500; }
 
-        /* --- CAST SECTION --- */
         .cast-section { margin-bottom: 40px; animation: fadeIn 0.6s ease; }
         .cast-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; }
         .cast-item { width: 90px; flex-shrink: 0; text-align: center; transition: 0.3s; }
@@ -278,6 +263,81 @@
         .iframe-box { width: 100%; height: 100%; box-shadow: 0 0 50px rgba(0,0,0,0.9); }
         .iframe-box iframe { width: 100%; height: 100%; border: none; }
 
+        /* --- FOOTER REDISEÑADO (NUEVO) --- */
+        .main-footer {
+            background: rgba(10, 10, 14, 0.8);
+            border-top: 1px solid var(--glass-border);
+            padding: 25px 40px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .footer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+        .footer-logo img {
+            height: 30px;
+            filter: brightness(0) invert(1); /* Logo en blanco */
+            opacity: 0.9;
+        }
+        .footer-logo span {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+        .footer-logo:hover { opacity: 0.7; }
+
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .footer-social:hover {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        .footer-social svg { width: 18px; height: 18px; fill: white; }
+
+        .footer-disclaimer {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 800px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 15px;
+        }
+
         /* --- RESPONSIVE DESKTOP --- */
         @media (min-width: 768px) {
             nav { padding: 20px 60px; flex-wrap: nowrap; }
@@ -297,6 +357,8 @@
             .episode-card img { width: 100%; height: auto; aspect-ratio: 16/9; }
             .iframe-box { width: 85%; height: auto; padding-bottom: 47.81%; position: relative; border-radius: 16px; overflow: hidden; }
             .iframe-box iframe { position: absolute; top: 0; left: 0; }
+            .footer-top { flex-direction: row; }
+            .footer-disclaimer { font-size: 12px; }
         }
     </style>
 </head>
@@ -387,6 +449,24 @@
         <div id="carousel" class="carousel"></div>
     </div>
 
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <a href="#" class="footer-logo">
+                    <img src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud Logo">
+                    <span>ToonCloud+</span>
+                </a>
+                <a href="https://www.instagram.com/tooncloudtv/" target="_blank" class="footer-social">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44c-.795 0-1.44-.645-1.44-1.44s.645-1.44 1.44-1.44z"/></svg>
+                    @tooncloudtv
+                </a>
+            </div>
+            <div class="footer-disclaimer">
+                <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un índice de contenido multimedia. No alojamos, almacenamos ni subimos ningún archivo de video en nuestros servidores. Todo el contenido visualizado es proporcionado por servicios de terceros totalmente ajenos a nosotros. El uso de esta plataforma es responsabilidad del usuario final.
+            </div>
+        </div>
+    </footer>
+
     <div id="details-screen">
         <span class="close-details" onclick="closeDetails()">✕</span>
         
@@ -430,7 +510,6 @@
     </div>
 
     <script>
-        // --- LÓGICA DE USUARIO Y LOGIN ---
         let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
         let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || []; 
 
@@ -488,7 +567,6 @@
 
         function logout() { currentUser = null; localStorage.removeItem('tooncloud_user'); updateAuthUI(); closeProfile(); }
 
-        // --- LÓGICA ORIGINAL DE TOONCLOUD+ ---
         const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzZiYmZlMmNiNzdjOWIyNzliOWVkNDc4OWY5NjcxYSIsIm5iZiI6MTc3MDE4OTU4MS4yMTYsInN1YiI6IjY5ODJmMzBkMjM1MmM2MzEzNTM4MzdjNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IEXOBTsDACDo_m6DUt_hqfRvtosp1hLmvv93jNALnKU';
         const IDS = [40075, 387, 4686, 2085, 557, 47035, 6673, 50035, 7736, 1878, 35094, 46759, 18123, 926, 652, 64228, 418, 1068, 8379, 552, 18351, 34891, 2304, 3934, 31499, 234, 2309, 79, 1647, 618, 4627, 17572, 607, 28624, 1769, 346, 17463, 656, 288, 1877, 4630, 33835, 604, 2355, 733, 274382, 897, 4229, 2405, 55924, 47480, 676, 127445, 14705, 9907, 30778, 21086, 94075, 12225, 76004, 32605, 65763, 670, 537, 7821, 3022, 232869, 296764, 126824, 68073, 64228, 12454, 17194, 3022, 504, 384, 588, 657, 2745, 10821, 3579, 1567, 2009, 4630, 2129, 178, 1643, 1848, 1960, 246, 3809, 1346, 3031, 10219, 6046, 3527, 9921, 3854, 15641, 7330, 18352, 5559, 18828, 18848, 33623, 39107, 46358, 46262, 46928, 61520, 46879, 55924, 57532, 60306, 57748, 61330, 61923, 84587, 177, 3611, 606, 4350, 2723, 2660, 4246, 1720, 255, 446, 6618, 10548, 7048, 6040, 15260, 32118, 31109, 33428, 31132, 2641, 679];
 
@@ -507,7 +585,6 @@
             setTimeout(updateCounter, Math.floor(Math.random() * (60000 - 20000 + 1)) + 20000);
         }
 
-        // NUEVA FUNCIÓN: Actualiza la cantidad de series que hay por canal
         function updateNetworkCounts() {
             document.getElementById('cnt-all').innerText = db.length;
             document.getElementById('cnt-cn').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('cartoon network'))).length;
@@ -522,9 +599,7 @@
             const fetchs = IDS.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()));
             db = await Promise.all(fetchs);
             db = db.filter(item => item && item.id);
-            
-            updateNetworkCounts(); // Llama a la función de contadores
-
+            updateNetworkCounts();
             updateUI(); setHero(db[Math.floor(Math.random()*db.length)]); renderCarousel(db); updateCounter();
         }
 
@@ -615,28 +690,23 @@
         async function openDetails(id) {
             selectedShow = db.find(s => s.id == id) || favoriteShows.find(s => s.id == id);
             const t = translations[currentLang];
-            
             const detailsScreen = document.getElementById('details-screen');
             if(selectedShow.backdrop_path) {
                 detailsScreen.style.backgroundImage = `linear-gradient(rgba(15, 16, 20, 0.92), rgba(15, 16, 20, 1) 70%), url(https://image.tmdb.org/t/p/original${selectedShow.backdrop_path})`;
                 detailsScreen.style.backgroundSize = 'cover';
                 detailsScreen.style.backgroundPosition = 'center top';
                 detailsScreen.style.backgroundAttachment = 'fixed';
-            } else {
-                detailsScreen.style.backgroundImage = 'none';
-            }
+            } else { detailsScreen.style.backgroundImage = 'none'; }
 
             document.getElementById('det-title').innerText = selectedShow.name;
             document.getElementById('det-tagline').innerText = selectedShow.tagline ? `"${selectedShow.tagline}"` : '';
             document.getElementById('det-desc').innerText = selectedShow.overview || 'Sin descripción disponible.';
             document.getElementById('det-poster').src = selectedShow.poster_path ? `https://image.tmdb.org/t/p/w500${selectedShow.poster_path}` : 'https://via.placeholder.com/500x750';
-            
             updateFavButtonUI(); 
 
             const creators = selectedShow.created_by && selectedShow.created_by.length > 0 ? selectedShow.created_by.map(c => c.name).join(', ') : 'Desconocido';
             const networks = selectedShow.networks ? selectedShow.networks.map(n => n.name).join(', ') : 'N/A';
             const runTime = selectedShow.episode_run_time && selectedShow.episode_run_time.length > 0 ? `${selectedShow.episode_run_time[0]} min` : 'N/A';
-            
             document.getElementById('det-creators').innerHTML = `${t.creator} <span>${creators}</span>`;
             document.getElementById('det-networks').innerHTML = `${t.networks} <span>${networks}</span>`;
             document.getElementById('det-runtime').innerHTML = `${t.runtime} <span>${runTime}</span>`;
