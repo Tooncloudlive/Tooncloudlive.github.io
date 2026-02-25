@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToonCloud+ TV</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/XAHG8BW.png">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
@@ -246,7 +247,8 @@
         .section-title { font-size: 20px; margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         .section-title::before { content: ''; display: block; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
         
-        .carousel { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 20px; scroll-behavior: smooth; }
+        /* Eliminado scroll-behavior: smooth; para que el JS corra fluido */
+        .carousel { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 20px; }
         .card {
             min-width: 150px; border-radius: 14px; overflow: hidden;
             cursor: pointer; transition: all 0.3s ease; position: relative;
@@ -671,11 +673,9 @@
             setTimeout(() => {
                 warning.style.display = 'none';
             }, 400);
-            // Guardamos en el navegador que ya lo vio para que no moleste en cada recarga
             localStorage.setItem('language_warning_seen', 'true');
         }
 
-        // Lógica para mostrarlo solo si no lo ha cerrado antes
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('language_warning_seen') === 'true') {
                 const warning = document.getElementById('language-warning');
@@ -780,14 +780,28 @@
             document.getElementById('cnt-dk').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('discovery'))).length;
         }
 
+        // --- FUNCIÓN PARA ORDEN ALEATORIO ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         async function init() {
             updateAuthUI();
             renderFavorites();
             const fetchs = IDS.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()));
             db = await Promise.all(fetchs);
             db = db.filter(item => item && item.id);
+            
+            db = shuffleArray(db); // Aplicamos el orden aleatorio aquí
+            
             updateNetworkCounts();
             updateUI(); setHero(db[Math.floor(Math.random()*db.length)]); renderCarousel(db); updateCounter();
+            
+            startAutoScroll(); // Iniciamos el scroll automático
         }
 
         function updateUI() {
@@ -971,6 +985,32 @@
         }
 
         function resetFilter(el) { document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); renderCarousel(db); }
+
+        // --- FUNCIÓN DE CARRUSEL AUTOMÁTICO ---
+        let isHoveringCarousel = false;
+
+        function startAutoScroll() {
+            const carousel = document.getElementById('carousel');
+            if (!carousel) return;
+
+            carousel.addEventListener('mouseenter', () => isHoveringCarousel = true);
+            carousel.addEventListener('mouseleave', () => isHoveringCarousel = false);
+            carousel.addEventListener('touchstart', () => isHoveringCarousel = true);
+            carousel.addEventListener('touchend', () => {
+                setTimeout(() => isHoveringCarousel = false, 1500); 
+            });
+
+            function scroll() {
+                if (!isHoveringCarousel) {
+                    carousel.scrollLeft += 0.5; // Velocidad del movimiento
+                    if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
+                        carousel.scrollLeft = 0; 
+                    }
+                }
+                requestAnimationFrame(scroll);
+            }
+            scroll(); 
+        }
 
         init();
     </script>
