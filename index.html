@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToonCloud+ TV</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
 
@@ -63,6 +64,31 @@
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* --- AUTH & PROFILE MODAL --- */
+        .auth-container { display: flex; align-items: center; gap: 10px; }
+        .nav-avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; object-fit: cover; }
+        
+        .profile-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 300; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .profile-card {
+            background: #1a1a24; padding: 30px; border-radius: 15px; width: 90%; max-width: 350px;
+            border: 1px solid var(--glass-border); text-align: center; position: relative;
+        }
+        .profile-card img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 15px; object-fit: cover; }
+        .profile-input {
+            width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 8px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05);
+            color: white; outline: none; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+        }
+        .btn {
+            background: var(--accent); color: #000; border: none; padding: 10px 20px;
+            border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-bottom: 10px;
+        }
+        .btn-logout { background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; }
+
         /* --- HERO --- */
         .hero {
             height: 60vh; position: relative; display: flex; align-items: center; padding: 0 20px;
@@ -77,13 +103,12 @@
         .hero-title { font-size: 32px; font-weight: 800; margin-bottom: 5px; line-height: 1.1; }
         .hero-meta { display: flex; gap: 10px; font-size: 12px; margin-bottom: 10px; color: var(--accent); font-weight: 600; }
         
-        /* CORRECCIÓN AQUÍ: Se agregó line-clamp estándar */
         .hero-desc { 
             font-size: 13px; 
             color: var(--text-sec); 
             display: -webkit-box; 
             -webkit-line-clamp: 3; 
-            line-clamp: 3; /* Estándar */
+            line-clamp: 3; 
             -webkit-box-orient: vertical; 
             overflow: hidden; 
         }
@@ -165,7 +190,6 @@
             .nav-right { width: auto; gap: 15px; }
             .hero { height: 75vh; padding: 0 60px; }
             .hero-title { font-size: 50px; }
-            /* CORRECCIÓN AQUÍ TAMBIÉN: Se agregó line-clamp estándar */
             .hero-desc { -webkit-line-clamp: 4; line-clamp: 4; font-size: 16px; }
             .brands-row { padding: 0 60px; margin-top: -50px; }
             .section-container { padding: 0 60px 40px; }
@@ -195,8 +219,29 @@
                 <option value="en-US">EN</option>
             </select>
             <input type="text" id="search-bar" class="search-input" placeholder="Buscar..." oninput="searchSeries()">
+            
+            <div id="auth-container" class="auth-container">
+                <div id="g_id_onload"
+                     data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="signin_with" data-size="medium"></div>
+            </div>
         </div>
     </nav>
+
+    <div id="profile-modal" class="profile-modal">
+        <div class="profile-card">
+            <span style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px;" onclick="closeProfile()">✕</span>
+            <h3 style="margin-top:0;">Mi Perfil</h3>
+            <img id="profile-preview" src="" alt="Avatar">
+            <input type="text" id="profile-name" class="profile-input" placeholder="Tu Nombre">
+            <input type="text" id="profile-avatar-url" class="profile-input" placeholder="URL de tu Avatar (opcional)">
+            <button class="btn" onclick="saveProfile()">Guardar Cambios</button>
+            <button class="btn btn-logout" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </div>
 
     <div id="hero" class="hero">
         <div class="hero-content">
@@ -251,6 +296,91 @@
     </div>
 
     <script>
+        // --- LÓGICA DE USUARIO Y LOGIN ---
+        let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
+
+        // Función para decodificar el JWT de Google
+        function decodeJwtResponse(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+
+        function handleCredentialResponse(response) {
+            const responsePayload = decodeJwtResponse(response.credential);
+            
+            currentUser = {
+                id: responsePayload.sub,
+                name: responsePayload.name,
+                avatar: responsePayload.picture
+            };
+            localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
+            updateAuthUI();
+        }
+
+        function updateAuthUI() {
+            const authContainer = document.getElementById('auth-container');
+            if (currentUser) {
+                authContainer.innerHTML = `<img src="${currentUser.avatar}" class="nav-avatar" title="${currentUser.name}" onclick="openProfile()">`;
+                const heroTitle = document.getElementById('hero-title');
+                if(heroTitle.innerText === "ToonCloud+") {
+                    heroTitle.innerText = `Hola, ${currentUser.name.split(' ')[0]}`;
+                }
+            } else {
+                authContainer.innerHTML = `
+                    <div id="g_id_onload" data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
+                    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="signin_with" data-size="medium"></div>
+                `;
+                if(typeof google !== 'undefined') {
+                    google.accounts.id.initialize({
+                        client_id: "108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com",
+                        callback: handleCredentialResponse
+                    });
+                    google.accounts.id.renderButton(
+                        authContainer.querySelector('.g_id_signin'),
+                        { theme: "filled_black", size: "medium", shape: "pill" }
+                    );
+                }
+            }
+        }
+
+        function openProfile() {
+            if(!currentUser) return;
+            document.getElementById('profile-name').value = currentUser.name;
+            document.getElementById('profile-avatar-url').value = currentUser.avatar;
+            document.getElementById('profile-preview').src = currentUser.avatar;
+            document.getElementById('profile-modal').style.display = 'flex';
+        }
+
+        function closeProfile() {
+            document.getElementById('profile-modal').style.display = 'none';
+        }
+
+        function saveProfile() {
+            const newName = document.getElementById('profile-name').value || currentUser.name;
+            const newAvatar = document.getElementById('profile-avatar-url').value || currentUser.avatar;
+            
+            currentUser.name = newName;
+            currentUser.avatar = newAvatar;
+            
+            localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
+            document.getElementById('profile-preview').src = currentUser.avatar;
+            updateAuthUI();
+            closeProfile();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('tooncloud_user');
+            updateAuthUI();
+            closeProfile();
+        }
+
+
+        // --- LÓGICA ORIGINAL DE TOONCLOUD+ ---
         const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzZiYmZlMmNiNzdjOWIyNzliOWVkNDc4OWY5NjcxYSIsIm5iZiI6MTc3MDE4OTU4MS4yMTYsInN1YiI6IjY5ODJmMzBkMjM1MmM2MzEzNTM4MzdjNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IEXOBTsDACDo_m6DUt_hqfRvtosp1hLmvv93jNALnKU';
         const IDS = [40075, 387, 4686, 2085, 557, 47035, 6673, 50035, 7736, 1878, 35094, 46759, 18123, 926, 652, 64228, 418, 1068, 8379, 552, 18351, 34891, 2304, 3934, 31499, 234, 2309, 79, 1647, 618, 4627, 17572, 607, 28624, 1769, 346, 17463, 656, 288, 1877, 4630, 33835, 604, 2355, 733, 274382, 897, 4229, 2405, 55924, 47480, 676, 127445, 14705, 9907, 30778, 21086, 94075, 12225, 76004, 32605, 65763, 670, 537, 7821, 3022, 232869, 296764, 126824, 68073, 64228, 12454, 17194, 3022, 504, 384, 588, 657, 2745, 10821, 3579, 1567, 2009, 4630, 2129, 178, 1643, 1848, 1960, 246, 3809, 1346, 3031, 10219, 6046, 3527, 9921, 3854, 15641, 7330, 18352, 5559, 18828, 18848, 33623, 39107, 46358, 46262, 46928, 61520, 46879, 55924, 57532, 60306, 57748, 61330, 61923, 84587, 177, 3611, 606, 4350, 2723, 2660, 4246, 1720, 255, 446, 6618, 10548, 7048, 6040, 15260, 32118, 31109, 33428, 31132, 2641, 679];
 
@@ -274,6 +404,8 @@
         }
 
         async function init() {
+            updateAuthUI(); // Llama a la interfaz de usuario al iniciar
+            
             const fetchs = IDS.map(id => 
                 fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, {
                     headers: { Authorization: `Bearer ${TOKEN}` }
@@ -327,7 +459,8 @@
         function setHero(s) {
             if(!s) return;
             document.getElementById('hero').style.backgroundImage = `url(https://image.tmdb.org/t/p/original${s.backdrop_path})`;
-            document.getElementById('hero-title').innerText = s.name;
+            // Si está logueado, lo saluda
+            document.getElementById('hero-title').innerText = currentUser ? `Hola, ${currentUser.name.split(' ')[0]}` : s.name;
             document.getElementById('hero-desc').innerText = s.overview ? s.overview : "";
             
             const year = s.first_air_date ? s.first_air_date.split('-')[0] : '';
@@ -395,7 +528,6 @@
             });
             const data = await res.json();
             
-            // CORRECCIÓN AQUÍ: Se agrega line-clamp estándar en JS también
             if(data.episodes) {
                 document.getElementById('episodes-list').innerHTML = data.episodes.map(ep => `
                     <div class="episode-card" onclick="playEpisode(${seasonNum}, ${ep.episode_number})">
