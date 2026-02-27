@@ -6,6 +6,7 @@
     <title>ToonCloud+ TV</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/XAHG8BW.png">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
 
@@ -696,6 +697,125 @@
             document.getElementById('adblock-banner').style.display = 'none';
         }
 
+
+        // --- CONFIGURACIÓN DE SUPABASE ---
+        const SUPABASE_URL = 'https://mhneyortuaxdbygcbxbz.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1obmV5b3J0dWF4ZGJ5Z2NieGJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNjg0MTgsImV4cCI6MjA4Nzc0NDQxOH0.CIWA_bJZVMbqM9Kmee51KcZV5PJe7PMGZWyep5qM1es';
+
+        // Inicializar cliente de Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- FUNCIONES DE SUPABASE PARA USUARIOS ---
+
+        // Registrar o actualizar usuario en Supabase
+        async function registerUserInSupabase(userData) {
+            try {
+                // Verificar si el usuario ya existe
+                const { data: existingUser, error: fetchError } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('google_id', userData.id)
+                    .single();
+
+                if (fetchError && fetchError.code !== 'PGRST116') {
+                    console.error('Error al buscar usuario:', fetchError);
+                }
+
+                if (existingUser) {
+                    // Actualizar último acceso
+                    const { error: updateError } = await supabase
+                        .from('users')
+                        .update({ 
+                            last_login: new Date().toISOString(),
+                            name: userData.name,
+                            avatar: userData.avatar
+                        })
+                        .eq('google_id', userData.id);
+
+                    if (updateError) console.error('Error al actualizar usuario:', updateError);
+                    else console.log('Usuario actualizado en Supabase');
+                } else {
+                    // Crear nuevo usuario
+                    const { error: insertError } = await supabase
+                        .from('users')
+                        .insert([{
+                            google_id: userData.id,
+                            name: userData.name,
+                            email: userData.email || null,
+                            avatar: userData.avatar,
+                            created_at: new Date().toISOString(),
+                            last_login: new Date().toISOString()
+                        }]);
+
+                    if (insertError) console.error('Error al registrar usuario:', insertError);
+                    else console.log('Usuario registrado en Supabase');
+                }
+            } catch (err) {
+                console.error('Error en registerUserInSupabase:', err);
+            }
+        }
+
+        // Obtener todos los usuarios registrados (para contador)
+        async function getRegisteredUsersCount() {
+            try {
+                const { count, error } = await supabase
+                    .from('users')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) {
+                    console.error('Error al contar usuarios:', error);
+                    return 0;
+                }
+                return count || 0;
+            } catch (err) {
+                console.error('Error en getRegisteredUsersCount:', err);
+                return 0;
+            }
+        }
+
+        // Guardar favoritos en Supabase
+        async function saveFavoritesToSupabase(userId, favorites) {
+            try {
+                const { error } = await supabase
+                    .from('user_favorites')
+                    .upsert({
+                        google_id: userId,
+                        favorites: JSON.stringify(favorites),
+                        updated_at: new Date().toISOString()
+                    }, {
+                        onConflict: 'google_id'
+                    });
+
+                if (error) console.error('Error al guardar favoritos:', error);
+            } catch (err) {
+                console.error('Error en saveFavoritesToSupabase:', err);
+            }
+        }
+
+        // Cargar favoritos desde Supabase
+        async function loadFavoritesFromSupabase(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('user_favorites')
+                    .select('favorites')
+                    .eq('google_id', userId)
+                    .single();
+
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Error al cargar favoritos:', error);
+                    return null;
+                }
+
+                if (data && data.favorites) {
+                    return JSON.parse(data.favorites);
+                }
+                return null;
+            } catch (err) {
+                console.error('Error en loadFavoritesFromSupabase:', err);
+                return null;
+            }
+        }
+
         // --- RESTO DEL SCRIPT ORIGINAL ---
         let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
         let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || []; 
@@ -711,8 +831,26 @@
 
         function handleCredentialResponse(response) {
             const responsePayload = decodeJwtResponse(response.credential);
-            currentUser = { id: responsePayload.sub, name: responsePayload.name, avatar: responsePayload.picture };
+            currentUser = { 
+                id: responsePayload.sub, 
+                name: responsePayload.name, 
+                avatar: responsePayload.picture,
+                email: responsePayload.email
+            };
             localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
+
+            // Registrar usuario en Supabase
+            registerUserInSupabase(currentUser);
+
+            // Cargar favoritos desde Supabase
+            loadFavoritesFromSupabase(currentUser.id).then(favs => {
+                if (favs) {
+                    favoriteShows = favs;
+                    localStorage.setItem('tooncloud_favorites', JSON.stringify(favoriteShows));
+                    renderFavorites();
+                }
+            });
+
             updateAuthUI();
         }
 
@@ -791,6 +929,16 @@
 
         async function init() {
             updateAuthUI();
+
+            // Cargar favoritos desde Supabase si el usuario está logueado
+            if (currentUser) {
+                const favs = await loadFavoritesFromSupabase(currentUser.id);
+                if (favs) {
+                    favoriteShows = favs;
+                    localStorage.setItem('tooncloud_favorites', JSON.stringify(favoriteShows));
+                }
+            }
+
             renderFavorites();
             
             // 1. Mezclamos los IDs ANTES de pedir los datos para que siempre sea variado
@@ -906,6 +1054,12 @@
             if (index > -1) { favoriteShows.splice(index, 1); } 
             else { favoriteShows.unshift(selectedShow); }
             localStorage.setItem('tooncloud_favorites', JSON.stringify(favoriteShows));
+
+            // Guardar favoritos en Supabase si el usuario está logueado
+            if (currentUser) {
+                saveFavoritesToSupabase(currentUser.id, favoriteShows);
+            }
+
             updateFavButtonUI(); renderFavorites();
         }
 
