@@ -792,16 +792,72 @@
         async function init() {
             updateAuthUI();
             renderFavorites();
-            const fetchs = IDS.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()));
-            db = await Promise.all(fetchs);
-            db = db.filter(item => item && item.id);
             
-            db = shuffleArray(db); // Aplicamos el orden aleatorio aquí
+            // 1. Mezclamos los IDs ANTES de pedir los datos para que siempre sea variado
+            const shuffledIds = shuffleArray([...IDS]);
             
+            // 2. Separamos los primeros 15 para carga rápida, y el resto para el fondo
+            const initialIds = shuffledIds.slice(0, 15);
+            const remainingIds = shuffledIds.slice(15);
+
+            // 3. Cargamos solo los 15 iniciales (la página abrirá rapidísimo)
+            const initialFetchs = initialIds.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
+            let initialDb = await Promise.all(initialFetchs);
+            db = initialDb.filter(item => item && item.id);
+            
+            // 4. Actualizamos la interfaz inmediatamente
             updateNetworkCounts();
-            updateUI(); setHero(db[Math.floor(Math.random()*db.length)]); renderCarousel(db); updateCounter();
-            
-            startAutoScroll(); // Iniciamos el scroll automático
+            updateUI(); 
+            setHero(db[Math.floor(Math.random() * db.length)]); 
+            renderCarousel(db); 
+            updateCounter();
+            startAutoScroll();
+
+            // 5. Llamamos a la función que carga el resto en segundo plano
+            fetchRemaining(remainingIds);
+        }
+
+        // --- NUEVAS FUNCIONES PARA CARGA EN SEGUNDO PLANO ---
+        async function fetchRemaining(ids) {
+            // Cargamos en lotes de 10 para no saturar el navegador ni bloquear la red
+            const chunkSize = 10;
+            for (let i = 0; i < ids.length; i += chunkSize) {
+                const chunk = ids.slice(i, i + chunkSize);
+                const fetchs = chunk.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
+                
+                const results = await Promise.all(fetchs);
+                const validResults = results.filter(item => item && item.id);
+                
+                // Agregamos los nuevos resultados a la base de datos principal
+                db.push(...validResults);
+                
+                // Actualizamos contadores silenciosamente
+                updateNetworkCounts();
+                
+                // Si el usuario está viendo "TODOS" y no ha buscado nada, agregamos las series al carrusel suavemente
+                const searchInput = document.getElementById('search-bar').value;
+                const activeFilter = document.querySelector('.brand-item.active').innerText.trim();
+                const t = translations[currentLang];
+                
+                if (activeFilter === t.all && searchInput === "") {
+                    appendCarousel(validResults);
+                }
+            }
+        }
+
+        function appendCarousel(newItems) {
+            const carousel = document.getElementById('carousel');
+            const html = newItems.map(s => `
+                <div class="card" onclick="openDetails(${s.id})">
+                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}">
+                    <div class="card-overlay">
+                        <div class="card-title">${s.name}</div>
+                        <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
+                    </div>
+                </div>
+            `).join('');
+            // Insertamos al final del carrusel sin interrumpir el scroll automático
+            carousel.insertAdjacentHTML('beforeend', html);
         }
 
         function updateUI() {
