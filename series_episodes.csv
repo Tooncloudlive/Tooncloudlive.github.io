@@ -1849,89 +1849,73 @@ tmdb_id,serie,temporada,episodio,titulo,link
 18123,¡Scooby-Doo! Misterios S.A.,2,24,Gates of Gloom,https://ok.ru/videoembed/1335599761993
 18123,¡Scooby-Doo! Misterios S.A.,2,25,Through the Curtain,https://ok.ru/videoembed/1335598123593
 18123,¡Scooby-Doo! Misterios S.A.,2,26,Come Undone,https://ok.ru/videoembed/1335599303241
-926,"¡Scooby-Doo, dónde estás!",1,1,La Leyenda del Caballero Negro,
-926,"¡Scooby-Doo, dónde estás!",1,2,El Fantasma del Castillo,
-926,"¡Scooby-Doo, dónde estás!",1,3,Una Pista para Scooby-Doo,
-926,"¡Scooby-Doo, dónde estás!",1,4,El Fantasma de Ciudad de Oro,
-926,"¡Scooby-Doo, dónde estás!",1,5,El Señuelo,
-926,"¡Scooby-Doo, dónde estás!",1,6,"Con Mil Demonios, ¿Qué Pasa Aquí?",
-926,"¡Scooby-Doo, dónde estás!",1,7,Jamás Persigas a un Hombre Mono,
-926,"¡Scooby-Doo, dónde estás!",1,8,Falla Divertida en los Juegos Mecánicos,
-926,"¡Scooby-Doo, dónde estás!",1,9,El Teatro de los Billetes Falsos,
-926,"¡Scooby-Doo, dónde estás!",1,10,El Caso del Payaso Fantasma,
-926,"¡Scooby-Doo, dónde estás!",1,11,El Castillo de Frankestein,
-926,"¡Scooby-Doo, dónde estás!",1,12,Scooby Doo y una Momia También,
-926,"¡Scooby-Doo, dónde estás!",1,13,Cómo Pescar una Bruja,
-926,"¡Scooby-Doo, dónde estás!",1,14,El Fantasma del Aeropuerto Abandonado,
-926,"¡Scooby-Doo, dónde estás!",1,15,Espuma de Barco Fantasma,
-926,"¡Scooby-Doo, dónde estás!",1,16,Una Noche de Espanto Causa Quebranto,
-926,"¡Scooby-Doo, dónde estás!",1,17,El Fantasma de las Nieves,
-926,"¡Scooby-Doo, dónde estás!",2,1,Nowhere to Hyde,
-926,"¡Scooby-Doo, dónde estás!",2,2,Mystery Mask Mix-Up,
-926,"¡Scooby-Doo, dónde estás!",2,3,Scooby's Night With a Frozen Fright,
-926,"¡Scooby-Doo, dónde estás!",2,4,"Jeepers, It's the Creeper",
-926,"¡Scooby-Doo, dónde estás!",2,5,Haunted House Hang-Up,
-926,"¡Scooby-Doo, dónde estás!",2,6,A Tiki Scare is No Fair,
-926,"¡Scooby-Doo, dónde estás!",2,7,Who's Afraid of the Big Bad Werewolf?,
-926,"¡Scooby-Doo, dónde estás!",2,8,Don't Fool With a Phantom,
-926,"¡Scooby-Doo, dónde estás!",3,1,Watch Out! The Willawaw!,
-926,"¡Scooby-Doo, dónde estás!",3,2,Creepy Tangle In The Bermuda Triangle,
-926,"¡Scooby-Doo, dónde estás!",3,3,A Scary Night With a Snow Beast Fright,
-926,"¡Scooby-Doo, dónde estás!",3,4,To Switch a Witch,
-926,"¡Scooby-Doo, dónde estás!",3,5,The Tar Monster,
-926,"¡Scooby-Doo, dónde estás!",3,6,A Highland Fling With a Monstrous Thing,
-926,"¡Scooby-Doo, dónde estás!",3,7,The Creepy Case Of Old Iron Face,
-926,"¡Scooby-Doo, dónde estás!",3,8,"Jeepers, It's the Jaguaro!",
-926,"¡Scooby-Doo, dónde estás!",3,9,Make a Beeline Away From That Feline,
-926,"¡Scooby-Doo, dónde estás!",3,10,The Creepy Creature of Vulture's Claw,
-926,"¡Scooby-Doo, dónde estás!",3,11,The Diabolical Disc Demon,
-926,"¡Scooby-Doo, dónde estás!",3,12,Scooby's Chinese Fortune Kooky Caper,
-926,"¡Scooby-Doo, dónde estás!",3,13,A Menace in Venice,
-926,"¡Scooby-Doo, dónde estás!",3,14,Don't Go Near the Fortress of Fear,
-926,"¡Scooby-Doo, dónde estás!",3,15,The Warlock of Wimbledon,
-926,"¡Scooby-Doo, dónde estás!",3,16,The Beast is Awake in Bottomless Lake,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,1,El abominable Hombre de las Nieves,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,2,Destrucción Tridimensional,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,3,El Misterio Extraterrestre,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,4,Big Scare in the Big Easy,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,5,"It's Mean, It's Green, It's the Mystery Machine",
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,6,Riva Ras Regas,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,7,Roller Ghoster Ride,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,8,"Safari, So Goodie!",
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,9,She Sees Sea Monsters by the Sea Shore,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,10,A Scooby-Doo! Christmas,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,11,Toy Scary Boo,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,12,Lights! Camera! Mayhem!,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,13,Pompeii and Circumstance,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",1,14,The Unnatural,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,1,Big Appetite in Little Tokyo,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,2,Mummy Scares Best,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,3,The Fast and the Wormious,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,4,High-Tech House of Horrors,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,5,The Vampire Strikes Back,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,6,A Scooby-Doo Halloween,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,7,Homeward Hound,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,8,The San Franpsycho,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,9,Simple Plan and the Invisible Madman,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,10,Recipe for Disaster,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,11,Large Dragon at Large,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,12,Uncle Scooby and Antarctica,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,13,"New Mexico, Old Monster",
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",2,14,It's All Greek to Scooby,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,1,Un Faról Diabólico,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,2,Vamos Al Oeste Scooby!,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,3,Un Escalofriante Día De San Valentín,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,4,Misterio En La Arena,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,5,Misterio A La Francesa,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,6,La Granja Secreta,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,7,Terror En El Estadio,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,8,El Payaso Aterrador Del Torneo De Golf,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,9,Campamento Intoxicado,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,10,El Temíble Dragón De Hong-Kong,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,11,"En Sus Marcas, Listos, Monstruos",
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,12,Garras Doradas,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,13,La Barrera De Coral,
-652,"¿Qué Hay De Nuevo, Scooby-Doo?",3,14,VideoJuego,
+926,Scooby-Doo, ¿Dónde estás?,1,1,"La leyenda del Caballero Negro",https://cubeembed.rpmvid.com/#yr6s1
+926,Scooby-Doo, ¿Dónde estás?,1,2,"Una pista para Scooby-Doo",https://cubeembed.rpmvid.com/#tj15f
+926,Scooby-Doo, ¿Dónde estás?,1,3,"El Fantasma del Castillo",https://cubeembed.rpmvid.com/#a9djk
+926,Scooby-Doo, ¿Dónde estás?,1,4,"El Fantasma de Ciudad de Oro",https://cubeembed.rpmvid.com/#wysoi
+926,Scooby-Doo, ¿Dónde estás?,1,5,"El Señuelo",https://cubeembed.rpmvid.com/#nuvts
+926,Scooby-Doo, ¿Dónde estás?,1,6,"Con mil demonios, ¿Qué pasa aquí?",https://cubeembed.rpmvid.com/#x5grw
+926,Scooby-Doo, ¿Dónde estás?,1,7,"Jamás persigas a un hombre mono",https://cubeembed.rpmvid.com/#yr6iw
+926,Scooby-Doo, ¿Dónde estás?,1,8,"¡Falla divertida en los juegos mecánicos!",https://cubeembed.rpmvid.com/#bmtns
+926,Scooby-Doo, ¿Dónde estás?,1,9,"El teatro de los billetes falsos",https://cubeembed.rpmvid.com/#bmtnz
+926,Scooby-Doo, ¿Dónde estás?,1,10,"El caso del payaso Fantasma",https://cubeembed.rpmvid.com/#folow
+926,Scooby-Doo, ¿Dónde estás?,1,11,"El castillo de Frankenstein",https://cubeembed.rpmvid.com/#os3po
+926,Scooby-Doo, ¿Dónde estás?,1,12,"Scooby-Doo y una momia también",https://cubeembed.rpmvid.com/#6kum3
+926,Scooby-Doo, ¿Dónde estás?,1,13,"Cómo pescar una bruja",https://cubeembed.rpmvid.com/#l3c35
+926,Scooby-Doo, ¿Dónde estás?,1,14,"Esfúmate Barco Fantasma",https://cubeembed.rpmvid.com/#gqaqn
+926,Scooby-Doo, ¿Dónde estás?,1,15,"El Fantasma del Aeropuerto Abandonado",https://cubeembed.rpmvid.com/#zcycc
+926,Scooby-Doo, ¿Dónde estás?,1,16,"Una Noche de Espanto, Causa Quebranto",https://cubeembed.rpmvid.com/#98x8c
+926,Scooby-Doo, ¿Dónde estás?,1,17,"El Fantasma de las Nieves",https://cubeembed.rpmvid.com/#a9d9o
+926,Scooby-Doo, ¿Dónde estás?,2,1,"El Espectro de Hyde",https://cubeembed.rpmvid.com/#wysyt
+926,Scooby-Doo, ¿Dónde estás?,2,2,"La Máscara de Zen-Túo",https://cubeembed.rpmvid.com/#zcyci
+926,Scooby-Doo, ¿Dónde estás?,2,3,"El Papel Misterioso",https://cubeembed.rpmvid.com/#foloz
+926,Scooby-Doo, ¿Dónde estás?,2,4,"La Noche de los Pies Helados",https://cubeembed.rpmvid.com/#hibr5
+926,Scooby-Doo, ¿Dónde estás?,2,5,"La Leyenda del Decapitado",https://cubeembed.rpmvid.com/#certa
+926,Scooby-Doo, ¿Dónde estás?,2,6,"La Aldea Encantada",https://cubeembed.rpmvid.com/#klzp5
+926,Scooby-Doo, ¿Dónde estás?,2,7,"¿Quién Teme al Lobo Feroz?",https://cubeembed.rpmvid.com/#wysxu
+926,Scooby-Doo, ¿Dónde estás?,2,8,"No Juegues con un Fantasma",https://cubeembed.rpmvid.com/#hibb6
+652,¿Qué hay de nuevo, Scooby-Doo?,1,1,"El abominable Hombre de las Nieves",https://cubeembed.rpmvid.com/#f6f9a
+652,¿Qué hay de nuevo, Scooby-Doo?,1,2,"Destrucción tridimensional",https://cubeembed.rpmvid.com/#zvziy
+652,¿Qué hay de nuevo, Scooby-Doo?,1,3,"El misterio extraterrestre",https://cubeembed.rpmvid.com/#b9bvl
+652,¿Qué hay de nuevo, Scooby-Doo?,1,4,"El misterio de ultratumba",https://cubeembed.rpmvid.com/#qmqcb
+652,¿Qué hay de nuevo, Scooby-Doo?,1,5,"La extraña máquina del misterio",https://cubeembed.rpmvid.com/#636js
+652,¿Qué hay de nuevo, Scooby-Doo?,1,6,"Viva Las Vegas",https://cubeembed.rpmvid.com/#1g13v
+652,¿Qué hay de nuevo, Scooby-Doo?,1,7,"El espectro de la feria",https://cubeembed.rpmvid.com/#f6f9j
+652,¿Qué hay de nuevo, Scooby-Doo?,1,8,"Safari deslumbrante",https://cubeembed.rpmvid.com/#m8mww
+652,¿Qué hay de nuevo, Scooby-Doo?,1,9,"Monstruos marinos en la playa",https://cubeembed.rpmvid.com/#d1d6b
+652,¿Qué hay de nuevo, Scooby-Doo?,1,10,"La Navidad de Scooby-Doo",https://cubeembed.rpmvid.com/#636j9
+652,¿Qué hay de nuevo, Scooby-Doo?,1,11,"Los juguetes del miedo",https://cubeembed.rpmvid.com/#lulxe
+652,¿Qué hay de nuevo, Scooby-Doo?,1,12,"¡Luces, cámara, confusión!",https://cubeembed.rpmvid.com/#eyeqx
+652,¿Qué hay de nuevo, Scooby-Doo?,1,13,"Pompeya y circunstancia",https://cubeembed.rpmvid.com/#zvzr3
+652,¿Qué hay de nuevo, Scooby-Doo?,1,14,"El fantasma del béisbol",https://cubeembed.rpmvid.com/#9j9r9
+652,¿Qué hay de nuevo, Scooby-Doo?,1,15,"GodziShaggy",https://cubeembed.rpmvid.com/#hqhme
+652,¿Qué hay de nuevo, Scooby-Doo?,1,16,"La maldición de la momia",https://cubeembed.rpmvid.com/#cwcfk
+652,¿Qué hay de nuevo, Scooby-Doo?,1,17,"La carrera del gusano",https://cubeembed.rpmvid.com/#wfw6m
+652,¿Qué hay de nuevo, Scooby-Doo?,1,18,"La casa del futuro",https://cubeembed.rpmvid.com/#ncnwx
+652,¿Qué hay de nuevo, Scooby-Doo?,1,19,"El regreso del vampiro",https://cubeembed.rpmvid.com/#8d81x
+652,¿Qué hay de nuevo, Scooby-Doo?,1,20,"Un halloween con Scooby-Doo",https://cubeembed.rpmvid.com/#9j95c
+652,¿Qué hay de nuevo, Scooby-Doo?,1,21,"El robo de los cachorros",https://cubeembed.rpmvid.com/#ueuyz
+652,¿Qué hay de nuevo, Scooby-Doo?,1,22,"El San Franpsycho",https://cubeembed.rpmvid.com/#3z3vk
+652,¿Qué hay de nuevo, Scooby-Doo?,1,23,"El hombre invisible",https://cubeembed.rpmvid.com/#yoyk9
+652,¿Qué hay de nuevo, Scooby-Doo?,1,24,"La receta secreta",https://cubeembed.rpmvid.com/#f6f3l
+652,¿Qué hay de nuevo, Scooby-Doo?,1,25,"El vuelo del dragón",https://cubeembed.rpmvid.com/#ataxw
+652,¿Qué hay de nuevo, Scooby-Doo?,1,26,"El tío Scooby en la Antártica",https://cubeembed.rpmvid.com/#j5jix
+652,¿Qué hay de nuevo, Scooby-Doo?,1,27,"La leyenda del Wakumi",https://cubeembed.rpmvid.com/#qmq86
+652,¿Qué hay de nuevo, Scooby-Doo?,1,28,"Vacaciones en Grecia",https://cubeembed.rpmvid.com/#b9bjp
+652,¿Qué hay de nuevo, Scooby-Doo?,1,29,"El farol diabólico",https://cubeembed.rpmvid.com/#1g1bj
+652,¿Qué hay de nuevo, Scooby-Doo?,1,30,"Vamos al oeste, Scooby",https://cubeembed.rpmvid.com/#636zi
+652,¿Qué hay de nuevo, Scooby-Doo?,1,31,"Un escalofriante día de San Valentín",https://cubeembed.rpmvid.com/#f6f3z
+652,¿Qué hay de nuevo, Scooby-Doo?,1,32,"Misterio en la arena",https://cubeembed.rpmvid.com/#okond
+652,¿Qué hay de nuevo, Scooby-Doo?,1,33,"Misterio a la francesa",https://cubeembed.rpmvid.com/#m8mdd
+652,¿Qué hay de nuevo, Scooby-Doo?,1,34,"La granja secreta",https://cubeembed.rpmvid.com/#lulet
+652,¿Qué hay de nuevo, Scooby-Doo?,1,35,"Terror en el estadio",https://cubeembed.rpmvid.com/#gbg96
+652,¿Qué hay de nuevo, Scooby-Doo?,1,36,"El payaso aterrador del torneo de golf",https://cubeembed.rpmvid.com/#eyeoe
+652,¿Qué hay de nuevo, Scooby-Doo?,1,37,"Campamento intoxicado",https://cubeembed.rpmvid.com/#9j9vb
+652,¿Qué hay de nuevo, Scooby-Doo?,1,38,"El temible dragón de Hong Kong",https://cubeembed.rpmvid.com/#zvz5b
+652,¿Qué hay de nuevo, Scooby-Doo?,1,39,"En sus marcas, listos, monstruos",https://cubeembed.rpmvid.com/#cwc1q
+652,¿Qué hay de nuevo, Scooby-Doo?,1,40,"Garras doradas",https://cubeembed.rpmvid.com/#wfwgk
+652,¿Qué hay de nuevo, Scooby-Doo?,1,41,"La barrera de coral",https://cubeembed.rpmvid.com/#ncnde
+652,¿Qué hay de nuevo, Scooby-Doo?,1,42,"Videojuego",https://cubeembed.rpmvid.com/#8d8we
 64228,"¡Ponte en Onda, Scooby-Doo!",1,1,Mystery 101,
 64228,"¡Ponte en Onda, Scooby-Doo!",1,2,Game of Chicken,
 64228,"¡Ponte en Onda, Scooby-Doo!",1,3,All Paws on Deck,
@@ -1985,190 +1969,126 @@ tmdb_id,serie,temporada,episodio,titulo,link
 64228,"¡Ponte en Onda, Scooby-Doo!",2,25,Professor Huh? Part 6¾,
 64228,"¡Ponte en Onda, Scooby-Doo!",2,26,Pizza O'Possum's,
 64228,"¡Ponte en Onda, Scooby-Doo!",2,27,The Curse of Half-Beard's Booty,
-418,Un cachorro llamado Scooby-Doo,1,1,A Bicycle Built for Boo!,
-418,Un cachorro llamado Scooby-Doo,1,2,The Sludge Monster from the Earth's Core,
-418,Un cachorro llamado Scooby-Doo,1,3,Wanted Cheddar Alive,
-418,Un cachorro llamado Scooby-Doo,1,4,The Schnook Who Took My Comic Book,
-418,Un cachorro llamado Scooby-Doo,1,5,For Letter or Worse,
-418,Un cachorro llamado Scooby-Doo,1,6,The Babysitter From Beyond,
-418,Un cachorro llamado Scooby-Doo,1,7,Snow Place Like Home,
-418,Un cachorro llamado Scooby-Doo,1,8,"Now Museum, Now You Don't",
-418,Un cachorro llamado Scooby-Doo,1,9,Scooby Dude,
-418,Un cachorro llamado Scooby-Doo,1,10,Ghost Who's Coming to Dinner?,
-418,Un cachorro llamado Scooby-Doo,1,11,The Story Stick,
-418,Un cachorro llamado Scooby-Doo,1,12,Robopup,
-418,Un cachorro llamado Scooby-Doo,1,13,Lights...Camera...Monster,
-418,Un cachorro llamado Scooby-Doo,2,1,Curse of the Collar,
-418,Un cachorro llamado Scooby-Doo,2,2,The Return of Commander Cool,
-418,Un cachorro llamado Scooby-Doo,2,3,The Spirit of Rock 'n Roll,
-418,Un cachorro llamado Scooby-Doo,2,4,Chickenstein Lives!,
-418,Un cachorro llamado Scooby-Doo,2,5,Night of the Living Burger,
-418,Un cachorro llamado Scooby-Doo,2,6,The Computer Walks Among Us,
-418,Un cachorro llamado Scooby-Doo,2,7,Dog Gone Scooby,
-418,Un cachorro llamado Scooby-Doo,2,8,"Terror, thy Name is Zombo",
-418,Un cachorro llamado Scooby-Doo,3,1,Night of the Boogey Biker,
-418,Un cachorro llamado Scooby-Doo,3,2,Dawn of the Spooky Shuttle Scare,
-418,Un cachorro llamado Scooby-Doo,3,3,Horror of the Haunted Hairpiece,
-418,Un cachorro llamado Scooby-Doo,3,4,Wrestle Maniacs,
-418,Un cachorro llamado Scooby-Doo,4,1,The Were-Doo of Doo Manor,
-418,Un cachorro llamado Scooby-Doo,4,2,Catcher on the Sly,
-418,Un cachorro llamado Scooby-Doo,4,3,The Ghost of Mrs. Shusham,
-418,Un cachorro llamado Scooby-Doo,4,4,The Wrath of Waitro,
-418,Un cachorro llamado Scooby-Doo,4,5,Mayhem of the Moving Mollusk,
-1068,Las Nuevas Películas De Scooby-Doo!,1,1,El Pueblo Fantasma,
-1068,Las Nuevas Películas De Scooby-Doo!,1,2,El Asunto Dinámico De Scooby-Doo,
-1068,Las Nuevas Películas De Scooby-Doo!,1,3,Wednesday is Missing,
-1068,Las Nuevas Películas De Scooby-Doo!,1,4,The Frickert Fracas,
-1068,Las Nuevas Películas De Scooby-Doo!,1,5,Guess Who's Knott Coming to Dinner,
-1068,Las Nuevas Películas De Scooby-Doo!,1,6,A Good Medium Is Rare,
-1068,Las Nuevas Películas De Scooby-Doo!,1,7,Sandy Duncan's Jekyll and Hyde,
-1068,Las Nuevas Películas De Scooby-Doo!,1,8,The Secret of Shark Island,
-1068,Las Nuevas Películas De Scooby-Doo!,1,9,The Spooky Fog,
-1068,Las Nuevas Películas De Scooby-Doo!,1,10,The Ghost of Bigfoot,
-1068,Las Nuevas Películas De Scooby-Doo!,1,11,The Ghost of The Red Baron,
-1068,Las Nuevas Películas De Scooby-Doo!,1,12,The Ghostly Creep from the Deep,
-1068,Las Nuevas Películas De Scooby-Doo!,1,13,The Haunted Horseman of Hagglethorn Hall,
-1068,Las Nuevas Películas De Scooby-Doo!,1,14,The Phantom of the Country Music Hall,
-1068,Las Nuevas Películas De Scooby-Doo!,1,15,The Caped Crusader Caper,
-1068,Las Nuevas Películas De Scooby-Doo!,1,16,The Loch Ness Mess,
-1068,Las Nuevas Películas De Scooby-Doo!,2,1,The Mystery of Haunted Island,
-1068,Las Nuevas Películas De Scooby-Doo!,2,2,The Haunted Showboat,
-1068,Las Nuevas Películas De Scooby-Doo!,2,3,Mystery in Persia,
-1068,Las Nuevas Películas De Scooby-Doo!,2,4,The Spirited Spooked Sport Show,
-1068,Las Nuevas Películas De Scooby-Doo!,2,5,The Exterminator,
-1068,Las Nuevas Películas De Scooby-Doo!,2,6,The Weird Winds of Winona,
-1068,Las Nuevas Películas De Scooby-Doo!,2,7,The Haunted Candy Factory,
-1068,Las Nuevas Películas De Scooby-Doo!,2,8,The Haunted Carnival,
-8379,Clifford,1,1,My Best Friend,https://ok.ru/videoembed/3318257551945
-8379,Clifford,1,2,Cleo's Fair Share,https://ok.ru/videoembed/3318258207305
-8379,Clifford,1,3,Special Delivery,https://ok.ru/videoembed/3318258797129
-8379,Clifford,1,4,A Ferry Tale,https://ok.ru/videoembed/3318258469449
-8379,Clifford,1,5,And Bird Makes Three,https://ok.ru/videoembed/3318258928201
-8379,Clifford,1,6,Home Is Where the Fun Is,https://ok.ru/videoembed/3318258076233
-8379,Clifford,1,7,Clifford's Carnival,https://ok.ru/videoembed/3318258862665
-8379,Clifford,1,8,Clifford's Doggy Reunion,https://ok.ru/videoembed/3318257683017
-8379,Clifford,1,9,The Great Race,https://ok.ru/videoembed/3318258666057
-8379,Clifford,1,10,Tummy Trouble,https://ok.ru/videoembed/3318257748553
-8379,Clifford,1,11,Cleo Comes to Town,https://ok.ru/videoembed/3318258338377
-8379,Clifford,1,12,False Friends,https://ok.ru/videoembed/3318257814089
-8379,Clifford,1,13,Clifford and the Beanstalk,https://ok.ru/videoembed/3318258731593
-8379,Clifford,1,14,Itchy Patch,https://ok.ru/videoembed/3318258010697
-8379,Clifford,1,15,A New Friend,https://ok.ru/videoembed/3318257945161
-8379,Clifford,1,16,Stormy Weather,https://ok.ru/videoembed/3318258600521
-8379,Clifford,1,17,Circus Stars,https://ok.ru/videoembed/3318259059273
-8379,Clifford,1,18,Limelight Fright,https://ok.ru/videoembed/3318259190345
-8379,Clifford,1,19,To Catch a Bird,https://ok.ru/videoembed/3318257617481
-8379,Clifford,1,20,The Best Party Ever,https://ok.ru/videoembed/3318258403913
-8379,Clifford,1,21,"Come Back, Mac",https://ok.ru/videoembed/3323885521481
-8379,Clifford,1,22,Boo!,https://ok.ru/videoembed/3323884669513
-8379,Clifford,1,23,Little Clifford,https://ok.ru/videoembed/3323885914697
-8379,Clifford,1,24,Welcome to Birdwell Island,https://ok.ru/videoembed/3323885718089
-8379,Clifford,1,25,Doing the Right Thing,https://ok.ru/videoembed/3323884866121
-8379,Clifford,1,26,The Dog Who Cried Woof,https://ok.ru/videoembed/3323885783625
-8379,Clifford,1,27,Leaf of Absence,https://ok.ru/videoembed/3323885587017
-8379,Clifford,1,28,Nobody's Perfect,https://ok.ru/videoembed/3323885849161
-8379,Clifford,1,29,Teacher's Pet,https://ok.ru/videoembed/3323884735049
-8379,Clifford,1,30,Islander of the Year,https://ok.ru/videoembed/3323885455945
-8379,Clifford,1,31,Clifford's Big Surprise,https://ok.ru/videoembed/3323884800585
-8379,Clifford,1,32,The Ears Have It,https://ok.ru/videoembed/3323885652553
-8379,Clifford,1,33,Tough Enough,https://ok.ru/videoembed/3323884931657
-8379,Clifford,1,34,Stars in Your Eyes,https://ok.ru/videoembed/3323885193801
-8379,Clifford,1,35,Mac's Secret Dog Club,https://ok.ru/videoembed/3323885324873
-8379,Clifford,1,36,The Dog Park,https://ok.ru/videoembed/3323885062729
-8379,Clifford,1,37,Fluffed Up Cleo,https://ok.ru/videoembed/3323885390409
-8379,Clifford,1,38,Team Spirit,https://ok.ru/videoembed/3323884997193
-8379,Clifford,1,39,Clifford on Parade,https://ok.ru/videoembed/3323885259337
-8379,Clifford,1,40,Follow the Leader,https://ok.ru/videoembed/3323885128265
-8379,Clifford,1,41,Good-Bye T-Bone,https://ok.ru/videoembed/3317219723849
-8379,Clifford,1,42,The Truth About Cats and Dogs,https://ok.ru/videoembed/3317220903497
-8379,Clifford,1,43,The Big Sleepover,https://ok.ru/videoembed/3317220182601
-8379,Clifford,1,44,Dog for a Day,https://ok.ru/videoembed/3317219396169
-8379,Clifford,1,45,"T-Bone, Dog About Town",https://ok.ru/videoembed/3317219854921
-8379,Clifford,1,46,Clifford's Big Heart,https://ok.ru/videoembed/3317221231177
-8379,Clifford,1,47,"Who Me, Jealous?",https://ok.ru/videoembed/3317219592777
-8379,Clifford,1,48,A Bunny in a Haystack,https://ok.ru/videoembed/3317220313673
-8379,Clifford,1,49,Clothes Don't Make the Dog,https://ok.ru/videoembed/3317219134025
-8379,Clifford,1,50,Short-Changed,https://ok.ru/videoembed/3317220575817
-8379,Clifford,1,51,The Kibble Crook,https://ok.ru/videoembed/3317219330633
-8379,Clifford,1,52,Screaming for Ice Cream,https://ok.ru/videoembed/3317220969033
-8379,Clifford,1,53,New Dog in Town,https://ok.ru/videoembed/3317220117065
-8379,Clifford,1,54,Get Well,https://ok.ru/videoembed/3317220379209
-8379,Clifford,1,55,Babysitter Blues,https://ok.ru/videoembed/3317219920457
-8379,Clifford,1,56,Saturday Morning,https://ok.ru/videoembed/3317220772425
-8379,Clifford,1,57,Best Paw Forward,https://ok.ru/videoembed/3317220248137
-8379,Clifford,1,58,Then Came Bo,https://ok.ru/videoembed/3317220641353
-8379,Clifford,1,59,"Friends, Morning, Noon and Night",https://ok.ru/videoembed/3317219789385
-8379,Clifford,1,60,Mr. Bleakman's Special Day,https://ok.ru/videoembed/3317220510281
-8379,Clifford,1,61,Doggie Garden,https://ok.ru/videoembed/3317221034569
-8379,Clifford,1,62,Captain Birdwell's Treasure,https://ok.ru/videoembed/3317220444745
-8379,Clifford,1,63,Welcome to the Doghouse,https://ok.ru/videoembed/3317219265097
-8379,Clifford,1,64,"Promises, Promises",https://ok.ru/videoembed/3317220706889
-8379,Clifford,1,65,Clifford's Hiccups,https://ok.ru/videoembed/3317219527241
-8379,Clifford,1,66,It's My Party,https://ok.ru/videoembed/3317221100105
-8379,Clifford,1,67,Clifford Cleans His Doghouse,
-8379,Clifford,1,68,Baby Makes Four,
-8379,Clifford,1,69,Jetta's Tall Tale,
-8379,Clifford,1,70,The Big Fetch,
-8379,Clifford,1,71,Potluck Party Pooper,
-8379,Clifford,1,72,The Best Gift,
-8379,Clifford,1,73,Two's Company,
-8379,Clifford,1,74,Fair Weather Friend,
-8379,Clifford,1,75,Topsy Turvy Day,
-8379,Clifford,1,76,Clifford's Charm School,
-8379,Clifford,1,77,Forgive and Forget,
-8379,Clifford,1,78,Mimi's Back in Town,
-8379,Clifford,1,79,Blanket Blues,
-8379,Clifford,1,80,Dino Clifford,
-8379,Clifford,2,1,That's Snow Lie,
-8379,Clifford,2,2,A Friend in Need,
-8379,Clifford,2,3,Fan Mail,
-8379,Clifford,2,4,Hooray for Cleo,
-8379,Clifford,2,5,Nothing to Fur But Fur Itself,
-8379,Clifford,2,6,Jetta's Project,
-8379,Clifford,2,7,Stinky Friends,
-8379,Clifford,2,8,He's Wonderful Mr. Bleakman,
-8379,Clifford,2,9,Magic in the Air / Everyone Loves Clifford,
-8379,Clifford,2,10,Everyone Loves Clifford,
-8379,Clifford,2,11,Clifford Grows Up,
-8379,Clifford,2,12,Jetta's Sweater,
-8379,Clifford,2,13,Big Hearted T-Bone,
-8379,Clifford,2,14,Cleo's Valentine Surprise,
-8379,Clifford,2,15,Embarrassing Moments,
-8379,Clifford,2,16,Lucky Charm,
-8379,Clifford,2,17,Princess Cleo,
-8379,Clifford,2,18,Basketball Stories,
-8379,Clifford,2,19,Doggie Detectives,
-8379,Clifford,2,20,Camping It Up,
-8379,Clifford,2,21,Cleo Gets a Cone,
-8379,Clifford,2,22,A Job Well Read,
-8379,Clifford,2,23,When I Grow Up,
-8379,Clifford,2,24,"Now Now, I'm Busy",
-8379,Clifford,2,25,Special T-Bone,
-8379,Clifford,2,26,Jetta's Sneak Peek,
-8379,Clifford,2,27,Vaz Goes Down the Tube,
-8379,Clifford,2,28,Cyber Puppy Problems,
-8379,Clifford,2,29,Another Fine Mess,
-8379,Clifford,2,30,King Mac,
-8379,Clifford,2,31,Who Moved My Bone?,
-8379,Clifford,2,32,Clifford the Pirate King,
-8379,Clifford,2,33,Clifford's Cookie Craving,
-8379,Clifford,2,34,Jetta's Friend,
-8379,Clifford,2,35,Fishing Lessons,
-8379,Clifford,2,36,No Baths for Cleo,
-8379,Clifford,2,37,Flood of Imagination,
-8379,Clifford,2,38,Lights Out,
-8379,Clifford,2,39,A Big Help,
-8379,Clifford,2,40,The Trouble With Kittens,
-8379,Clifford,2,41,Led Astray,
-8379,Clifford,2,42,Wedding Bell Blues,
-8379,Clifford,2,43,Food For Thought,
-8379,Clifford,2,44,Friends Forever,
-8379,Clifford,2,45,Tie-Dye Clifford,
-8379,Clifford,2,46,Stage Struck,
-8379,Clifford,2,47,Doghouse Rock,
-8379,Clifford,2,48,Guess Who's Coming to Birdwell,
-8379,Clifford,2,49,Little Big Pup,
-8379,Clifford,2,50,Getting To Know You,
+418,Un Cachorro Llamado Scooby Doo,1,1,"El misterio de la bicicleta robada",https://dhtpre.com/embed/ykjk33wtz1zb
+418,Un Cachorro Llamado Scooby Doo,1,2,"El misterio del monstruo del centro de la tierra",https://dhtpre.com/embed/5oky2n49lxlp
+418,Un Cachorro Llamado Scooby Doo,1,3,"El misterio del monstruo de queso",https://dhtpre.com/embed/v5mewuy34jbo
+418,Un Cachorro Llamado Scooby Doo,1,4,"Un monstruo se ha llevado mi cómic",https://dhtpre.com/embed/xm3hwzv1sjje
+418,Un Cachorro Llamado Scooby Doo,1,5,"Un fantasma detrás de emisión",https://dhtpre.com/embed/v9hm489wnpc3
+418,Un Cachorro Llamado Scooby Doo,1,6,"Una niñera del más allá",https://dhtpre.com/embed/m9g7kqkm3p2i
+418,Un Cachorro Llamado Scooby Doo,1,7,"Un misterio muy frío",https://dhtpre.com/embed/41nif3btu101
+418,Un Cachorro Llamado Scooby Doo,1,8,"El fantasma del museo",https://dhtpre.com/embed/q1y7ufaag8yf
+418,Un Cachorro Llamado Scooby Doo,1,9,"El patinador sin cabeza",https://dhtpre.com/embed/tovfd2vi24gv
+418,Un Cachorro Llamado Scooby Doo,1,10,"Una noche de brujas",https://dhtpre.com/embed/zrzbnta96fz9
+418,Un Cachorro Llamado Scooby Doo,1,11,"Un monstruo de madera",https://dhtpre.com/embed/fahwfz47i27g
+418,Un Cachorro Llamado Scooby Doo,1,12,"El perro nuclear",https://dhtpre.com/embed/dila6twvqfk4
+418,Un Cachorro Llamado Scooby Doo,1,13,"Luces, cámara, un monstruo",https://dhtpre.com/embed/4yoeyim07m6r
+418,Un Cachorro Llamado Scooby Doo,2,1,"La maldición del collar",https://dhtpre.com/embed/56td68aaaa4p
+418,Un Cachorro Llamado Scooby Doo,2,2,"El regreso del Comandante Coloso",https://dhtpre.com/embed/5rlt449c4cep
+418,Un Cachorro Llamado Scooby Doo,2,3,"El fantasma rockero",https://dhtpre.com/embed/4vb2uqf7sy1k
+418,Un Cachorro Llamado Scooby Doo,2,4,"Gallenstein vive",https://dhtpre.com/embed/s2o4zvfm6xyf
+418,Un Cachorro Llamado Scooby Doo,2,5,"La noche de la hamburguesa viviente",https://dhtpre.com/embed/acmp7aryedw9
+418,Un Cachorro Llamado Scooby Doo,2,6,"Nos invaden las máquinas",https://dhtpre.com/embed/sehkk99tythm
+418,Un Cachorro Llamado Scooby Doo,2,7,"Scooby-Doo se va de casa",https://dhtpre.com/embed/plksj0qruv6m
+418,Un Cachorro Llamado Scooby Doo,2,8,"El espectáculo más grande del mundo",https://dhtpre.com/embed/rewfarij8h4q
+418,Un Cachorro Llamado Scooby Doo,3,1,"La noche de la motocicleta perdida",https://dhtpre.com/embed/rz58lx4gxx39
+418,Un Cachorro Llamado Scooby Doo,3,2,"El caso de la aventura espacial",https://dhtpre.com/embed/5ksq0ltixztb
+418,Un Cachorro Llamado Scooby Doo,3,3,"Los locos de la lucha libre",https://dhtpre.com/embed/nql2j5tlon85
+418,Un Cachorro Llamado Scooby Doo,3,4,"El horror de la peluca embrujada",https://dhtpre.com/embed/ujp5e1btlxch
+418,Un Cachorro Llamado Scooby Doo,3,5,"Las travesuras del molusco andarín",https://dhtpre.com/embed/s953kj6ekahm
+418,Un Cachorro Llamado Scooby Doo,3,6,"El monstruo de la mansión Doo",https://dhtpre.com/embed/0k5n9esnro1r
+418,Un Cachorro Llamado Scooby Doo,3,7,"El Catcher astuto",https://dhtpre.com/embed/q9r80dfwjd84
+418,Un Cachorro Llamado Scooby Doo,3,8,"El fantasma de la Sra. Shusham",https://dhtpre.com/embed/li3n5yvhqw7i
+418,Un Cachorro Llamado Scooby Doo,3,9,"La furia del mesero",https://dhtpre.com/embed/fcvl1rdyuq4l
+1068,Las Nuevas Peliculas De Scooby Doo,1,1,"Pueblo Fantasma Cucuy",https://cubeembed.rpmvid.com/#evf1g
+1068,Las Nuevas Peliculas De Scooby Doo,1,2,"Scooby-Doo en un Asunto Dinámico",https://cubeembed.rpmvid.com/#98xex
+1068,Las Nuevas Peliculas De Scooby Doo,1,3,"Scooby Doo visita la casa de los Locos Adams",https://cubeembed.rpmvid.com/#98xei
+1068,Las Nuevas Peliculas De Scooby Doo,1,4,"Escalofriante descanso",https://cubeembed.rpmvid.com/#klz9g
+1068,Las Nuevas Peliculas De Scooby Doo,1,5,"El General dasaparecido",https://cubeembed.rpmvid.com/#wysif
+1068,Las Nuevas Peliculas De Scooby Doo,1,6,"El fantasma del marido",https://cubeembed.rpmvid.com/#bmtag
+1068,Las Nuevas Peliculas De Scooby Doo,1,7,"El hombre y el monstruo",https://cubeembed.rpmvid.com/#x5gfy
+1068,Las Nuevas Peliculas De Scooby Doo,1,8,"La isla de los tiburones",https://cubeembed.rpmvid.com/#zcyeg
+1068,Las Nuevas Peliculas De Scooby Doo,1,9,"La niebla tenebrosa",https://cubeembed.rpmvid.com/#1hpih
+1068,Las Nuevas Peliculas De Scooby Doo,1,10,"El abominable hombre de las nieves",https://cubeembed.rpmvid.com/#l3cn1
+1068,Las Nuevas Peliculas De Scooby Doo,1,11,"El fantasma de Baron Rojo",https://cubeembed.rpmvid.com/#tj1dy
+1068,Las Nuevas Peliculas De Scooby Doo,1,12,"Los piratas fantasmas",https://cubeembed.rpmvid.com/#3neuz
+1068,Las Nuevas Peliculas De Scooby Doo,1,13,"El caballero fantasma de Hagglethorn Hall",https://cubeembed.rpmvid.com/#x5g1x
+1068,Las Nuevas Peliculas De Scooby Doo,1,14,"Fantasmas en el teatro",https://cubeembed.rpmvid.com/#jdhef
+1068,Las Nuevas Peliculas De Scooby Doo,1,15,"Los cruzados enmascarados",https://cubeembed.rpmvid.com/#zcytf
+1068,Las Nuevas Peliculas De Scooby Doo,1,16,"La mansión del tio Daniel",https://cubeembed.rpmvid.com/#bmtln
+1068,Las Nuevas Peliculas De Scooby Doo,2,1,"El misterio de la isla encantada",https://cubeembed.rpmvid.com/#wys5w
+1068,Las Nuevas Peliculas De Scooby Doo,2,2,"El espectácular barco encantado",https://cubeembed.rpmvid.com/#gqa3j
+1068,Las Nuevas Peliculas De Scooby Doo,2,3,"Scooby Doo conoce a Jeannie",https://cubeembed.rpmvid.com/#8t591
+1068,Las Nuevas Peliculas De Scooby Doo,2,4,"Una función deportiva entre espantos",https://cubeembed.rpmvid.com/#98xau
+1068,Las Nuevas Peliculas De Scooby Doo,2,5,"El exterminador",https://cubeembed.rpmvid.com/#fol5m
+1068,Las Nuevas Peliculas De Scooby Doo,2,6,"El tenebroso viento de Winona",https://cubeembed.rpmvid.com/#98x5r
+1068,Las Nuevas Peliculas De Scooby Doo,2,7,"La fábrica de dulces encantada",https://cubeembed.rpmvid.com/#6kuzr
+1068,Las Nuevas Peliculas De Scooby Doo,2,8,"Scooby-Doo Meets Dick Van Dyke",https://cubeembed.rpmvid.com/#x5gor
+8379,Clifford,1,1,"El mejor amigo - Cleo no quiere compartir",https://ok.ru/videoembed/3318257551945
+8379,Clifford,1,2,"Entrega especial - El perro del año",https://ok.ru/videoembed/3318258207305
+8379,Clifford,1,3,"Y Birdy estuvo ahì - Hogar es dinde està la diversiòn",https://ok.ru/videoembed/3318258797129
+8379,Clifford,1,4,"La feria de Clifford - La reuniòn sw Clifford",https://ok.ru/videoembed/3318258469449
+8379,Clifford,1,5,"La gran carrera - Problemas estomacales",https://ok.ru/videoembed/3318258928201
+8379,Clifford,1,6,"Cleo viene al pueblo - Falsos amigos",https://ok.ru/videoembed/3318258076233
+8379,Clifford,1,7,"Clifford y la planta màgica - La comezòn",https://ok.ru/videoembed/3318258862665
+8379,Clifford,1,8,"Un nuevo amigo - Una tormenta se avecina",https://ok.ru/videoembed/3318257683017
+8379,Clifford,1,9,"Estrellas de circo - Miedo escénico",https://ok.ru/videoembed/3318258666057
+8379,Clifford,1,10,"Atrapar un pájaro - La mejor fiesta de cumpleaños",https://ok.ru/videoembed/3318257748553
+8379,Clifford,1,11,"Vuelve Mac",https://ok.ru/videoembed/3318258338377
+8379,Clifford,1,12,"El pequeño Clifford - Bienvenido a la isla Birdwell",https://ok.ru/videoembed/3318257814089
+8379,Clifford,1,13,"Hacer lo correcto - El perro que gritò 'guau'",https://ok.ru/videoembed/3318258731593
+8379,Clifford,1,14,"La hoja faltante - Nadie es perfecto",https://ok.ru/videoembed/3318258010697
+8379,Clifford,1,15,"La maestra de mascotas - El personaje del año",https://ok.ru/videoembed/3318257945161
+8379,Clifford,1,16,"La gran sorpresa de Clifford - Está en los oidos",https://ok.ru/videoembed/3318258600521
+8379,Clifford,1,17,"Bastante rudo - Estrellas en tus ojos",https://ok.ru/videoembed/3318259059273
+8379,Clifford,1,18,"El club secreto de perros de Mac - El parque para perros",https://ok.ru/videoembed/3318259190345
+8379,Clifford,1,19,"Cleo la más lanuda - Trabajo en equipo",https://ok.ru/videoembed/3318257617481
+8379,Clifford,1,20,"Clifford desfila - Sigan al líder",https://ok.ru/videoembed/3318258403913
+8379,Clifford,1,21,"Adios T-Bone - La verdad sobre perros y gatos",https://ok.ru/videoembed/3323885521481
+8379,Clifford,1,22,"Todos a dormir - Perro por un día",https://ok.ru/videoembed/3323884669513
+8379,Clifford,1,23,"T-Bone, el perro de moda - El gran corazón de Clifford",https://ok.ru/videoembed/3323885914697
+8379,Clifford,1,24,"Celosa yo - Un conejo en un pajar",https://ok.ru/videoembed/3323885718089
+8379,Clifford,1,25,"El traje no hace al perro - Cambio de altura",https://ok.ru/videoembed/3323884866121
+8379,Clifford,1,26,"Ladrón de comida - Pidiendo a gritos un helado",https://ok.ru/videoembed/3323885783625
+8379,Clifford,1,27,"Un perro nuevo en el vecindario - Que te mejores",https://ok.ru/videoembed/3323885587017
+8379,Clifford,1,28,"El blues de la niñera - Sábado en la mañana",https://ok.ru/videoembed/3323885849161
+8379,Clifford,1,29,"La mejor pata delantera - Y entonces llegó Bob",https://ok.ru/videoembed/3323884735049
+8379,Clifford,1,30,"Amigos todo el día - El día especial del Sr. Bleakman",https://ok.ru/videoembed/3323885455945
+8379,Clifford,1,31,"Bienvenido a la caseta - Promesas, promesas",https://ok.ru/videoembed/3323884800585
+8379,Clifford,1,32,"El hipo de Clifford - Es mi fiesta",https://ok.ru/videoembed/3323885652553
+8379,Clifford,1,33,"Clifford limpia su caseta - El bebé",https://ok.ru/videoembed/3323884931657
+8379,Clifford,1,34,"La gran mentira de Jetta - La gran entrega",https://ok.ru/videoembed/3323885193801
+8379,Clifford,1,35,"El aguafiestas - El mejor regalo",https://ok.ru/videoembed/3323885324873
+8379,Clifford,1,36,"Dos son compañía - Amigo del buen tiempo",https://ok.ru/videoembed/3323885062729
+8379,Clifford,1,37,"Jardín de perros - El tesoro del Capitán Birdwell",https://ok.ru/videoembed/3323885390409
+8379,Clifford,1,38,"El día de todo al revés - La escuela de elegancia de Clifford",https://ok.ru/videoembed/3323884997193
+8379,Clifford,1,39,"Olvidar y perdonar - Mimí regresa al pueblo",https://ok.ru/videoembed/3323885259337
+8379,Clifford,1,40,"Su manta preferida - Dino Clifford",https://ok.ru/videoembed/3323885128265
+8379,Clifford,2,1,"That's Snow Lie - A Friend in Need",https://ok.ru/videoembed/3317219723849
+8379,Clifford,2,2,"Fan Mail - Hooray for Cleo",https://ok.ru/videoembed/3317220903497
+8379,Clifford,2,3,"Nothing to Fur But Fur Itself - Jetta's Project",https://ok.ru/videoembed/3317220182601
+8379,Clifford,2,4,"Stinky Friends - He's Wonderful Mr. Bleakman",https://ok.ru/videoembed/3317219396169
+8379,Clifford,2,5,"Magic in the Air - Everyone Loves Clifford",https://ok.ru/videoembed/3317219854921
+8379,Clifford,2,6,"Clifford Grows Up - Jetta's Sweater",https://ok.ru/videoembed/3317221231177
+8379,Clifford,2,7,"Big Hearted T-Bone - Cleo's Valentine Surprise",https://ok.ru/videoembed/3317219592777
+8379,Clifford,2,8,"Embarassing Moments - Lucky Charm",https://ok.ru/videoembed/3317220313673
+8379,Clifford,2,9,"Little Big Pup - Getting to Know You",https://ok.ru/videoembed/3317219134025
+8379,Clifford,2,10,"Fishing Lessons - No Baths for Cleo",https://ok.ru/videoembed/3317220575817
+8379,Clifford,2,11,"Another Fine Mess - King Mac",https://ok.ru/videoembed/3317219330633
+8379,Clifford,2,12,"When I Grow Up - Not Now, I'm Busy",https://ok.ru/videoembed/3317220969033
+8379,Clifford,2,13,"Special T-Bone - Jetta's Sneak Peak",https://ok.ru/videoembed/3317220117065
+8379,Clifford,2,14,"Vaz Goes Down the Tubes - Cyber Puppy Problems",https://ok.ru/videoembed/3317220379209
+8379,Clifford,2,15,"Cleo Gets a Cone - A Job Well Read",https://ok.ru/videoembed/3317220772425
+8379,Clifford,2,16,"Who Moved My Bone - Clifford Pirate King",https://ok.ru/videoembed/3317220248137
+8379,Clifford,2,17,"Clifford's Cookie Craving - Jetta's Friend",https://ok.ru/videoembed/3317220641353
+8379,Clifford,2,18,"Food for Thought - Friends Forever",https://ok.ru/videoembed/3317220641353
+8379,Clifford,2,19,"Clifford's Big Heart - Cleo's Valentine Surprise",https://ok.ru/videoembed/3317219789385
+8379,Clifford,2,20,"A Big Help - The Trouble with Kittens",https://ok.ru/videoembed/3317220510281
+8379,Clifford,2,21,"Led Astray - Wedding Bell Blues",https://ok.ru/videoembed/3317221034569
+8379,Clifford,2,22,"Doggie Detectives - Camping It Up",https://ok.ru/videoembed/3317220444745
+8379,Clifford,2,23,"Tie Dyed Clifford - Stage Struck",https://ok.ru/videoembed/3317219265097
+8379,Clifford,2,24,"Doghouse Rock - Guess Who's Coming to Birdwell Island",https://ok.ru/videoembed/3317220706889
+8379,Clifford,2,25,"Princess Cleo - Basketball Stories",https://ok.ru/videoembed/3317219527241
+8379,Clifford,2,26,"Little Big Pup- Getting To Know You",https://ok.ru/videoembed/3317221100105
 552,Los héroes de la ciudad,1,1,Up a Tree / Missing Grandpop,
 552,Los héroes de la ciudad,1,2,Twinkle Tooth / Flower Power,
 552,Los héroes de la ciudad,1,3,First Snow / All Tire'd Out,
