@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToonCloud+ TV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ToonCloud+TV</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/XAHG8BW.png">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
@@ -19,28 +19,38 @@
             --text-main: #ffffff;
             --text-sec: #b3b3b3;
             --rating-color: #ffd700;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
         }
+
+        * { -webkit-tap-highlight-color: transparent; }
 
         body {
             margin: 0; background-color: var(--bg-color); color: var(--text-main);
             font-family: 'Poppins', sans-serif; overflow-x: hidden;
             scroll-behavior: smooth;
+            padding-bottom: calc(70px + var(--safe-bottom));
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; transition: 0.3s; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInModal {
             from { opacity: 0; transform: scale(0.95); backdrop-filter: blur(0px); }
             to { opacity: 1; transform: scale(1); backdrop-filter: blur(15px); }
         }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
+        /* ===== BANNER AD BLOCK ===== */
         .adblock-banner {
             position: sticky;
             top: 0;
@@ -50,181 +60,247 @@
             border-bottom: 1px solid rgba(255, 42, 117, 0.4);
             color: #fff;
             text-align: center;
-            padding: 8px 45px 8px 20px;
-            font-size: 12px;
+            padding: 10px 40px 10px 15px;
+            font-size: 11px;
             z-index: 100;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             box-sizing: border-box;
             backdrop-filter: blur(10px);
             transition: 0.3s ease;
+            line-height: 1.4;
         }
         .adblock-banner a {
             background: var(--accent);
             color: white;
             text-decoration: none;
-            padding: 4px 15px;
-            border-radius: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 10px;
             transition: 0.3s;
-            letter-spacing: 0.5px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
-        .adblock-banner a:hover {
+        .adblock-banner a:hover, .adblock-banner a:active {
             background: var(--accent-hover);
             box-shadow: 0 0 10px var(--accent-glow);
-            transform: translateY(-2px);
         }
         .close-banner {
             position: absolute;
-            right: 15px;
+            right: 10px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             opacity: 0.7;
             transition: 0.3s;
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
         }
-        .close-banner:hover {
-            opacity: 1;
-            background: rgba(255,255,255,0.1);
-        }
+        .close-banner:hover, .close-banner:active { opacity: 1; background: rgba(255,255,255,0.1); }
 
+        /* ===== NAVEGACION ===== */
         nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 40px; width: 100%; z-index: 10; box-sizing: border-box;
-            flex-wrap: wrap; gap: 15px;
-            background: linear-gradient(to bottom, rgba(15, 16, 20, 0.95), transparent);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            padding: 12px 16px; 
+            width: 100%; 
+            z-index: 10; 
+            box-sizing: border-box;
+            gap: 12px;
+            background: linear-gradient(to bottom, rgba(15, 16, 20, 0.98), rgba(15, 16, 20, 0.8));
+            position: sticky;
+            top: 0;
         }
         .logo-container img { 
-            height: 40px; 
-            filter: drop-shadow(0 0 12px var(--accent-glow)); 
+            height: 32px; 
+            filter: drop-shadow(0 0 10px var(--accent-glow)); 
             cursor: pointer; 
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .logo-container img:hover { transform: scale(1.08) rotate(-2deg); }
+        .logo-container img:active { transform: scale(0.95); }
 
-        .nav-right { display: flex; gap: 15px; align-items: center; width: 100%; justify-content: space-between; }
+        .nav-right { 
+            display: flex; 
+            gap: 10px; 
+            align-items: center; 
+            flex: 1;
+            justify-content: flex-end;
+        }
         
         .search-input, .lang-select {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            padding: 10px 18px;
+            padding: 10px 16px;
             border-radius: 25px;
             color: white;
             outline: none;
             backdrop-filter: blur(12px);
             transition: all 0.3s ease;
             font-family: 'Poppins', sans-serif;
+            font-size: 13px;
         }
-        .search-input { flex-grow: 1; font-size: 14px; max-width: 300px; }
-        .search-input:focus { border-color: var(--accent); background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px var(--accent-glow); max-width: 400px; }
-        .lang-select { cursor: pointer; }
+        .search-input { 
+            flex: 1; 
+            max-width: 160px;
+            min-width: 100px;
+        }
+        .search-input:focus { 
+            border-color: var(--accent); 
+            background: rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 0 15px var(--accent-glow);
+            max-width: 200px;
+        }
 
         .user-counter {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(255, 42, 117, 0.1);
-            padding: 8px 18px; border-radius: 25px;
-            border: 1px solid rgba(255, 42, 117, 0.3);
-            font-size: 13px; font-weight: 600; color: var(--accent);
-            backdrop-filter: blur(5px);
+            display: none;
         }
-        .planet { font-size: 16px; animation: spin 4s linear infinite; display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .auth-container { display: flex; align-items: center; gap: 10px; }
-        .nav-avatar { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--accent); cursor: pointer; object-fit: cover; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .nav-avatar:hover { transform: scale(1.15); box-shadow: 0 0 15px var(--accent-glow); }
+        .auth-container { display: flex; align-items: center; }
+        .nav-avatar { 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 50%; 
+            border: 2px solid var(--accent); 
+            cursor: pointer; 
+            object-fit: cover; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .nav-avatar:active { transform: scale(0.95); box-shadow: 0 0 15px var(--accent-glow); }
+
+        /* Boton de login compacto */
+        .g_id_signin { transform: scale(0.85); transform-origin: right center; }
         
+        /* ===== PERFIL MODAL ===== */
         .profile-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); z-index: 300; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.9); z-index: 300; justify-content: center; align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .profile-card {
-            background: #15161c; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px;
+            background: #15161c; padding: 30px 25px; border-radius: 24px; width: 100%; max-width: 340px;
             border: 1px solid var(--glass-border); text-align: center; position: relative;
             animation: fadeInModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
-        .profile-card img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; object-fit: cover; box-shadow: 0 0 20px var(--accent-glow); }
+        .profile-card img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 15px; object-fit: cover; box-shadow: 0 0 20px var(--accent-glow); }
         .profile-input {
-            width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px;
+            width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 14px;
             border: 1px solid var(--glass-border); background: var(--glass-bg);
             color: white; outline: none; box-sizing: border-box; font-family: 'Poppins', sans-serif;
-            transition: 0.3s;
+            transition: 0.3s; font-size: 14px;
         }
         .profile-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.08); }
         
         .btn {
-            background: linear-gradient(45deg, var(--accent), var(--accent-hover)); color: #fff; border: none; padding: 14px 24px;
-            border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-bottom: 12px;
-            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--accent), var(--accent-hover)); color: #fff; border: none; padding: 14px 20px;
+            border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; margin-bottom: 10px;
+            transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(255, 42, 117, 0.3);
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--accent-glow); }
+        .btn:active { transform: scale(0.98); box-shadow: 0 8px 25px var(--accent-glow); }
         .btn-logout { background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d; box-shadow: none; }
-        .btn-logout:hover { background: rgba(255, 77, 77, 0.1); box-shadow: none; transform: translateY(-2px); }
+        .btn-logout:active { background: rgba(255, 77, 77, 0.1); transform: scale(0.98); }
 
+        /* ===== HERO ===== */
         .hero {
-            height: 75vh; position: relative; display: flex; align-items: center; padding: 0 40px;
-            background-size: cover; background-position: center top; transition: background-image 1s ease-in-out;
-            margin-top: -10px;
+            height: 50vh; 
+            position: relative; 
+            display: flex; 
+            align-items: flex-end;
+            padding: 0 16px 30px;
+            background-size: cover; 
+            background-position: center top; 
+            transition: background-image 0.5s ease-in-out;
         }
         .hero::after {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(0deg, #0f1014 0%, transparent 80%),
-                        linear-gradient(90deg, #0f1014 0%, rgba(15, 16, 20, 0.6) 60%, transparent 100%);
+            background: linear-gradient(0deg, #0f1014 0%, rgba(15,16,20,0.7) 40%, rgba(15,16,20,0.3) 100%);
         }
-        .hero-content { position: relative; z-index: 2; max-width: 650px; margin-top: 60px; animation: fadeIn 0.8s ease; }
+        .hero-content { 
+            position: relative; 
+            z-index: 2; 
+            max-width: 100%; 
+            animation: fadeIn 0.6s ease; 
+        }
         .hero-title { 
-            font-size: 48px; font-weight: 800; margin-bottom: 10px; line-height: 1.1; 
-            text-shadow: 2px 4px 15px rgba(0,0,0,0.5);
+            font-size: 28px; 
+            font-weight: 800; 
+            margin-bottom: 8px; 
+            line-height: 1.1; 
+            text-shadow: 2px 4px 15px rgba(0,0,0,0.8);
+        }
+        .hero-meta { 
+            display: flex; 
+            gap: 8px; 
+            font-size: 12px; 
+            margin-bottom: 12px; 
+            color: #fff; 
+            font-weight: 500; 
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .hero-meta span { 
+            background: rgba(255,255,255,0.1); 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            backdrop-filter: blur(5px); 
+        }
+        .hero-meta span.rating { color: var(--rating-color); font-weight: 700; }
+        .hero-desc { 
+            font-size: 13px; 
+            color: #e0e0e0; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 2; 
+            line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+            line-height: 1.6; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            max-width: 90%;
         }
 
-        /* --- LANGUAGE SWITCHER --- */
+        /* ===== LANGUAGE SWITCHER ===== */
         .lang-switcher-container {
-            position: fixed;
-            top: 100px;
-            right: 30px;
-            z-index: 50;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 20;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         .lang-switcher-label {
-            font-size: 10px;
+            font-size: 8px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-sec);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.7);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
         .lang-switcher {
             position: relative;
-            width: 100px;
-            height: 44px;
+            width: 70px;
+            height: 32px;
             background: rgba(20, 21, 30, 0.9);
-            border-radius: 25px;
-            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            border: 1.5px solid var(--glass-border);
             cursor: pointer;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 2px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             backdrop-filter: blur(10px);
         }
-        .lang-switcher:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
-            transform: scale(1.05);
-        }
+        .lang-switcher:active { transform: scale(0.95); }
         .lang-switcher-track {
             position: absolute;
             top: 0;
@@ -234,100 +310,66 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 10px;
+            padding: 0 8px;
             box-sizing: border-box;
         }
         .lang-option {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
             z-index: 2;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
         .lang-option.es { color: rgba(255,255,255,0.4); }
         .lang-option.en { color: rgba(255,255,255,0.4); }
-        .lang-option.active { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        .lang-option .flag {
-            font-size: 14px;
-            filter: grayscale(0.5);
-            transition: all 0.3s ease;
-        }
-        .lang-option.active .flag {
-            filter: grayscale(0);
-            transform: scale(1.2);
-        }
+        .lang-option.active { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.5); }
         .lang-switcher-thumb {
             position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 48px;
-            height: 34px;
+            top: 2px;
+            left: 2px;
+            width: 34px;
+            height: 26px;
             background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            border-radius: 20px;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 4px 15px var(--accent-glow), inset 0 1px 2px rgba(255,255,255,0.3);
+            border-radius: 16px;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 2px 10px var(--accent-glow);
             z-index: 1;
         }
         .lang-switcher.english .lang-switcher-thumb {
-            transform: translateX(46px);
+            transform: translateX(32px);
         }
         .lang-switcher.english .lang-option.es { color: rgba(255,255,255,0.4); }
-        .lang-switcher.english .lang-option.en { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
-        .lang-switcher.english .lang-option.es .flag { filter: grayscale(0.5); transform: scale(1); }
-        .lang-switcher.english .lang-option.en .flag { filter: grayscale(0); transform: scale(1.2); }
+        .lang-switcher.english .lang-option.en { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.5); }
 
-        /* Animación de cambio de idioma */
-        @keyframes langChangePulse {
-            0% { box-shadow: 0 0 0 0 var(--accent-glow); }
-            50% { box-shadow: 0 0 30px 10px var(--accent-glow); }
-            100% { box-shadow: 0 0 0 0 transparent; }
-        }
-        .lang-switcher.changing {
-            animation: langChangePulse 0.6s ease;
-        }
-
-        /* Indicador de idioma actual en el hero */
+        /* Indicador de idioma actual */
         .current-lang-indicator {
             position: absolute;
-            top: 20px;
-            left: 40px;
+            top: 12px;
+            left: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 6px;
             background: rgba(0,0,0,0.5);
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             z-index: 3;
-            transition: all 0.3s ease;
-        }
-        .current-lang-indicator:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent-glow);
         }
         .current-lang-indicator .flag-big {
-            font-size: 24px;
-            animation: flagWave 2s ease-in-out infinite;
-        }
-        @keyframes flagWave {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
+            font-size: 16px;
         }
         .current-lang-indicator .lang-text {
-            font-size: 14px;
+            font-size: 10px;
             font-weight: 700;
         }
         .current-lang-indicator .lang-text span {
-            font-size: 11px;
+            font-size: 8px;
             color: var(--text-sec);
             display: block;
             font-weight: 500;
         }
 
-        /* Overlay de transición de idioma */
+        /* Overlay de transicion */
         .lang-transition-overlay {
             position: fixed;
             top: 0;
@@ -340,179 +382,533 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
         }
         .lang-transition-overlay.active {
             display: flex;
             animation: fadeIn 0.3s ease;
         }
         .lang-transition-flag {
-            font-size: 80px;
+            font-size: 60px;
             animation: flagPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes flagPop {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            50% { transform: scale(1.3) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
         .lang-transition-text {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--text-main);
             animation: fadeIn 0.5s ease 0.2s both;
         }
         .lang-transition-subtext {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-sec);
             animation: fadeIn 0.5s ease 0.3s both;
         }
-        .hero-meta { display: flex; gap: 15px; font-size: 14px; margin-bottom: 20px; color: #fff; font-weight: 500; text-shadow: 1px 2px 5px rgba(0,0,0,0.8); align-items: center; }
-        .hero-meta span { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; backdrop-filter: blur(5px); }
-        .hero-meta span.rating { color: var(--rating-color); font-weight: 800; }
-        .hero-desc { 
-            font-size: 15px; color: #e0e0e0; display: -webkit-box; 
-            -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; 
-            overflow: hidden; line-height: 1.7; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
 
+        /* ===== BRANDS ROW - SCROLLABLE ===== */
         .brands-row {
-            position: relative; z-index: 5; margin-top: -35px; margin-bottom: 40px;
-            padding: 0 20px; display: flex; gap: 12px; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-        }
-        .brand-item {
-            width: 75px; height: 45px; 
-            background: rgba(25, 25, 35, 0.7);
-            backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
-            border-radius: 12px; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); padding: 8px; flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             position: relative; 
+            z-index: 5; 
+            margin-top: -20px; 
+            margin-bottom: 25px;
+            padding: 0 16px;
+            display: flex;
+            gap: 10px; 
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 10px;
         }
-        .brand-item:hover:not(.disabled) { transform: translateY(-4px); background: rgba(255,255,255,0.15); box-shadow: 0 8px 15px rgba(0,0,0,0.4); }
-        .brand-item.active { background: rgba(255, 42, 117, 0.2); border-color: var(--accent); box-shadow: 0 5px 20px var(--accent-glow); }
-        .brand-item img { max-width: 100%; max-height: 100%; filter: brightness(200%) grayscale(50%); transition: 0.3s; }
-        .brand-item:hover:not(.disabled) img, .brand-item.active img { filter: none; }
+        .brands-row::-webkit-scrollbar { display: none; }
+        
+        .brand-item {
+            min-width: 70px; 
+            height: 42px; 
+            background: rgba(25, 25, 35, 0.8);
+            backdrop-filter: blur(12px); 
+            border: 1px solid var(--glass-border);
+            border-radius: 12px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            padding: 6px; 
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+            scroll-snap-align: start;
+        }
+        .brand-item:active:not(.disabled) { 
+            transform: scale(0.95); 
+            background: rgba(255,255,255,0.15); 
+        }
+        .brand-item.active { 
+            background: rgba(255, 42, 117, 0.25); 
+            border-color: var(--accent); 
+            box-shadow: 0 0 15px var(--accent-glow); 
+        }
+        .brand-item img { max-width: 90%; max-height: 70%; filter: brightness(200%) grayscale(50%); transition: 0.3s; }
+        .brand-item.active img, .brand-item:active:not(.disabled) img { filter: none; }
 
         .brand-count {
             position: absolute;
-            top: -6px; right: -6px;
+            top: -5px; right: -5px;
             background: var(--accent);
             color: #fff;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             padding: 2px 5px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.5);
             z-index: 2;
-            letter-spacing: 0;
         }
 
-        .brand-item.disabled { cursor: not-allowed; opacity: 0.6; flex-direction: column; gap: 2px; }
-        .brand-item.disabled:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.3); transform: none; }
-        .coming-soon-text { font-size: 8px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; text-align: center; }
+        .brand-item.disabled { cursor: not-allowed; opacity: 0.5; flex-direction: column; gap: 1px; }
+        .coming-soon-text { font-size: 7px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.3px; text-align: center; }
 
-        .section-container { padding: 0 40px 45px; }
-        .section-title { font-size: 20px; margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .section-title::before { content: ''; display: block; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+        /* ===== SECTIONS ===== */
+        .section-container { padding: 0 16px 30px; }
+        .section-title { 
+            font-size: 16px; 
+            margin-bottom: 15px; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .section-title::before { 
+            content: ''; 
+            display: block; 
+            width: 3px; 
+            height: 16px; 
+            background: var(--accent); 
+            border-radius: 2px; 
+        }
         
-        .carousel { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 20px; }
+        /* ===== CAROUSEL ===== */
+        .carousel { 
+            display: flex; 
+            gap: 12px; 
+            overflow-x: auto; 
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .carousel::-webkit-scrollbar { display: none; }
+        
         .card {
-            min-width: 150px; border-radius: 14px; overflow: hidden;
-            cursor: pointer; transition: all 0.3s ease; position: relative;
-            border: 1px solid transparent; background: #15161c;
+            min-width: 130px;
+            max-width: 130px;
+            border-radius: 12px; 
+            overflow: hidden;
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            position: relative;
+            border: 1px solid transparent; 
+            background: #15161c;
+            scroll-snap-align: start;
         }
-        .card:hover {
-            transform: translateY(-8px) scale(1.02);
+        .card:active {
+            transform: scale(0.97);
             border-color: rgba(255, 42, 117, 0.5);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.8), 0 0 20px rgba(255, 42, 117, 0.2);
-            z-index: 2;
         }
-        .card.coming-soon { opacity: 0.6; cursor: not-allowed; }
-        .card.coming-soon:hover { transform: none; border-color: transparent; box-shadow: none; }
-        .card img { width: 100%; height: 225px; object-fit: cover; transition: transform 0.5s ease; }
-        .card:hover:not(.coming-soon) img { transform: scale(1.08); }
+        .card.coming-soon { opacity: 0.5; cursor: not-allowed; }
+        .card.coming-soon:active { transform: none; border-color: transparent; }
+        .card img { width: 100%; height: 195px; object-fit: cover; transition: transform 0.4s ease; }
         .card-overlay {
-            position: absolute; bottom: 0; width: 100%; padding: 20px 10px 10px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.95) 80%);
-            box-sizing: border-box; transition: 0.3s;
+            position: absolute; 
+            bottom: 0; 
+            width: 100%; 
+            padding: 25px 8px 10px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95) 60%);
+            box-sizing: border-box;
         }
-        .card-title { font-size: 14px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; text-shadow: 1px 1px 3px #000; }
-        .card-rating { font-size: 12px; color: var(--rating-color); text-align: center; font-weight: 600; text-shadow: 1px 1px 3px #000; }
+        .card-title { 
+            font-size: 12px; 
+            font-weight: 600; 
+            text-align: center; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            margin-bottom: 3px;
+            text-shadow: 1px 1px 3px #000; 
+        }
+        .card-rating { 
+            font-size: 11px; 
+            color: var(--rating-color); 
+            text-align: center; 
+            font-weight: 600;
+            text-shadow: 1px 1px 3px #000; 
+        }
         .card-coming-soon {
             position: absolute;
-            top: 10px;
+            top: 8px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 42, 117, 0.9);
+            background: rgba(255, 42, 117, 0.95);
             color: #fff;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 3px 8px;
+            border-radius: 10px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             z-index: 3;
         }
 
+        /* ===== DETAILS SCREEN ===== */
         #details-screen {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color); z-index: 100; overflow-y: auto; padding: 40px; box-sizing: border-box;
-            animation: fadeIn 0.4s ease-out;
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background-color: var(--bg-color); 
+            z-index: 100; 
+            overflow-y: auto;
+            animation: slideUp 0.4s ease-out;
+            padding-bottom: calc(20px + var(--safe-bottom));
         }
-        .details-content-wrapper { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; }
-        .details-header { display: flex; flex-direction: column; gap: 35px; margin-bottom: 40px; animation: fadeIn 0.5s ease; }
-        .details-poster { width: 220px; border-radius: 16px; align-self: center; box-shadow: 0 20px 40px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1); }
+        .details-content-wrapper { 
+            position: relative; 
+            z-index: 2; 
+            max-width: 100%; 
+        }
+        .details-header { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 0;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        .details-hero {
+            position: relative;
+            width: 100%;
+            height: 45vh;
+            background-size: cover;
+            background-position: center top;
+        }
+        .details-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to top, var(--bg-color) 0%, transparent 100%);
+        }
+        .details-poster-container {
+            position: relative;
+            margin-top: -80px;
+            padding: 0 16px;
+            display: flex;
+            gap: 15px;
+            z-index: 3;
+        }
+        .details-poster { 
+            width: 120px;
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); 
+            border: 2px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+        .details-info-header {
+            flex: 1;
+            padding-top: 85px;
+        }
         
         .close-details { 
-            font-size: 24px; cursor: pointer; position: fixed; right: 30px; top: 30px; z-index: 110; 
-            transition: 0.3s; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; backdrop-filter: blur(10px);
+            font-size: 20px; 
+            cursor: pointer; 
+            position: fixed; 
+            right: 12px; 
+            top: 12px; 
+            z-index: 110; 
+            transition: 0.3s; 
+            width: 40px; 
+            height: 40px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            background: rgba(0,0,0,0.6); 
+            border: 1px solid rgba(255,255,255,0.15); 
+            border-radius: 50%; 
+            backdrop-filter: blur(10px);
         }
-        .close-details:hover { background: var(--accent); border-color: var(--accent); transform: rotate(90deg); }
+        .close-details:active { background: var(--accent); border-color: var(--accent); }
         
-        .meta-tags { display: flex; flex-wrap: wrap; gap: 12px; margin: 15px 0; }
-        .tag { background: rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; backdrop-filter: blur(5px); }
-        .tag.rating { background: rgba(255, 215, 0, 0.15); color: var(--rating-color); border: 1px solid rgba(255, 215, 0, 0.3); font-weight: 600;}
-        .tag.popularity { background: rgba(255, 69, 0, 0.15); color: #ff6b33; border: 1px solid rgba(255, 69, 0, 0.3); }
-        .tag.pro-data { background: rgba(255, 42, 117, 0.15); color: #ff7aa5; border: 1px solid rgba(255, 42, 117, 0.4); }
+        .meta-tags { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+            margin: 12px 0;
+            padding: 0 16px;
+        }
+        .tag { 
+            background: rgba(255,255,255,0.08); 
+            padding: 5px 10px; 
+            border-radius: 15px; 
+            font-size: 11px; 
+            font-weight: 500; 
+            backdrop-filter: blur(5px); 
+        }
+        .tag.rating { 
+            background: rgba(255, 215, 0, 0.15); 
+            color: var(--rating-color); 
+            border: 1px solid rgba(255, 215, 0, 0.3); 
+            font-weight: 700;
+        }
+        .tag.popularity { 
+            background: rgba(255, 69, 0, 0.15); 
+            color: #ff6b33; 
+            border: 1px solid rgba(255, 69, 0, 0.3); 
+        }
+        .tag.pro-data { 
+            background: rgba(255, 42, 117, 0.15); 
+            color: #ff7aa5; 
+            border: 1px solid rgba(255, 42, 117, 0.4); 
+        }
 
-        .extra-info-text { font-size: 13px; color: #bbb; margin-bottom: 5px; line-height: 1.5; }
+        .details-info-content {
+            padding: 0 16px;
+        }
+        .extra-info-text { 
+            font-size: 12px; 
+            color: #bbb; 
+            margin-bottom: 6px; 
+            line-height: 1.5; 
+        }
         .extra-info-text span { color: #fff; font-weight: 500; }
 
-        .cast-section { margin-bottom: 40px; animation: fadeIn 0.6s ease; }
-        .cast-scroll { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 15px; }
-        .cast-item { width: 90px; flex-shrink: 0; text-align: center; transition: 0.3s; }
-        .cast-item:hover { transform: translateY(-5px); }
-        .cast-img { width: 85px; height: 85px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .cast-name { font-size: 12px; font-weight: 600; color: white; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 2px; }
-        .cast-char { font-size: 11px; color: var(--text-sec); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #det-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+            line-height: 1.2;
+        }
+        #det-tagline {
+            font-style: italic; 
+            color: #ff7aa5; 
+            font-weight: 400; 
+            font-size: 13px; 
+            margin: 0 0 10px 0;
+            opacity: 0.9;
+        }
+        #det-desc {
+            color: #ccc; 
+            line-height: 1.7; 
+            font-size: 13px; 
+            margin: 15px 0;
+        }
 
-        .episodes-grid { display: grid; grid-template-columns: 1fr; gap: 20px; animation: fadeIn 0.7s ease; }
+        .action-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        #season-select {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 14px;
+            font-size: 13px;
+        }
+        #fav-btn {
+            width: auto;
+            padding: 12px 18px;
+            font-size: 12px;
+            margin: 0;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        /* ===== CAST SECTION ===== */
+        .cast-section { 
+            margin: 20px 0;
+            animation: fadeIn 0.6s ease; 
+        }
+        .cast-scroll { 
+            display: flex; 
+            gap: 12px; 
+            overflow-x: auto; 
+            padding: 0 16px 10px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .cast-scroll::-webkit-scrollbar { display: none; }
+        .cast-item { 
+            width: 70px; 
+            flex-shrink: 0; 
+            text-align: center; 
+            scroll-snap-align: start;
+        }
+        .cast-img { 
+            width: 65px; 
+            height: 65px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 2px solid rgba(255,255,255,0.1); 
+            margin-bottom: 6px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+        }
+        .cast-name { 
+            font-size: 10px; 
+            font-weight: 600; 
+            color: white; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+            margin-bottom: 1px; 
+        }
+        .cast-char { 
+            font-size: 9px; 
+            color: var(--text-sec); 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+
+        /* ===== EPISODES ===== */
+        .episodes-section-title {
+            padding: 0 16px;
+            margin: 20px 0 15px;
+        }
+        .episodes-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 12px; 
+            animation: fadeIn 0.7s ease;
+            padding: 0 16px;
+        }
         .episode-card { 
-            background: rgba(20, 21, 28, 0.8); border-radius: 14px; overflow: hidden; display: flex; 
-            border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);
+            background: rgba(20, 21, 28, 0.8); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            display: flex; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            cursor: pointer; 
+            transition: all 0.25s ease; 
+            backdrop-filter: blur(10px);
         }
-        .episode-card:hover { 
-            border-color: var(--accent); background: rgba(255, 42, 117, 0.1); 
-            transform: translateX(8px); box-shadow: -8px 8px 20px rgba(0,0,0,0.4);
+        .episode-card:active { 
+            border-color: var(--accent); 
+            background: rgba(255, 42, 117, 0.1); 
+            transform: scale(0.98);
         }
-        .episode-card img { width: 150px; height: 100px; object-fit: cover; }
+        .episode-card img { 
+            width: 110px; 
+            height: 75px; 
+            object-fit: cover; 
+            flex-shrink: 0;
+        }
+        .episode-info {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+        }
+        .episode-number {
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .episode-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .episode-rating {
+            font-size: 10px;
+            color: var(--rating-color);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .episode-overview {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
         
+        /* ===== PLAYER OVERLAY ===== */
         #player-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 200; justify-content: center; align-items: center;
-            backdrop-filter: blur(20px); animation: fadeInModal 0.3s ease;
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: #000;
+            z-index: 1000; 
+            flex-direction: column;
         }
-        .iframe-box { width: 100%; height: 100%; box-shadow: 0 0 50px rgba(0,0,0,0.9); }
-        .iframe-box iframe { width: 100%; height: 100%; border: none; }
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+        }
+        .player-title {
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            margin-right: 15px;
+        }
+        .close-player-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .close-player-btn:active { background: var(--accent); }
+        .iframe-box { 
+            flex: 1;
+            width: 100%;
+            position: relative;
+        }
+        .iframe-box iframe { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
 
+        /* ===== FOOTER ===== */
         .main-footer {
-            background: rgba(10, 10, 14, 0.8);
+            background: rgba(10, 10, 14, 0.9);
             border-top: 1px solid var(--glass-border);
-            padding: 40px 40px 25px;
-            margin-top: 40px;
+            padding: 25px 16px;
+            margin-top: 20px;
             backdrop-filter: blur(10px);
         }
         .footer-container {
@@ -521,93 +917,94 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
         }
         .footer-top {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
         }
         .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            transition: 0.3s;
-        }
-        .footer-logo img { height: 30px; filter: brightness(0) invert(1); opacity: 0.9; }
-        .footer-logo span { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
-
-        .footer-social {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             color: white;
+        }
+        .footer-logo img { height: 24px; filter: brightness(0) invert(1); opacity: 0.9; }
+        .footer-logo span { font-weight: 800; font-size: 16px; }
+
+        .footer-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: white;
             background: rgba(255,255,255,0.05);
-            padding: 8px 15px;
+            padding: 8px 14px;
             border-radius: 20px;
             border: 1px solid var(--glass-border);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
-            transition: all 0.3s ease;
         }
-        .footer-social:hover {
-            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
-            border-color: transparent;
-            transform: translateY(-2px);
-        }
-        .footer-social svg { width: 18px; height: 18px; fill: white; }
+        .footer-social svg { width: 16px; height: 16px; fill: white; }
 
         .footer-collabs {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
-            opacity: 0.6;
-            transition: 0.3s;
-            padding: 10px 0;
+            opacity: 0.5;
+            padding: 5px 0;
         }
-        .footer-collabs:hover { opacity: 1; }
-        .footer-collabs span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-sec); width: 100%; text-align: center; margin-bottom: -15px; }
-        .collab-logo { height: 22px; filter: grayscale(100%) brightness(1.5); transition: 0.3s; cursor: help; }
-        .collab-logo:hover { filter: grayscale(0%) brightness(1); transform: scale(1.1); }
+        .footer-collabs span { 
+            font-size: 9px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            color: var(--text-sec); 
+            width: 100%; 
+            text-align: center; 
+            margin-bottom: -10px; 
+        }
+        .collab-logo { height: 18px; filter: grayscale(100%) brightness(1.5); }
 
         .footer-disclaimer {
-            font-size: 11px;
+            font-size: 10px;
             color: #555;
             text-align: center;
-            line-height: 1.6;
-            max-width: 800px;
+            line-height: 1.5;
+            max-width: 100%;
             border-top: 1px solid rgba(255,255,255,0.03);
             padding-top: 15px;
         }
 
+        /* ===== LANGUAGE MODAL ===== */
         .language-modal {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.4s ease;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .language-card {
-            background: rgba(25, 26, 31, 0.85);
+            background: rgba(25, 26, 31, 0.95);
             border: 1px solid var(--glass-border);
-            padding: 40px;
-            border-radius: 28px;
-            max-width: 480px;
-            width: 90%;
+            padding: 30px 20px;
+            border-radius: 24px;
+            max-width: 340px;
+            width: 100%;
             text-align: center;
             position: relative;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255, 42, 117, 0.2);
@@ -616,112 +1013,249 @@
 
         .language-card h3 {
             color: var(--accent);
-            margin-top: 10px;
-            font-size: 26px;
+            margin: 10px 0 15px;
+            font-size: 22px;
             font-weight: 800;
         }
 
         .language-card p {
             color: #e0e0e0;
             line-height: 1.6;
-            font-size: 15px;
+            font-size: 13px;
+            margin-bottom: 10px;
         }
 
         .warning-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
+            font-size: 45px;
+            margin-bottom: 10px;
             filter: drop-shadow(0 0 10px var(--accent-glow));
         }
 
         .close-warning {
             position: absolute;
-            top: 20px;
-            right: 25px;
+            top: 15px;
+            right: 15px;
             cursor: pointer;
-            font-size: 22px;
+            font-size: 20px;
             color: var(--text-sec);
             transition: 0.3s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
-
-        .close-warning:hover {
-            color: white;
-            transform: rotate(90deg);
-        }
+        .close-warning:active { color: white; background: rgba(255,255,255,0.1); }
 
         .footer-msg {
-            margin-top: 25px;
-            font-size: 13px !important;
+            margin-top: 20px;
+            font-size: 12px !important;
             color: var(--text-sec) !important;
         }
-
-        .footer-msg strong {
-            color: var(--accent);
-        }
+        .footer-msg strong { color: var(--accent); }
 
         .coming-soon-episodes {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: var(--text-sec);
         }
         .coming-soon-episodes h3 {
             color: var(--accent);
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 12px;
         }
         .coming-soon-episodes p {
-            font-size: 14px;
-            max-width: 400px;
+            font-size: 13px;
+            max-width: 280px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
+        /* ===== BOTTOM NAV (MOBILE) ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 16, 20, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0 calc(10px + var(--safe-bottom));
+            z-index: 90;
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-sec);
+        }
+        .bottom-nav-item.active { color: var(--accent); }
+        .bottom-nav-item:active { transform: scale(0.95); }
+        .bottom-nav-icon {
+            font-size: 20px;
+        }
+        .bottom-nav-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        /* ===== TABLET & DESKTOP ===== */
         @media (min-width: 768px) {
-            nav { padding: 20px 60px; flex-wrap: nowrap; }
-            .nav-right { width: auto; gap: 20px; }
-            .hero { height: 85vh; padding: 0 80px; }
+            body { padding-bottom: 0; }
+            
+            nav { 
+                padding: 15px 40px; 
+                flex-wrap: nowrap;
+                position: relative;
+            }
+            .logo-container img { height: 38px; }
+            .nav-right { width: auto; gap: 15px; justify-content: flex-end; }
+            .search-input { max-width: 250px; flex: none; }
+            .search-input:focus { max-width: 350px; }
+            .user-counter { display: flex; }
+            .g_id_signin { transform: none; }
+            .bottom-nav { display: none; }
+            
+            .hero {
+                height: 70vh;
+                padding: 0 60px 50px;
+                align-items: center;
+            }
+            .hero-title { font-size: 52px; }
+            .hero-desc { 
+                font-size: 15px; 
+                -webkit-line-clamp: 3;
+                max-width: 600px;
+            }
+            
+            .lang-switcher-container {
+                position: fixed;
+                top: 90px;
+                right: 30px;
+            }
+            .lang-switcher {
+                width: 90px;
+                height: 38px;
+            }
+            .lang-switcher-thumb {
+                width: 42px;
+                height: 32px;
+            }
+            .lang-switcher.english .lang-switcher-thumb {
+                transform: translateX(42px);
+            }
+            .current-lang-indicator {
+                top: 20px;
+                left: 60px;
+                padding: 8px 14px;
+            }
+            .current-lang-indicator .flag-big { font-size: 20px; }
+            .current-lang-indicator .lang-text { font-size: 12px; }
+            
+            .brands-row { 
+                padding: 0 60px; 
+                margin-top: -25px;
+                overflow-x: visible;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .brand-item {
+                min-width: 80px;
+                height: 48px;
+            }
+            
+            .section-container { padding: 0 60px 50px; }
+            .section-title { font-size: 18px; }
+            
+            .card {
+                min-width: 170px;
+                max-width: 170px;
+            }
+            .card img { height: 255px; }
+            
+            .details-hero { height: 50vh; }
+            .details-poster-container {
+                margin-top: -100px;
+                padding: 0 60px;
+            }
+            .details-poster { width: 180px; }
+            .details-info-header { padding-top: 110px; }
+            #det-title { font-size: 32px; }
+            
+            .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title {
+                padding-left: 60px;
+                padding-right: 60px;
+            }
+            
+            .episodes-grid { 
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            }
+            .episode-card img {
+                width: 130px;
+                height: 90px;
+            }
+            
+            .main-footer { padding: 40px 60px; }
+            .footer-top { justify-content: space-between; }
+        }
+
+        @media (min-width: 1200px) {
+            .hero { height: 80vh; padding: 0 100px 60px; }
             .hero-title { font-size: 65px; }
-            .hero-desc { -webkit-line-clamp: 4; line-clamp: 4; font-size: 17px; }
-            .brands-row { padding: 0 80px; margin-top: -30px; gap: 15px; }
-            .brand-item { width: 85px; height: 50px; }
-            .section-container { padding: 0 80px 60px; }
-            .card { min-width: 190px; }
+            
+            .brands-row, .section-container { padding-left: 100px; padding-right: 100px; }
+            .details-poster-container, .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title {
+                padding-left: 100px;
+                padding-right: 100px;
+            }
+            
+            .card {
+                min-width: 190px;
+                max-width: 190px;
+            }
             .card img { height: 285px; }
-            .details-header { flex-direction: row; gap: 50px; align-items: flex-start; }
-            .details-poster { width: 280px; position: sticky; top: 40px; }
-            .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
-            .episode-card { flex-direction: column; }
-            .episode-card img { width: 100%; height: auto; aspect-ratio: 16/9; }
-            .iframe-box { width: 85%; height: auto; padding-bottom: 47.81%; position: relative; border-radius: 16px; overflow: hidden; }
-            .iframe-box iframe { position: absolute; top: 0; left: 0; }
-            .footer-top { flex-direction: row; }
+            
+            .details-poster { width: 220px; }
+            .details-poster-container { margin-top: -120px; }
+            .details-info-header { padding-top: 130px; }
+            #det-title { font-size: 38px; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
-    <!-- Overlay de transición de idioma -->
+    <!-- Overlay de transicion de idioma -->
     <div id="lang-transition-overlay" class="lang-transition-overlay">
         <div class="lang-transition-flag" id="transition-flag"></div>
-        <div class="lang-transition-text" id="transition-text">Cambiando a Español...</div>
+        <div class="lang-transition-text" id="transition-text">Cambiando a Espanol...</div>
         <div class="lang-transition-subtext" id="transition-subtext">Cargando contenido</div>
     </div>
 
     <div id="language-warning" class="language-modal">
         <div class="language-card">
-            <span class="close-warning" onclick="closeWarning()">✕</span>
+            <span class="close-warning" onclick="closeWarning()">X</span>
             <div class="warning-icon">🌐</div>
             <h3 id="warn-title">¡Hola Comunidad Hispana!</h3>
-            <p id="warn-text">Queremos pedirles disculpas: por el momento, la mayoría de nuestras series solo están disponibles en su <strong>idioma original (inglés)</strong>.</p>
-            <p id="warn-subtext">Estamos trabajando duro y en las próximas actualizaciones activaremos la opción de <strong>lenguaje español</strong> para que todos puedan disfrutar por igual.</p>
+            <p id="warn-text">Queremos pedirles disculpas: por el momento, la mayoria de nuestras series solo estan disponibles en su <strong>idioma original (ingles)</strong>.</p>
+            <p id="warn-subtext">Estamos trabajando duro y en las proximas actualizaciones activaremos la opcion de <strong>lenguaje espanol</strong> para que todos puedan disfrutar por igual.</p>
             <p class="footer-msg">¡Gracias por su paciencia! <br> <strong>Equipo ToonCloud+ TV</strong></p>
             <button class="btn" onclick="closeWarning()">Entendido</button>
         </div>
     </div>
 
     <div class="adblock-banner" id="adblock-banner">
-        <span data-i18n="adblock_text">Recomendado: Instala esta extensión para bloquear la molesta publicidad de los servidores de video externos.</span>
-        <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=es" target="_blank" data-i18n="adblock_btn">Instalar uBlock</a>
-        <div class="close-banner" onclick="closeBanner()">✕</div>
+        <span data-i18n="adblock_text">Recomendado: Instala uBlock para bloquear anuncios</span>
+        <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=es" target="_blank" data-i18n="adblock_btn">Instalar</a>
+        <div class="close-banner" onclick="closeBanner()">X</div>
     </div>
 
     <nav>
@@ -729,10 +1263,10 @@
         <div class="nav-right">
             <div class="user-counter">
                 <span class="planet">🌍</span>
-                <span id="active-users">0</span> <span style="font-size: 10px; opacity: 0.9; margin-left:-3px;">ACTIVOS</span>
+                <span id="active-users">0</span>
             </div>
 
-            <input type="text" id="search-bar" class="search-input" placeholder="Buscar serie..." oninput="searchSeries()">
+            <input type="text" id="search-bar" class="search-input" placeholder="Buscar..." oninput="searchSeries()">
             
             <div id="auth-container" class="auth-container">
                 <div id="g_id_onload"
@@ -740,54 +1274,53 @@
                      data-callback="handleCredentialResponse"
                      data-auto_prompt="false">
                 </div>
-                <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="signin_with" data-size="medium"></div>
+                <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="filled_black" data-size="medium"></div>
             </div>
         </div>
     </nav>
 
     <div id="profile-modal" class="profile-modal">
         <div class="profile-card">
-            <span style="position:absolute; right:25px; top:25px; cursor:pointer; font-size:24px; color: var(--text-sec); transition: 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--text-sec)'" onclick="closeProfile()">✕</span>
-            <h3 style="margin-top:0; font-size: 22px; font-weight: 600;">Mi Perfil Pro</h3>
+            <span style="position:absolute; right:15px; top:15px; cursor:pointer; font-size:20px; color: var(--text-sec); width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%;" onclick="closeProfile()">X</span>
+            <h3 style="margin:5px 0 15px; font-size: 20px; font-weight: 700;">Mi Perfil</h3>
             <img id="profile-preview" src="" alt="Avatar">
             <input type="text" id="profile-name" class="profile-input" placeholder="Tu Nombre">
             <input type="text" id="profile-avatar-url" class="profile-input" placeholder="URL de tu Avatar (opcional)">
             <button class="btn" onclick="saveProfile()">Guardar Cambios</button>
-            <button class="btn btn-logout" onclick="logout()">Cerrar Sesión</button>
-        </div>
-    </div>
-
-    <!-- Switch de idioma flotante -->
-    <div class="lang-switcher-container">
-        <span class="lang-switcher-label">IDIOMA</span>
-        <div class="lang-switcher" id="lang-switcher" onclick="toggleLanguage()">
-            <div class="lang-switcher-track">
-                <span class="lang-option es active"><span class="flag"></span> ES</span>
-                <span class="lang-option en"><span class="flag"></span> EN</span>
-            </div>
-            <div class="lang-switcher-thumb"></div>
+            <button class="btn btn-logout" onclick="logout()">Cerrar Sesion</button>
         </div>
     </div>
 
     <div id="hero" class="hero">
-        <!-- Indicador de idioma actual -->
         <div class="current-lang-indicator" id="current-lang-indicator">
             <span class="flag-big" id="current-flag"></span>
             <div class="lang-text">
-                <span>CONTENIDO EN</span>
+                <span>EN</span>
                 <span id="current-lang-name">ESPAÑOL</span>
             </div>
         </div>
+        
+        <div class="lang-switcher-container">
+            <span class="lang-switcher-label">IDIOMA</span>
+            <div class="lang-switcher" id="lang-switcher" onclick="toggleLanguage()">
+                <div class="lang-switcher-track">
+                    <span class="lang-option es active">ES</span>
+                    <span class="lang-option en">EN</span>
+                </div>
+                <div class="lang-switcher-thumb"></div>
+            </div>
+        </div>
+        
         <div class="hero-content">
             <h1 id="hero-title" class="hero-title">ToonCloud+</h1>
             <div id="hero-meta" class="hero-meta"></div>
-            <p id="hero-desc" class="hero-desc">Cargando la mejor selección de series...</p>
+            <p id="hero-desc" class="hero-desc">Cargando la mejor seleccion de series...</p>
         </div>
     </div>
 
     <div class="brands-row">
         <div class="brand-item active" onclick="resetFilter(this)">
-            <span data-i18n="all" style="font-size: 12px; font-weight: 800; letter-spacing: 1px;">TODOS</span>
+            <span data-i18n="all" style="font-size: 11px; font-weight: 700;">TODOS</span>
             <span class="brand-count" id="cnt-all">0</span>
         </div>
         <div class="brand-item" onclick="filterByNetwork('Cartoon Network', this)">
@@ -806,24 +1339,44 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Discovery_Kids_2021_2D_Gradient.svg/500px-Discovery_Kids_2021_2D_Gradient.svg.png">
             <span class="brand-count" id="cnt-dk">0</span>
         </div>
-        <div class="brand-item disabled" title="Próximamente">
-            <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">ANIME</span>
-            <span class="coming-soon-text">Próximamente</span>
+        <div class="brand-item disabled" title="Proximamente">
+            <span style="font-size: 10px; font-weight: 700;">ANIME</span>
+            <span class="coming-soon-text">Prox.</span>
         </div>
-        <div class="brand-item disabled" title="Próximamente">
-            <span style="font-size: 11px; font-weight: 800; letter-spacing: 1px;">PELÍCULAS</span>
-            <span class="coming-soon-text">Próximamente</span>
+        <div class="brand-item disabled" title="Proximamente">
+            <span style="font-size: 10px; font-weight: 700;">PELIS</span>
+            <span class="coming-soon-text">Prox.</span>
         </div>
     </div>
 
     <div id="favorites-section" class="section-container" style="display: none;">
-        <h2 class="section-title" data-i18n="my_favorites">Mis Favoritos ❤️</h2>
+        <h2 class="section-title" data-i18n="my_favorites">❤️ Favoritos</h2>
         <div id="favorites-carousel" class="carousel"></div>
     </div>
 
     <div class="section-container">
         <h2 id="section-title" class="section-title" data-i18n="suggested">Series Sugeridas</h2>
         <div id="carousel" class="carousel"></div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-item active" onclick="scrollToSection('hero')">
+            <span class="bottom-nav-icon">🏠</span>
+            <span class="bottom-nav-label">Inicio</span>
+        </div>
+        <div class="bottom-nav-item" onclick="scrollToSection('favorites-section')">
+            <span class="bottom-nav-icon">❤️</span>
+            <span class="bottom-nav-label">Favoritos</span>
+        </div>
+        <div class="bottom-nav-item" onclick="document.getElementById('search-bar').focus()">
+            <span class="bottom-nav-icon">🔍</span>
+            <span class="bottom-nav-label">Buscar</span>
+        </div>
+        <div class="bottom-nav-item" onclick="toggleLanguage()">
+            <span class="bottom-nav-icon">🌐</span>
+            <span class="bottom-nav-label">Idioma</span>
+        </div>
     </div>
 
     <footer class="main-footer">
@@ -840,181 +1393,115 @@
             </div>
 
             <div class="footer-collabs">
-                <span>Power By & Collaboration</span>
+                <span>Colaboraciones</span>
                 <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="TMDB" class="collab-logo" title="Datos por The Movie Database">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" alt="GitHub" class="collab-logo" title="Hospedado en GitHub">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/UBlock_Origin_logo.svg/1024px-UBlock_Origin_logo.svg.png" alt="uBlock" class="collab-logo" title="Bloqueo de anuncios recomendado">
             </div>
 
             <div class="footer-disclaimer">
-                <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un índice de contenido multimedia. No alojamos, almacenamos ni subimos ningún archivo de video en nuestros servidores. Todo el contenido visualizado es proporcionado por servicios de terceros totalmente ajenos a nosotros. El uso de esta plataforma es responsabilidad del usuario final.
+                <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un indice de contenido multimedia. No alojamos, almacenamos ni subimos ningun archivo de video en nuestros servidores.
             </div>
         </div>
     </footer>
 
     <div id="details-screen">
-        <span class="close-details" onclick="closeDetails()">✕</span>
+        <span class="close-details" onclick="closeDetails()">X</span>
         <div class="details-content-wrapper">
             <div class="details-header">
-                <img id="det-poster" class="details-poster" src="">
-                <div class="details-info" style="flex: 1;">
-                    <h1 id="det-title" style="margin-top:0; font-size: 38px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; text-shadow: 1px 2px 10px rgba(0,0,0,0.8);"></h1>
-                    <h4 id="det-tagline" style="margin-top:0; font-style: italic; color: #ff7aa5; font-weight: 400; font-size: 16px; margin-bottom: 15px;"></h4>
-                    <div id="det-meta" class="meta-tags"></div>
-                    <div id="det-extra-info" style="margin-bottom: 20px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(5px);">
-                        <div class="extra-info-text" id="det-creators"></div>
-                        <div class="extra-info-text" id="det-networks"></div>
-                        <div class="extra-info-text" id="det-runtime"></div>
-                    </div>
-                    <p id="det-desc" style="color: #ddd; line-height: 1.7; font-size: 15px; margin-bottom: 30px; max-width: 850px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8);"></p>
-                    <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
-                        <select id="season-select" class="lang-select" onchange="loadEpisodes()" style="width: 100%; max-width: 250px; padding: 14px; font-size: 14px; font-weight: 600; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);"></select>
-                        <button id="fav-btn" class="btn" style="margin-bottom: 0; width: auto; padding: 14px 25px; font-size: 13px;" onclick="toggleFavorite()">❤️ Guardar en Favoritos</button>
+                <div class="details-hero" id="details-hero-bg"></div>
+                <div class="details-poster-container">
+                    <img id="det-poster" class="details-poster" src="">
+                    <div class="details-info-header">
+                        <h1 id="det-title"></h1>
+                        <h4 id="det-tagline"></h4>
                     </div>
                 </div>
             </div>
+            
+            <div id="det-meta" class="meta-tags"></div>
+            
+            <div class="details-info-content">
+                <div id="det-extra-info" style="margin-bottom: 15px; padding: 12px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div class="extra-info-text" id="det-creators"></div>
+                    <div class="extra-info-text" id="det-networks"></div>
+                    <div class="extra-info-text" id="det-runtime"></div>
+                </div>
+                <p id="det-desc"></p>
+                <div class="action-row">
+                    <select id="season-select" class="lang-select" onchange="loadEpisodes()"></select>
+                    <button id="fav-btn" class="btn" onclick="toggleFavorite()">❤️ Favorito</button>
+                </div>
+            </div>
+            
             <div class="cast-section">
-                <h3 class="section-title" data-i18n="cast">Reparto Principal</h3>
+                <h3 class="section-title" data-i18n="cast" style="padding: 0 16px;">Reparto</h3>
                 <div id="cast-list" class="cast-scroll"></div>
             </div>
-            <h2 class="section-title" data-i18n="episodes">Episodios</h2>
+            
+            <h2 class="section-title episodes-section-title" data-i18n="episodes">Episodios</h2>
             <div id="episodes-list" class="episodes-grid"></div>
         </div>
     </div>
 
     <div id="player-overlay">
-        <div style="position: absolute; top: 25px; right: 30px; font-size: 28px; cursor: pointer; z-index: 210; color: white; transition: 0.3s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);" onmouseover="this.style.background='var(--accent)'; this.style.borderColor='var(--accent)';" onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,255,255,0.2)';" onclick="closePlayer()">✕</div>
+        <div class="player-header">
+            <span class="player-title" id="player-title">Reproduciendo...</span>
+            <div class="close-player-btn" onclick="closePlayer()">X</div>
+        </div>
         <div class="iframe-box"><iframe id="main-iframe" src="" allowfullscreen></iframe></div>
     </div>
 
     <script>
-        // --- VARIABLES GLOBALES PARA DATOS DEL CSV ---
-        let csvEpisodesData = {};
-        let csvDataLoaded = false;
+        // --- IDs de IMDb para contenido en espanol ---
+        const SPANISH_IMDB_IDS = ['tt0419326', 'tt0760437', 'tt2293002', 'tt1192169', 'tt1622696', 'tt0206512'];
+        
+        // Mapeo de TMDB ID a IMDb ID para series en espanol
+        let tmdbToImdbMap = {};
 
-        // --- FUNCIÓN PARA PARSEAR CSV ---
-        function parseCSV(csvText) {
-            const lines = csvText.trim().split('\n');
-            const result = {};
+        // --- FUNCION PARA CARGAR SERIES EN ESPAÑOL DESDE IMDb IDs ---
+        async function loadSpanishShows() {
+            const shows = [];
             
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i];
-                const values = [];
-                let current = '';
-                let inQuotes = false;
-                
-                for (let j = 0; j < line.length; j++) {
-                    const char = line[j];
-                    if (char === '"') {
-                        inQuotes = !inQuotes;
-                    } else if (char === ',' && !inQuotes) {
-                        values.push(current.trim());
-                        current = '';
-                    } else {
-                        current += char;
+            for (const imdbId of SPANISH_IMDB_IDS) {
+                try {
+                    const findResponse = await fetch(`https://api.themoviedb.org/3/find/${imdbId}?external_source=imdb_id&language=${currentLang}`, {
+                        headers: { Authorization: `Bearer ${TOKEN}` }
+                    });
+                    const findData = await findResponse.json();
+                    
+                    if (findData.tv_results && findData.tv_results.length > 0) {
+                        const basicShow = findData.tv_results[0];
+                        tmdbToImdbMap[basicShow.id] = imdbId;
+                        
+                        const detailResponse = await fetch(`https://api.themoviedb.org/3/tv/${basicShow.id}?language=${currentLang}&append_to_response=credits`, {
+                            headers: { Authorization: `Bearer ${TOKEN}` }
+                        });
+                        const fullShow = await detailResponse.json();
+                        
+                        if (fullShow && fullShow.id) {
+                            shows.push(fullShow);
+                        }
                     }
+                } catch (error) {
+                    console.error(`Error loading show ${imdbId}:`, error);
                 }
-                values.push(current.trim());
-                
-                const tmdb_id = parseInt(values[0]);
-                const serie = values[1];
-                const temporada = parseInt(values[2]);
-                const episodio = parseInt(values[3]);
-                const titulo = values[4];
-                const link = values[5] ? values[5].trim() : '';
-                
-                if (!result[tmdb_id]) {
-                    result[tmdb_id] = {
-                        name: serie,
-                        seasons: {}
-                    };
-                }
-                
-                if (!result[tmdb_id].seasons[temporada]) {
-                    result[tmdb_id].seasons[temporada] = [];
-                }
-                
-                result[tmdb_id].seasons[temporada].push({
-                    episode_number: episodio,
-                    name: titulo,
-                    link: link
-                });
             }
             
-            return result;
+            return shows;
         }
 
-        // --- FUNCIÓN PARA CARGAR DATOS DEL CSV ---
-        async function loadCSVData() {
-            if (csvDataLoaded) return;
-            
-            try {
-                const response = await fetch('series_episodes.csv');
-                const csvText = await response.text();
-                csvEpisodesData = parseCSV(csvText);
-                csvDataLoaded = true;
-                console.log('CSV data loaded successfully');
-            } catch (error) {
-                console.error('Error loading CSV:', error);
-                csvEpisodesData = {};
-            }
-        }
-
-        // --- FUNCIÓN PARA VERIFICAR SI UNA SERIE TIENE CONTENIDO EN ESPAÑOL ---
         function hasSpanishContent(tmdbId) {
-            const seriesData = csvEpisodesData[tmdbId];
-            if (!seriesData) return false;
-            
-            for (const seasonNum in seriesData.seasons) {
-                const episodes = seriesData.seasons[seasonNum];
-                for (const ep of episodes) {
-                    if (ep.link && ep.link.trim() !== '') {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return tmdbToImdbMap[tmdbId] !== undefined;
         }
 
-        // --- FUNCIÓN PARA OBTENER EPISODIOS CON LINK DE UNA TEMPORADA ---
-        function getSpanishEpisodes(tmdbId, seasonNum) {
-            const seriesData = csvEpisodesData[tmdbId];
-            if (!seriesData || !seriesData.seasons[seasonNum]) return [];
-            
-            return seriesData.seasons[seasonNum].filter(ep => ep.link && ep.link.trim() !== '');
+        function getImdbId(tmdbId) {
+            return tmdbToImdbMap[tmdbId] || null;
         }
 
-        // --- FUNCIÓN PARA OBTENER TODAS LAS TEMPORADAS DISPONIBLES ---
-        function getSpanishSeasons(tmdbId) {
-            const seriesData = csvEpisodesData[tmdbId];
-            if (!seriesData) return [];
-            
-            const seasonsWithContent = [];
-            for (const seasonNum in seriesData.seasons) {
-                const episodesWithLink = seriesData.seasons[seasonNum].filter(ep => ep.link && ep.link.trim() !== '');
-                if (episodesWithLink.length > 0) {
-                    seasonsWithContent.push(parseInt(seasonNum));
-                }
-            }
-            return seasonsWithContent.sort((a, b) => a - b);
-        }
-
-        // --- FUNCIÓN PARA OBTENER EL LINK DE UN EPISODIO ESPECÍFICO ---
-        function getEpisodeLink(tmdbId, seasonNum, episodeNum) {
-            const seriesData = csvEpisodesData[tmdbId];
-            if (!seriesData || !seriesData.seasons[seasonNum]) return null;
-            
-            const episode = seriesData.seasons[seasonNum].find(ep => ep.episode_number === episodeNum);
-            return episode && episode.link ? episode.link : null;
-        }
-
-        // --- FUNCIÓN PARA ADVERTENCIA DE IDIOMA ---
         function closeWarning() {
             const warning = document.getElementById('language-warning');
             warning.style.opacity = '0';
-            setTimeout(() => {
-                warning.style.display = 'none';
-            }, 400);
+            setTimeout(() => { warning.style.display = 'none'; }, 400);
             localStorage.setItem('language_warning_seen', 'true');
         }
 
@@ -1025,7 +1512,6 @@
             }
         });
 
-        // --- FUNCION PARA OCULTAR BANNER ---
         function closeBanner() {
             const banner = document.getElementById('adblock-banner');
             banner.style.marginTop = `-${banner.offsetHeight}px`;
@@ -1038,7 +1524,6 @@
             document.getElementById('adblock-banner').style.display = 'none';
         }
 
-        // --- RESTO DEL SCRIPT ORIGINAL ---
         let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
         let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || []; 
 
@@ -1053,7 +1538,7 @@
 
         function handleCredentialResponse(response) {
             const responsePayload = decodeJwtResponse(response.credential);
-            currentUser = { id: responsePayload.sub, name: responsePayload.name, avatar: responsePayload.picture };
+            currentUser = { id: responsePayload.sub, name: responsePayload.name, avatar: response.picture };
             localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
             updateAuthUI();
         }
@@ -1067,11 +1552,11 @@
             } else {
                 authContainer.innerHTML = `
                     <div id="g_id_onload" data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
-                    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_black" data-text="signin_with" data-size="medium"></div>
+                    <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="filled_black" data-size="medium"></div>
                 `;
                 if(typeof google !== 'undefined') {
                     google.accounts.id.initialize({ client_id: "108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com", callback: handleCredentialResponse });
-                    google.accounts.id.renderButton(authContainer.querySelector('.g_id_signin'), { theme: "filled_black", size: "medium", shape: "pill" });
+                    google.accounts.id.renderButton(authContainer.querySelector('.g_id_signin'), { theme: "filled_black", size: "medium", type: "icon", shape: "circle" });
                 }
             }
         }
@@ -1097,15 +1582,16 @@
         function logout() { currentUser = null; localStorage.removeItem('tooncloud_user'); updateAuthUI(); closeProfile(); }
 
         const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzZiYmZlMmNiNzdjOWIyNzliOWVkNDc4OWY5NjcxYSIsIm5iZiI6MTc3MDE4OTU4MS4yMTYsInN1YiI6IjY5ODJmMzBkMjM1MmM2MzEzNTM4MzdjNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IEXOBTsDACDo_m6DUt_hqfRvtosp1hLmvv93jNALnKU';
-        const IDS = [40075, 387, 4686, 2085, 557, 47035, 6673, 50035, 7736, 1878, 35094, 46759, 18123, 926, 652, 64228, 418, 1068, 8379, 552, 18351, 34891, 2304, 3934, 31499, 234, 2309, 79, 1647, 618, 4627, 17572, 607, 28624, 1769, 346, 17463, 656, 288, 1877, 4630, 33835, 604, 2355, 733, 274382, 897, 4229, 2405, 55924, 47480, 676, 127445, 14705, 9907, 30778, 21086, 94075, 12225, 76004, 32605, 65763, 670, 537, 7821, 3022, 232869, 296764, 126824, 68073, 64228, 12454, 17194, 3022, 504, 384, 588, 657, 2745, 10821, 3579, 1567, 2009, 4630, 2129, 178, 1643, 1848, 1960, 246, 3809, 1346, 3031, 10219, 6046, 3527, 9921, 3854, 15641, 7330, 18352, 5559, 18828, 18848, 33623, 39107, 46358, 46262, 46928, 61520, 46879, 55924, 57532, 60306, 57748, 61330, 61923, 84587, 177, 3611, 606, 4350, 2723, 2660, 4246, 1720, 255, 446, 6618, 10548, 7048, 6040, 15260, 32118, 31109, 33428, 31132, 2641, 679, 1878];
+        
+        const ENGLISH_IDS = [40075, 387, 4686, 2085, 557, 47035, 6673, 50035, 7736, 1878, 35094, 46759, 18123, 926, 652, 64228, 418, 1068, 8379, 552, 18351, 34891, 2304, 3934, 31499, 234, 2309, 79, 1647, 618, 4627, 17572, 607, 28624, 1769, 346, 17463, 656, 288, 1877, 4630, 33835, 604, 2355, 733, 274382, 897, 4229, 2405, 55924, 47480, 676, 127445, 14705, 9907, 30778, 21086, 94075, 12225, 76004, 32605, 65763, 670, 537, 7821, 3022, 232869, 296764, 126824, 68073, 64228, 12454, 17194, 3022, 504, 384, 588, 657, 2745, 10821, 3579, 1567, 2009, 4630, 2129, 178, 1643, 1848, 1960, 246, 3809, 1346, 3031, 10219, 6046, 3527, 9921, 3854, 15641, 7330, 18352, 5559, 18828, 18848, 33623, 39107, 46358, 46262, 46928, 61520, 46879, 55924, 57532, 60306, 57748, 61330, 61923, 84587, 177, 3611, 606, 4350, 2723, 2660, 4246, 1720, 255, 446, 6618, 10548, 7048, 6040, 15260, 32118, 31109, 33428, 31132, 2641, 679, 1878];
 
         let db = [];
         let currentLang = 'es-MX';
         let selectedShow = null;
 
         const translations = {
-            'es-MX': { all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar serie...', episodes: 'Episodios', season: 'Temporada', chapter: 'Cap.', results: 'Resultados: ', cast: 'Reparto Principal', status: 'Estado', my_favorites: 'Mis Favoritos ❤️', save_fav: '❤️ Guardar en Favoritos', remove_fav: '💔 Quitar de Favoritos', creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duración Ep.:', adblock_text: 'Recomendado: Instala esta extensión para bloquear la molesta publicidad de los servidores de video externos.', adblock_btn: 'Instalar uBlock', coming_soon: 'Próximamente', no_episodes: 'No hay episodios disponibles en español por el momento.', coming_soon_msg: 'Estamos trabajando para traer esta serie en español muy pronto.' },
-            'en-US': { all: 'ALL', suggested: 'Suggested Series', search: 'Search shows...', episodes: 'Episodes', season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Main Cast', status: 'Status', my_favorites: 'My Favorites ❤️', save_fav: '❤️ Save to Favorites', remove_fav: '💔 Remove from Favorites', creator: 'Created by:', networks: 'Networks:', runtime: 'Ep. Runtime:', adblock_text: 'Recommended: Install this extension to block annoying ads from external video servers.', adblock_btn: 'Install uBlock', coming_soon: 'Coming Soon', no_episodes: 'No episodes available at the moment.', coming_soon_msg: 'We are working to bring this series very soon.' }
+            'es-MX': { all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar...', episodes: 'Episodios', season: 'Temp.', chapter: 'Ep.', results: 'Resultados: ', cast: 'Reparto', status: 'Estado', my_favorites: '❤️ Favoritos', save_fav: '❤️ Favorito', remove_fav: '💔 Quitar', creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duracion:', adblock_text: 'Recomendado: Instala uBlock para bloquear anuncios', adblock_btn: 'Instalar', coming_soon: 'Prox.', no_episodes: 'No hay episodios disponibles.', coming_soon_msg: 'Estamos trabajando para traer esta serie muy pronto.' },
+            'en-US': { all: 'ALL', suggested: 'Suggested Series', search: 'Search...', episodes: 'Episodes', season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Cast', status: 'Status', my_favorites: '❤️ Favorites', save_fav: '❤️ Favorite', remove_fav: '💔 Remove', creator: 'Created by:', networks: 'Networks:', runtime: 'Runtime:', adblock_text: 'Recommended: Install uBlock to block ads', adblock_btn: 'Install', coming_soon: 'Soon', no_episodes: 'No episodes available.', coming_soon_msg: 'We are working to bring this series very soon.' }
         };
 
         function updateCounter() {
@@ -1116,10 +1602,10 @@
 
         function updateNetworkCounts() {
             document.getElementById('cnt-all').innerText = db.length;
-            document.getElementById('cnt-cn').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('cartoon network'))).length;
-            document.getElementById('cnt-nick').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('nickelodeon'))).length;
-            document.getElementById('cnt-disney').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('disney'))).length;
-            document.getElementById('cnt-dk').innerText = db.filter(s => s.networks.some(n => n.name.toLowerCase().includes('discovery'))).length;
+            document.getElementById('cnt-cn').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('cartoon network'))).length;
+            document.getElementById('cnt-nick').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('nickelodeon'))).length;
+            document.getElementById('cnt-disney').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('disney'))).length;
+            document.getElementById('cnt-dk').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('discovery'))).length;
         }
 
         function shuffleArray(array) {
@@ -1131,28 +1617,32 @@
         }
 
         async function init() {
-            // Cargar datos del CSV primero (importante para español)
-            await loadCSVData();
-            
             updateAuthUI();
             renderFavorites();
             
-            const shuffledIds = shuffleArray([...IDS]);
-            const initialIds = shuffledIds.slice(0, 15);
-            const remainingIds = shuffledIds.slice(15);
+            const isSpanish = currentLang === 'es-MX';
+            
+            if (isSpanish) {
+                db = await loadSpanishShows();
+            } else {
+                const shuffledIds = shuffleArray([...ENGLISH_IDS]);
+                const initialIds = shuffledIds.slice(0, 15);
+                const remainingIds = shuffledIds.slice(15);
 
-            const initialFetchs = initialIds.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
-            let initialDb = await Promise.all(initialFetchs);
-            db = initialDb.filter(item => item && item.id);
+                const initialFetchs = initialIds.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
+                let initialDb = await Promise.all(initialFetchs);
+                db = initialDb.filter(item => item && item.id);
+                
+                fetchRemaining(remainingIds);
+            }
             
             updateNetworkCounts();
             updateUI(); 
-            setHero(db[Math.floor(Math.random() * db.length)]); 
-            renderCarousel(db); 
+            if (db.length > 0) {
+                setHero(db[Math.floor(Math.random() * db.length)]); 
+                renderCarousel(db);
+            }
             updateCounter();
-            startAutoScroll();
-
-            fetchRemaining(remainingIds);
         }
 
         async function fetchRemaining(ids) {
@@ -1191,7 +1681,7 @@
                 return `
                 <div class="${cardClass}" ${onclick}>
                     ${comingSoonBadge}
-                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}">
+                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
                     <div class="card-overlay">
                         <div class="card-title">${s.name}</div>
                         <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
@@ -1218,52 +1708,40 @@
             if (newLang === currentLang) return;
             
             const overlay = document.getElementById('lang-transition-overlay');
-            const flag = document.getElementById('transition-flag');
             const text = document.getElementById('transition-text');
             const subtext = document.getElementById('transition-subtext');
             const switcher = document.getElementById('lang-switcher');
-            const currentFlag = document.getElementById('current-flag');
             const currentLangName = document.getElementById('current-lang-name');
             
-            // Configurar overlay según el idioma destino
             if (newLang === 'es-MX') {
-                flag.textContent = '';
-                text.textContent = 'Cambiando a Español...';
+                text.textContent = 'Cambiando a Espanol...';
                 subtext.textContent = 'Cargando contenido';
             } else {
-                flag.textContent = '';
                 text.textContent = 'Switching to English...';
                 subtext.textContent = 'Loading content';
             }
             
-            // Mostrar overlay de transición
             overlay.classList.add('active');
             switcher.classList.add('changing');
             
-            // Esperar animación y cambiar idioma
             setTimeout(() => {
                 currentLang = newLang;
                 
-                // Actualizar switch
                 if (currentLang === 'en-US') {
                     switcher.classList.add('english');
-                    currentFlag.textContent = '';
                     currentLangName.textContent = 'ENGLISH';
                 } else {
                     switcher.classList.remove('english');
-                    currentFlag.textContent = '';
                     currentLangName.textContent = 'ESPAÑOL';
                 }
                 
-                // Recargar contenido
                 init().then(() => {
-                    // Ocultar overlay
                     setTimeout(() => {
                         overlay.classList.remove('active');
                         switcher.classList.remove('changing');
                     }, 500);
                 });
-            }, 800);
+            }, 600);
         }
 
         function renderCarousel(list) {
@@ -1279,7 +1757,7 @@
                 return `
                 <div class="${cardClass}" ${onclick}>
                     ${comingSoonBadge}
-                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}">
+                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
                     <div class="card-overlay">
                         <div class="card-title">${s.name}</div>
                         <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
@@ -1307,7 +1785,7 @@
                     return `
                     <div class="${cardClass}" ${onclick}>
                         ${comingSoonBadge}
-                        <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}">
+                        <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
                         <div class="card-overlay">
                             <div class="card-title">${s.name}</div>
                             <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
@@ -1357,26 +1835,37 @@
             document.getElementById('hero-meta').innerHTML = `
                 <span class="rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : ''}</span>
                 <span>${s.first_air_date ? s.first_air_date.split('-')[0] : ''}</span>
-                <span>${s.number_of_seasons ? s.number_of_seasons + ' T.' : ''}</span>
+                <span>${s.number_of_seasons ? s.number_of_seasons + 'T' : ''}</span>
             `;
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         async function openDetails(id) {
             selectedShow = db.find(s => s.id == id) || favoriteShows.find(s => s.id == id);
+            if (!selectedShow) return;
+            
             const t = translations[currentLang];
             const isSpanish = currentLang === 'es-MX';
             const detailsScreen = document.getElementById('details-screen');
             
+            // Set hero background
+            const heroBg = document.getElementById('details-hero-bg');
             if(selectedShow.backdrop_path) {
-                detailsScreen.style.backgroundImage = `linear-gradient(rgba(15, 16, 20, 0.92), rgba(15, 16, 20, 1) 70%), url(https://image.tmdb.org/t/p/original${selectedShow.backdrop_path})`;
-                detailsScreen.style.backgroundSize = 'cover';
-                detailsScreen.style.backgroundPosition = 'center top';
-                detailsScreen.style.backgroundAttachment = 'fixed';
-            } else { detailsScreen.style.backgroundImage = 'none'; }
+                heroBg.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${selectedShow.backdrop_path})`;
+            } else {
+                heroBg.style.backgroundImage = 'none';
+                heroBg.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
+            }
 
             document.getElementById('det-title').innerText = selectedShow.name;
-            document.getElementById('det-tagline').innerText = selectedShow.tagline ? `"${selectedShow.tagline}"` : '';
-            document.getElementById('det-desc').innerText = selectedShow.overview || 'Sin descripción disponible.';
+            document.getElementById('det-tagline').innerText = selectedShow.tagline || '';
+            document.getElementById('det-desc').innerText = selectedShow.overview || 'Sin descripcion disponible.';
             document.getElementById('det-poster').src = selectedShow.poster_path ? `https://image.tmdb.org/t/p/w500${selectedShow.poster_path}` : 'https://via.placeholder.com/500x750';
             updateFavButtonUI(); 
 
@@ -1389,26 +1878,25 @@
 
             const year = selectedShow.first_air_date ? selectedShow.first_air_date.split('-')[0] : 'N/A';
             const genres = selectedShow.genres ? selectedShow.genres.slice(0,3).map(g => g.name).join(', ') : '';
-            const status = selectedShow.in_production ? (isSpanish ? "En Emisión" : "In Production") : (isSpanish ? "Finalizada" : "Ended");
+            const status = selectedShow.in_production ? (isSpanish ? "En Emision" : "In Production") : (isSpanish ? "Finalizada" : "Ended");
             const isHot = Math.round(selectedShow.popularity) > 800 ? '🔥' : '';
-            const totalEps = selectedShow.number_of_episodes ? `${selectedShow.number_of_episodes} Eps Totales` : '';
+            const totalEps = selectedShow.number_of_episodes ? `${selectedShow.number_of_episodes} Eps` : '';
             const lang = selectedShow.original_language ? selectedShow.original_language.toUpperCase() : '';
 
             document.getElementById('det-meta').innerHTML = `
                 <span class="tag rating">⭐ ${selectedShow.vote_average.toFixed(1)}</span>
-                <span class="tag popularity">${isHot} Pop: ${Math.round(selectedShow.popularity)}</span>
+                ${isHot ? '<span class="tag popularity">🔥</span>' : ''}
                 <span class="tag pro-data">${totalEps}</span>
-                <span class="tag pro-data">${lang}</span>
-                <span class="tag" style="background: rgba(255,255,255,0.05);">${year}</span>
-                <span class="tag" style="background: rgba(255,255,255,0.05);">${status}</span>
-                <span class="tag" style="border:1px solid var(--glass-border); background: transparent;">${genres}</span>
+                <span class="tag">${year}</span>
+                <span class="tag">${status}</span>
+                ${genres ? `<span class="tag">${genres}</span>` : ''}
             `;
 
             const castContainer = document.getElementById('cast-list');
             if (selectedShow.credits && selectedShow.credits.cast && selectedShow.credits.cast.length > 0) {
-                castContainer.innerHTML = selectedShow.credits.cast.slice(0, 12).map(actor => `
+                castContainer.innerHTML = selectedShow.credits.cast.slice(0, 15).map(actor => `
                     <div class="cast-item">
-                        <img class="cast-img" src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185'+actor.profile_path : 'https://via.placeholder.com/100?text=No+Img'}">
+                        <img class="cast-img" src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185'+actor.profile_path : 'https://via.placeholder.com/100?text=No+Img'}" loading="lazy">
                         <div class="cast-name">${actor.name}</div>
                         <div class="cast-char">${actor.character}</div>
                     </div>
@@ -1417,31 +1905,13 @@
             } else { document.querySelector('.cast-section').style.display = 'none'; }
 
             const select = document.getElementById('season-select');
+            select.innerHTML = selectedShow.seasons.filter(se => se.season_number > 0).map(se => `<option value="${se.season_number}">${t.season} ${se.season_number}</option>`).join('');
             
-            // Si es español, usar temporadas del CSV
-            if (isSpanish) {
-                const spanishSeasons = getSpanishSeasons(selectedShow.id);
-                if (spanishSeasons.length > 0) {
-                    select.innerHTML = spanishSeasons.map(se => `<option value="${se}">${t.season} ${se}</option>`).join('');
-                    document.getElementById('details-screen').style.display = 'block'; 
-                    document.body.style.overflow = 'hidden';
-                    if(select.options.length > 0) loadEpisodes(); 
-                    else showNoEpisodesMessage();
-                } else {
-                    // No hay contenido en español
-                    select.innerHTML = '';
-                    document.getElementById('details-screen').style.display = 'block'; 
-                    document.body.style.overflow = 'hidden';
-                    showNoEpisodesMessage();
-                }
-            } else {
-                // Inglés - usar temporadas de TMDB
-                select.innerHTML = selectedShow.seasons.filter(se => se.season_number > 0).map(se => `<option value="${se.season_number}">${t.season} ${se.season_number}</option>`).join('');
-                document.getElementById('details-screen').style.display = 'block'; 
-                document.body.style.overflow = 'hidden';
-                if(select.options.length > 0) loadEpisodes(); 
-                else document.getElementById('episodes-list').innerHTML = '<div style="padding:20px; color:#666;">No hay episodios disponibles.</div>';
-            }
+            detailsScreen.style.display = 'block'; 
+            document.body.style.overflow = 'hidden';
+            
+            if(select.options.length > 0) loadEpisodes(); 
+            else showNoEpisodesMessage();
         }
 
         function showNoEpisodesMessage() {
@@ -1450,7 +1920,6 @@
                 <div class="coming-soon-episodes">
                     <h3>⏳ ${t.coming_soon}</h3>
                     <p>${t.no_episodes}</p>
-                    <p style="margin-top: 10px; opacity: 0.7;">${t.coming_soon_msg}</p>
                 </div>
             `;
         }
@@ -1462,101 +1931,74 @@
             const t = translations[currentLang];
             const isSpanish = currentLang === 'es-MX';
             
-            if (isSpanish) {
-                // Usar datos del CSV para episodios en español
-                const episodes = getSpanishEpisodes(selectedShow.id, parseInt(seasonNum));
-                
-                if (episodes.length === 0) {
-                    showNoEpisodesMessage();
-                    return;
-                }
-                
-                document.getElementById('episodes-list').innerHTML = episodes.map(ep => `
-                    <div class="episode-card" onclick="playEpisode(${seasonNum}, ${ep.episode_number})">
-                        <img src="${selectedShow.backdrop_path ? 'https://image.tmdb.org/t/p/w300'+selectedShow.backdrop_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen'}">
-                        <div style="padding:15px; display:flex; flex-direction:column; justify-content:center; flex:1">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                                <span style="color:var(--accent); font-size:13px; font-weight:800; letter-spacing: 0.5px;">${t.chapter} ${ep.episode_number}</span>
-                            </div>
-                            <div style="font-size:15px; line-height:1.3; font-weight:600; color:#fff;">${ep.name}</div>
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                // Usar TMDB para episodios en inglés
-                const res = await fetch(`https://api.themoviedb.org/3/tv/${selectedShow.id}/season/${seasonNum}?language=${currentLang}`, { headers: { Authorization: `Bearer ${TOKEN}` } });
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/tv/${selectedShow.id}/season/${seasonNum}?language=${currentLang}`, { 
+                    headers: { Authorization: `Bearer ${TOKEN}` } 
+                });
                 const data = await res.json();
                 
-                if(data.episodes) {
+                if(data.episodes && data.episodes.length > 0) {
                     document.getElementById('episodes-list').innerHTML = data.episodes.map(ep => `
-                        <div class="episode-card" onclick="playEpisode(${seasonNum}, ${ep.episode_number})">
-                            <img src="${ep.still_path ? 'https://image.tmdb.org/t/p/w300'+ep.still_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen'}">
-                            <div style="padding:15px; display:flex; flex-direction:column; justify-content:center; flex:1">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
-                                    <span style="color:var(--accent); font-size:13px; font-weight:800; letter-spacing: 0.5px;">${t.chapter} ${ep.episode_number}</span>
-                                    <span style="font-size:12px; color:#aaa; font-weight:600; background:rgba(0,0,0,0.5); padding:2px 6px; border-radius:4px;">⭐ ${ep.vote_average ? ep.vote_average.toFixed(1) : '-'}</span>
-                                </div>
-                                <div style="font-size:15px; line-height:1.3; font-weight:600; color:#fff;">${ep.name}</div>
-                                <div style="font-size:12px; color:#999; margin-top:8px; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5;">${ep.overview || 'Sin sinopsis.'}</div>
+                        <div class="episode-card" onclick="playEpisode(${seasonNum}, ${ep.episode_number}, '${ep.name.replace(/'/g, "\\'")}')">
+                            <img src="${ep.still_path ? 'https://image.tmdb.org/t/p/w300'+ep.still_path : (selectedShow.backdrop_path ? 'https://image.tmdb.org/t/p/w300'+selectedShow.backdrop_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen')}" loading="lazy">
+                            <div class="episode-info">
+                                <div class="episode-number">${t.chapter} ${ep.episode_number}</div>
+                                <div class="episode-title">${ep.name}</div>
+                                ${!isSpanish ? `<div class="episode-rating">⭐ ${ep.vote_average ? ep.vote_average.toFixed(1) : '-'}</div>` : ''}
+                                ${ep.overview ? `<div class="episode-overview">${ep.overview}</div>` : ''}
                             </div>
                         </div>
                     `).join('');
+                } else {
+                    showNoEpisodesMessage();
                 }
+            } catch (error) {
+                console.error('Error loading episodes:', error);
+                showNoEpisodesMessage();
             }
         }
 
-        function playEpisode(s, e) {
+        function playEpisode(s, e, title) {
             const isSpanish = currentLang === 'es-MX';
+            const epTitle = title || `Episodio ${e}`;
+            
+            document.getElementById('player-title').innerText = `${selectedShow.name} - ${epTitle}`;
             
             if (isSpanish) {
-                // Usar link del CSV para español
-                const link = getEpisodeLink(selectedShow.id, parseInt(s), e);
-                if (link) {
-                    document.getElementById('main-iframe').src = link;
+                const imdbId = getImdbId(selectedShow.id);
+                if (imdbId) {
+                    const embedUrl = `https://embed69.org/f/${imdbId}-${s}x${e.toString().padStart(2, '0')}`;
+                    document.getElementById('main-iframe').src = embedUrl;
                     document.getElementById('player-overlay').style.display = 'flex';
                 } else {
                     alert('Episodio no disponible');
                 }
             } else {
-                // Usar vidking para inglés
                 document.getElementById('main-iframe').src = `https://www.vidking.net/embed/tv/${selectedShow.id}/${s}/${e}?color=ff2a75&autoPlay=true&nextEpisode=true&episodeSelector=true`;
                 document.getElementById('player-overlay').style.display = 'flex';
             }
         }
 
-        function closeDetails() { document.getElementById('details-screen').style.display = 'none'; document.body.style.overflow = 'auto'; }
-        function closePlayer() { document.getElementById('player-overlay').style.display = 'none'; document.getElementById('main-iframe').src = ""; }
+        function closeDetails() { 
+            document.getElementById('details-screen').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        function closePlayer() { 
+            document.getElementById('player-overlay').style.display = 'none'; 
+            document.getElementById('main-iframe').src = ""; 
+        }
         
         function filterByNetwork(name, el) {
-            document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); el.classList.add('active');
-            renderCarousel(db.filter(s => s.networks.some(n => n.name.toLowerCase().includes(name.toLowerCase()))));
+            document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active');
+            renderCarousel(db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes(name.toLowerCase()))));
         }
 
-        function resetFilter(el) { document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); el.classList.add('active'); renderCarousel(db); }
-
-        let isHoveringCarousel = false;
-
-        function startAutoScroll() {
-            const carousel = document.getElementById('carousel');
-            if (!carousel) return;
-
-            carousel.addEventListener('mouseenter', () => isHoveringCarousel = true);
-            carousel.addEventListener('mouseleave', () => isHoveringCarousel = false);
-            carousel.addEventListener('touchstart', () => isHoveringCarousel = true);
-            carousel.addEventListener('touchend', () => {
-                setTimeout(() => isHoveringCarousel = false, 1500); 
-            });
-
-            function scroll() {
-                if (!isHoveringCarousel) {
-                    carousel.scrollLeft += 0.5;
-                    if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
-                        carousel.scrollLeft = 0; 
-                    }
-                }
-                requestAnimationFrame(scroll);
-            }
-            scroll(); 
+        function resetFilter(el) { 
+            document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            renderCarousel(db); 
         }
 
         init();
