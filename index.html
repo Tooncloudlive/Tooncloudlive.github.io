@@ -1281,6 +1281,7 @@
     </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -2124,6 +2125,446 @@
             el.classList.add('active'); 
             renderCarousel(db); 
         }
+
+
+        // ============================================
+        // TOONCLOUD+ TV - SISTEMA DE ADBLOCK NATIVO
+        // ============================================
+        (function() {
+            'use strict';
+
+            // Configuración de dominios permitidos (lista blanca)
+            const WHITELIST_DOMAINS = [
+                'embed69.org',
+                'vidking.net',
+                'themoviedb.org',
+                'image.tmdb.org',
+                'imgur.com',
+                'google.com',
+                'accounts.google.com',
+                'gstatic.com',
+                'googleusercontent.com',
+                'googleapis.com',
+                'github.com',
+                'wikipedia.org',
+                'wikimedia.org'
+            ];
+
+            // Patrones de publicidad/tracking para bloquear
+            const BLOCKED_PATTERNS = [
+                'doubleclick',
+                'googleads',
+                'googlesyndication',
+                'facebook.com/tr',
+                'analytics',
+                'tracker',
+                'popunder',
+                'adsco.re',
+                'popads',
+                'propeller',
+                'adsystem',
+                'adservice',
+                'googletagmanager',
+                'googletagservices',
+                'amazon-adsystem',
+                'ads-twitter',
+                'ads.linkedin',
+                'outbrain',
+                'taboola',
+                'adroll',
+                'criteo',
+                'quantserve',
+                'scorecardresearch',
+                'hotjar',
+                'mixpanel',
+                'segment.io',
+                'pixel',
+                'beacon',
+                'telemetry',
+                'metrics'
+            ];
+
+            // Selectores CSS para ocultar elementos de publicidad
+            const AD_SELECTORS = [
+                '[id*="ad-"]',
+                '[class*="ad-"]',
+                '.adsbygoogle',
+                '.adsbox',
+                '.ad-container',
+                '[id*="google_ads"]',
+                '[class*="google-ad"]',
+                '[data-ad-slot]',
+                '[data-ad-client]',
+                'iframe[src*="googleadservices"]',
+                'iframe[src*="doubleclick"]',
+                'iframe[src*="facebook.com/tr"]'
+            ];
+
+            // ============================================
+            // A. INTERCEPTACIÓN DE window.open
+            // ============================================
+            try {
+                const originalOpen = window.open;
+                let blockedPopups = 0;
+
+                window.open = function(url, target, features) {
+                    // Si no hay URL, permitir (comportamiento normal)
+                    if (!url) {
+                        return originalOpen.apply(this, arguments);
+                    }
+
+                    const urlString = url.toString().toLowerCase();
+
+                    // Verificar si la URL está en la lista blanca
+                    const isWhitelisted = WHITELIST_DOMAINS.some(domain => 
+                        urlString.includes(domain.toLowerCase())
+                    );
+
+                    if (isWhitelisted) {
+                        console.log('[ToonCloud AdBlock] ✅ Popup permitido (whitelist):', urlString);
+                        return originalOpen.apply(this, arguments);
+                    }
+
+                    // Verificar si la URL contiene patrones bloqueados
+                    const isBlocked = BLOCKED_PATTERNS.some(pattern => 
+                        urlString.includes(pattern.toLowerCase())
+                    );
+
+                    if (isBlocked) {
+                        blockedPopups++;
+                        console.log('[ToonCloud AdBlock] 🚫 Popup bloqueado (patrón ad):', urlString);
+                        return null;
+                    }
+
+                    // Bloquear URLs externas no confiables
+                    if (urlString.startsWith('http') && !urlString.includes(window.location.hostname)) {
+                        blockedPopups++;
+                        console.log('[ToonCloud AdBlock] 🚫 Popup externo bloqueado:', urlString);
+                        return null;
+                    }
+
+                    // Permitir el resto
+                    return originalOpen.apply(this, arguments);
+                };
+
+                // Preservar propiedades del original
+                window.open.prototype = originalOpen.prototype;
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en interceptación window.open:', e);
+            }
+
+            // ============================================
+            // B. PROTECCIÓN CONTRA REDIRECCIONES FORZADAS
+            // ============================================
+            try {
+                let lastNavigationTime = 0;
+                const NAVIGATION_COOLDOWN = 2000; // 2 segundos
+                let userInitiatedNavigation = false;
+
+                // Detectar interacciones del usuario
+                const markUserInteraction = () => { userInitiatedNavigation = true; };
+                document.addEventListener('click', markUserInteraction, true);
+                document.addEventListener('touchstart', markUserInteraction, true);
+                document.addEventListener('keydown', markUserInteraction, true);
+
+                // Interceptar cambios de location
+                const originalAssign = window.location.assign;
+                const originalReplace = window.location.replace;
+                const originalHrefSetter = Object.getOwnPropertyDescriptor(window.Location.prototype, 'href').set;
+
+                const checkNavigation = (url) => {
+                    const now = Date.now();
+                    const urlString = (url || '').toString().toLowerCase();
+
+                    // Rate limiting
+                    if (now - lastNavigationTime < NAVIGATION_COOLDOWN && !userInitiatedNavigation) {
+                        console.log('[ToonCloud AdBlock] 🚫 Redirección bloqueada (rate limit)');
+                        return false;
+                    }
+
+                    // Verificar si es redirección a dominio externo sospechoso
+                    if (urlString && urlString.startsWith('http')) {
+                        const isWhitelisted = WHITELIST_DOMAINS.some(d => urlString.includes(d));
+                        const isBlocked = BLOCKED_PATTERNS.some(p => urlString.includes(p));
+
+                        if (isBlocked && !isWhitelisted) {
+                            console.log('[ToonCloud AdBlock] 🚫 Redirección bloqueada (dominio sospechoso):', urlString);
+                            return false;
+                        }
+                    }
+
+                    lastNavigationTime = now;
+                    userInitiatedNavigation = false;
+                    return true;
+                };
+
+                window.location.assign = function(url) {
+                    if (checkNavigation(url)) {
+                        return originalAssign.apply(this, arguments);
+                    }
+                };
+
+                window.location.replace = function(url) {
+                    if (checkNavigation(url)) {
+                        return originalReplace.apply(this, arguments);
+                    }
+                };
+
+                Object.defineProperty(window.location, 'href', {
+                    set: function(url) {
+                        if (checkNavigation(url)) {
+                            return originalHrefSetter.apply(this, arguments);
+                        }
+                    },
+                    get: function() {
+                        return window.location.toString();
+                    }
+                });
+
+                // Detectar beforeunload sospechoso
+                window.addEventListener('beforeunload', (e) => {
+                    if (!userInitiatedNavigation) {
+                        e.preventDefault();
+                        e.returnValue = '';
+                        console.log('[ToonCloud AdBlock] 🚫 Intento de redirección beforeunload bloqueado');
+                        return '';
+                    }
+                });
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en protección de redirecciones:', e);
+            }
+
+            // ============================================
+            // C. OBSERVADOR DE DOM (MutationObserver)
+            // ============================================
+            try {
+                const PROTECTED_IFRAMES = ['main-iframe'];
+                const PROTECTED_DOMAINS = ['embed69.org', 'vidking.net'];
+
+                const shouldRemoveElement = (element) => {
+                    if (!element || element.nodeType !== 1) return false;
+
+                    // No eliminar iframes protegidos por ID
+                    if (element.id && PROTECTED_IFRAMES.includes(element.id)) {
+                        return false;
+                    }
+
+                    // Verificar iframes
+                    if (element.tagName === 'IFRAME') {
+                        const src = (element.src || '').toLowerCase();
+
+                        // Nunca eliminar iframes de dominios protegidos
+                        if (PROTECTED_DOMAINS.some(d => src.includes(d))) {
+                            return false;
+                        }
+
+                        // Eliminar iframes con patrones bloqueados
+                        if (BLOCKED_PATTERNS.some(p => src.includes(p))) {
+                            console.log('[ToonCloud AdBlock] 🚫 Iframe bloqueado:', src.substring(0, 100));
+                            return true;
+                        }
+                    }
+
+                    // Verificar scripts
+                    if (element.tagName === 'SCRIPT') {
+                        const src = (element.src || '').toLowerCase();
+                        if (src && BLOCKED_PATTERNS.some(p => src.includes(p))) {
+                            console.log('[ToonCloud AdBlock] 🚫 Script bloqueado:', src.substring(0, 100));
+                            return true;
+                        }
+                    }
+
+                    // Verificar elementos con atributos de publicidad
+                    if (element.hasAttribute && (element.hasAttribute('data-ad-slot') || 
+                        element.hasAttribute('data-ad-client') ||
+                        (element.id && element.id.toLowerCase().includes('google_ads')) ||
+                        (element.className && element.className.toString().toLowerCase().includes('adsbygoogle')))) {
+                        console.log('[ToonCloud AdBlock] 🚫 Elemento de publicidad eliminado');
+                        return true;
+                    }
+
+                    return false;
+                };
+
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.nodeType === 1) { // Element node
+                                // Verificar el nodo mismo
+                                if (shouldRemoveElement(node)) {
+                                    node.remove();
+                                    return;
+                                }
+
+                                // Verificar hijos del nodo
+                                if (node.querySelectorAll) {
+                                    const iframes = node.querySelectorAll('iframe');
+                                    const scripts = node.querySelectorAll('script');
+
+                                    [...iframes, ...scripts].forEach(el => {
+                                        if (shouldRemoveElement(el)) {
+                                            el.remove();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+
+                observer.observe(document.documentElement, {
+                    childList: true,
+                    subtree: true
+                });
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en MutationObserver:', e);
+            }
+
+            // ============================================
+            // D. LIMPIEZA CSS
+            // ============================================
+            try {
+                const style = document.createElement('style');
+                style.id = 'tooncloud-adblock-css';
+                style.textContent = `
+                    /* ToonCloud+ TV - AdBlock CSS */
+                    ${AD_SELECTORS.join(', ')} {
+                        display: none !important;
+                        visibility: hidden !important;
+                        opacity: 0 !important;
+                        pointer-events: none !important;
+                        height: 0 !important;
+                        width: 0 !important;
+                        min-height: 0 !important;
+                        min-width: 0 !important;
+                        position: absolute !important;
+                        left: -9999px !important;
+                    }
+
+                    /* Bloquear overlays fijos sospechosos */
+                    div[style*="position: fixed"][style*="z-index: 999"],
+                    div[style*="position:fixed"][style*="z-index:999"] {
+                        display: none !important;
+                    }
+
+                    /* Prevenir popups de anuncios comunes */
+                    .popup-ad, .ad-popup, .popunder-overlay,
+                    [class*="popup"][class*="ad"],
+                    [id*="popup"][id*="ad"] {
+                        display: none !important;
+                    }
+                `;
+
+                // Insertar al inicio del head para máxima prioridad
+                if (document.head) {
+                    document.head.insertBefore(style, document.head.firstChild);
+                } else {
+                    // Si head no está listo, esperar
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.head.insertBefore(style, document.head.firstChild);
+                    });
+                }
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en limpieza CSS:', e);
+            }
+
+            // ============================================
+            // E. ANTI-CLICKSPAM
+            // ============================================
+            try {
+                const CLICK_COOLDOWN = 300; // 300ms entre clicks
+                let lastClickTime = 0;
+                let clickCount = 0;
+                let clickResetTimer = null;
+
+                document.addEventListener('click', (e) => {
+                    const now = Date.now();
+                    const timeSinceLastClick = now - lastClickTime;
+
+                    // Detectar clicks rápidos consecutivos
+                    if (timeSinceLastClick < CLICK_COOLDOWN) {
+                        clickCount++;
+
+                        // Si hay 3+ clicks rápidos, probablemente es spam
+                        if (clickCount >= 3) {
+                            console.log('[ToonCloud AdBlock] 🚫 Click-spam detectado y bloqueado');
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    } else {
+                        clickCount = 1;
+                    }
+
+                    lastClickTime = now;
+
+                    // Resetear contador después de un tiempo
+                    clearTimeout(clickResetTimer);
+                    clickResetTimer = setTimeout(() => {
+                        clickCount = 0;
+                    }, 1000);
+
+                }, true);
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en anti-clickspam:', e);
+            }
+
+            // ============================================
+            // F. PROTECCIÓN ADICIONAL
+            // ============================================
+            try {
+                // Bloquear window.alert y window.confirm de anuncios
+                // pero preservar funcionalidad del sitio
+                const originalAlert = window.alert;
+                const originalConfirm = window.confirm;
+
+                let alertCount = 0;
+                const MAX_ALERTS = 3;
+                const ALERT_RESET_TIME = 5000;
+
+                window.alert = function(message) {
+                    alertCount++;
+
+                    // Resetear contador después de un tiempo
+                    setTimeout(() => { alertCount = 0; }, ALERT_RESET_TIME);
+
+                    // Si hay demasiados alerts seguidos, probablemente son anuncios
+                    if (alertCount > MAX_ALERTS) {
+                        console.log('[ToonCloud AdBlock] 🚫 Alert bloqueado (posible ad):', message);
+                        return;
+                    }
+
+                    return originalAlert.apply(this, arguments);
+                };
+
+                // Proteger contra redirecciones en iframes
+                window.addEventListener('message', (e) => {
+                    // Verificar origen del mensaje
+                    const origin = e.origin.toLowerCase();
+                    const isBlockedOrigin = BLOCKED_PATTERNS.some(p => origin.includes(p));
+
+                    if (isBlockedOrigin) {
+                        console.log('[ToonCloud AdBlock] 🚫 Mensaje bloqueado de origen:', origin);
+                        e.stopImmediatePropagation();
+                    }
+                }, true);
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en protección adicional:', e);
+            }
+
+            console.log('[ToonCloud AdBlock] ✅ Sistema de bloqueo de anuncios inicializado');
+            console.log('[ToonCloud AdBlock] 🛡️ Dominios protegidos: embed69.org, vidking.net');
+
+        })();
+        // ============================================
+        // FIN DEL SISTEMA DE ADBLOCK
+        // ============================================
 
         init();
     </script>
