@@ -863,27 +863,67 @@
             line-height: 1.4;
         }
         
-        /* ===== PLAYER OVERLAY ===== */
-        #player-overlay {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            background: #000;
-            z-index: 1000; 
-            flex-direction: column;
+        /* ===== PLAYER EMBEDDED ===== */
+        #player-container {
+            display: none;
+            width: 100%;
+            margin: 20px 0;
+            animation: fadeIn 0.4s ease;
         }
-        .player-header {
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* Estilos cuando el player está en pantalla completa */
+        .player-wrapper:fullscreen {
+            border-radius: 0;
+            padding-bottom: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+        .player-wrapper:fullscreen iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        .player-wrapper:-webkit-full-screen {
+            border-radius: 0;
+            padding-bottom: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+        .player-wrapper:-webkit-full-screen iframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        .player-header-embedded {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 16px;
             background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .player-title {
+        .player-title-embedded {
             font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
@@ -891,32 +931,37 @@
             text-overflow: ellipsis;
             flex: 1;
             margin-right: 15px;
+            color: #fff;
         }
-        .close-player-btn {
-            width: 36px;
-            height: 36px;
+        .close-player-btn-embedded {
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             transition: 0.3s;
+            color: #fff;
         }
-        .close-player-btn:active { background: var(--accent); }
-        .iframe-box { 
-            flex: 1;
-            width: 100%;
-            position: relative;
+        .close-player-btn-embedded:active { background: var(--accent); }
+        .fullscreen-hint {
+            font-size: 11px;
+            color: var(--text-sec);
+            padding: 8px 16px;
+            background: rgba(0,0,0,0.6);
+            text-align: center;
         }
-        .iframe-box iframe { 
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%; 
-            height: 100%; 
-            border: none; 
+        .fullscreen-hint span {
+            color: var(--accent);
+        }
+        /* Ocultar hint en móvil */
+        @media (max-width: 768px) {
+            .fullscreen-hint {
+                display: none;
+            }
         }
 
         /* ===== FOOTER ===== */
@@ -1282,6 +1327,7 @@
 <base target="_blank">
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -1494,6 +1540,18 @@
                 </div>
             </div>
             
+            <!-- Player embebido (se muestra dentro de details-screen) -->
+    <div id="player-container">
+        <div class="player-header-embedded">
+            <span class="player-title-embedded" id="player-title">Reproduciendo...</span>
+            <div class="close-player-btn-embedded" onclick="closePlayer()">✕</div>
+        </div>
+        <div class="player-wrapper">
+            <iframe id="main-iframe" src="" allowfullscreen></iframe>
+        </div>
+        <div class="fullscreen-hint">💡 Haz clic en el botón <span>⛶</span> del reproductor para pantalla completa</div>
+    </div>
+            
             <div class="cast-section">
                 <h3 class="section-title" data-i18n="cast" style="padding: 0 16px;">Reparto</h3>
                 <div id="cast-list" class="cast-scroll"></div>
@@ -1504,13 +1562,7 @@
         </div>
     </div>
 
-    <div id="player-overlay">
-        <div class="player-header">
-            <span class="player-title" id="player-title">Reproduciendo...</span>
-            <div class="close-player-btn" onclick="closePlayer()">X</div>
-        </div>
-        <div class="iframe-box"><iframe id="main-iframe" src="" allowfullscreen></iframe></div>
-    </div>
+    
 
     <script>
         // --- IDs de IMDb para contenido en espanol ---
@@ -2083,24 +2135,83 @@
             }
         }
 
+        // Detectar si es dispositivo móvil
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   (window.innerWidth <= 768);
+        }
+
+        // Entrar en pantalla completa
+        function enterFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
+
+        // Salir de pantalla completa
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
         function playEpisode(s, e, title) {
             const isSpanish = currentLang === 'es-MX';
             const epTitle = title || `Episodio ${e}`;
-            
+            const mobile = isMobile();
+
             document.getElementById('player-title').innerText = `${selectedShow.name} - ${epTitle}`;
-            
+
+            // Mostrar el player en la página de detalles
+            const playerContainer = document.getElementById('player-container');
+            const playerWrapper = document.querySelector('.player-wrapper');
+
             if (isSpanish) {
                 const imdbId = getImdbId(selectedShow.id);
                 if (imdbId) {
                     const embedUrl = `https://embed69.org/f/${imdbId}-${s}x${e.toString().padStart(2, '0')}`;
                     document.getElementById('main-iframe').src = embedUrl;
-                    document.getElementById('player-overlay').style.display = 'flex';
+                    playerContainer.style.display = 'block';
+
+                    // En móvil, abrir en pantalla completa automáticamente
+                    if (mobile) {
+                        setTimeout(() => {
+                            playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            enterFullscreen(playerWrapper);
+                        }, 300);
+                    } else {
+                        // En desktop, scroll suave al player
+                        setTimeout(() => {
+                            playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                    }
                 } else {
                     alert('Episodio no disponible');
                 }
             } else {
                 document.getElementById('main-iframe').src = `https://www.vidking.net/embed/tv/${selectedShow.id}/${s}/${e}?color=ff2a75&autoPlay=true&nextEpisode=true&episodeSelector=true`;
-                document.getElementById('player-overlay').style.display = 'flex';
+                playerContainer.style.display = 'block';
+
+                // En móvil, abrir en pantalla completa automáticamente
+                if (mobile) {
+                    setTimeout(() => {
+                        playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        enterFullscreen(playerWrapper);
+                    }, 300);
+                } else {
+                    // En desktop, scroll suave al player
+                    setTimeout(() => {
+                        playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
             }
         }
 
@@ -2110,7 +2221,9 @@
         }
         
         function closePlayer() { 
-            document.getElementById('player-overlay').style.display = 'none'; 
+            // Salir de pantalla completa si está activa
+            exitFullscreen();
+            document.getElementById('player-container').style.display = 'none'; 
             document.getElementById('main-iframe').src = ""; 
         }
         
