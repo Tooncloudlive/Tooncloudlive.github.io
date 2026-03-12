@@ -1775,6 +1775,7 @@
     </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -2478,6 +2479,12 @@
         }
 
         function scrollToSection(id) {
+            // Cerrar el player al navegar a otra sección (especialmente al home)
+            if (id === 'hero') {
+                closePlayer();
+                closeDetails();
+            }
+
             const element = document.getElementById(id);
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth' });
@@ -2485,6 +2492,9 @@
         }
 
         async function openDetails(id) {
+            // Cerrar cualquier player abierto previamente al abrir una nueva serie
+            closePlayer();
+
             selectedShow = db.find(s => s.id == id) || favoriteShows.find(s => s.id == id);
             if (!selectedShow) return;
             
