@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ToonCloud+ TV</title>
+    <title>ToonCloud+TV</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/XAHG8BW.png">
     <link rel="shortcut icon" type="image/png" href="https://i.imgur.com/XAHG8BW.png">
     <link rel="apple-touch-icon" href="https://i.imgur.com/XAHG8BW.png">
@@ -39,139 +39,75 @@
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-        /* ===== LOADING SCREEN ===== */
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-color);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        #loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        .loading-logo {
-            width: 100px;
-            height: 100px;
-            animation: pulse 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px var(--accent-glow));
-        }
-        .loading-title {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--accent), var(--accent-hover));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .loading-subtitle {
-            font-size: 13px;
-            color: var(--text-sec);
-            margin-top: -15px;
-        }
-        .loading-progress-container {
-            width: 200px;
-            height: 4px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        .loading-progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
-            border-radius: 4px;
-            transition: width 0.4s ease;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-        .loading-status {
-            font-size: 11px;
-            color: var(--text-sec);
-            text-align: center;
-            max-width: 280px;
-            line-height: 1.5;
-        }
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-top: 5px;
-        }
-        .loading-stats {
-            font-size: 11px;
-            color: rgba(255,255,255,0.4);
-            margin-top: -10px;
-        }
-
+        /* ===== ANIMACIONES PROFESIONALES ===== */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         @keyframes fadeInScale {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+        
         @keyframes fadeInModal {
             from { opacity: 0; transform: scale(0.95); backdrop-filter: blur(0px); }
             to { opacity: 1; transform: scale(1); backdrop-filter: blur(15px); }
         }
+        
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(30px); }
             to { opacity: 1; transform: translateX(0); }
         }
+        
         @keyframes slideInLeft {
             from { opacity: 0; transform: translateX(-30px); }
             to { opacity: 1; transform: translateX(0); }
         }
+        
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.02); }
         }
+        
         @keyframes glow {
             0%, 100% { box-shadow: 0 0 5px var(--accent-glow); }
             50% { box-shadow: 0 0 20px var(--accent-glow), 0 0 30px var(--accent-glow); }
         }
+        
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+        
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
+        
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+        
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
+        /* Clases de animación reutilizables */
         .animate-fade-in { animation: fadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-fade-in-scale { animation: fadeInScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-slide-up { animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-slide-right { animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .animate-slide-left { animation: slideInLeft 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-
+        
+        /* Stagger animations para listas */
         .stagger-1 { animation-delay: 0.05s; }
         .stagger-2 { animation-delay: 0.1s; }
         .stagger-3 { animation-delay: 0.15s; }
@@ -180,47 +116,6 @@
         .stagger-6 { animation-delay: 0.3s; }
         .stagger-7 { animation-delay: 0.35s; }
         .stagger-8 { animation-delay: 0.4s; }
-
-        /* ===== VERIFICATION STATUS INDICATOR ===== */
-        .verify-indicator {
-            position: fixed;
-            top: 60px;
-            right: 12px;
-            background: rgba(15, 16, 20, 0.95);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 8px 14px;
-            font-size: 11px;
-            font-weight: 600;
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            animation: fadeInScale 0.4s ease;
-        }
-        .verify-indicator.hidden {
-            opacity: 0;
-            transform: translateY(-10px);
-            pointer-events: none;
-        }
-        .verify-indicator .v-icon {
-            font-size: 14px;
-        }
-        .verify-indicator .v-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        .verify-indicator .v-count {
-            color: var(--accent);
-            font-weight: 700;
-        }
 
         /* ===== BANNER AD BLOCK ===== */
         .adblock-banner {
@@ -317,6 +212,7 @@
             flex: 1;
             justify-content: flex-end;
         }
+        
         .search-input, .lang-select {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -341,9 +237,11 @@
             max-width: 200px;
             transform: scale(1.02);
         }
+
         .user-counter {
             display: none;
         }
+
         .auth-container { display: flex; align-items: center; }
         .nav-avatar { 
             width: 36px; 
@@ -360,8 +258,10 @@
             box-shadow: 0 0 20px var(--accent-glow);
         }
         .nav-avatar:active { transform: scale(0.95); box-shadow: 0 0 15px var(--accent-glow); }
-        .g_id_signin { transform: scale(0.85); transform-origin: right center; }
 
+        /* Boton de login compacto */
+        .g_id_signin { transform: scale(0.85); transform-origin: right center; }
+        
         /* ===== PERFIL MODAL ===== */
         .profile-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -407,6 +307,7 @@
             box-shadow: 0 0 15px var(--accent-glow);
             transform: translateY(-2px);
         }
+        
         .btn {
             background: linear-gradient(45deg, var(--accent), var(--accent-hover)); 
             color: #fff; border: none; padding: 14px 20px;
@@ -427,7 +328,9 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.5s ease;
         }
-        .btn:hover::before { left: 100%; }
+        .btn:hover::before {
+            left: 100%;
+        }
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px var(--accent-glow);
@@ -589,6 +492,7 @@
         .lang-switcher.english .lang-option.es { color: rgba(255,255,255,0.4); }
         .lang-switcher.english .lang-option.en { color: #fff; text-shadow: 0 0 8px rgba(255,255,255,0.5); }
 
+        /* Indicador de idioma actual */
         .current-lang-indicator {
             position: absolute;
             top: 12px;
@@ -619,6 +523,7 @@
             font-weight: 500;
         }
 
+        /* Overlay de transicion */
         .lang-transition-overlay {
             position: fixed;
             top: 0;
@@ -653,7 +558,7 @@
             animation: fadeIn 0.5s ease 0.3s both;
         }
 
-        /* ===== BRANDS ROW ===== */
+        /* ===== BRANDS ROW - SCROLLABLE ===== */
         .brands-row {
             position: relative; 
             z-index: 5; 
@@ -670,6 +575,7 @@
             animation: slideUp 0.6s ease 0.2s both;
         }
         .brands-row::-webkit-scrollbar { display: none; }
+        
         .brand-item {
             min-width: 70px; 
             height: 42px; 
@@ -706,6 +612,7 @@
         .brand-item img { max-width: 90%; max-height: 70%; filter: brightness(200%) grayscale(50%); transition: all 0.3s ease; }
         .brand-item.active img, .brand-item:active:not(.disabled) img { filter: none; }
         .brand-item:hover img { filter: brightness(120%); }
+
         .brand-count {
             position: absolute;
             top: -5px; right: -5px;
@@ -719,6 +626,7 @@
             z-index: 2;
             animation: fadeInScale 0.3s ease;
         }
+
         .brand-item.disabled { cursor: not-allowed; opacity: 0.5; flex-direction: column; gap: 1px; }
         .coming-soon-text { font-size: 7px; color: var(--accent); text-transform: uppercase; font-weight: 800; letter-spacing: 0.3px; text-align: center; }
 
@@ -745,7 +653,7 @@
             border-radius: 2px; 
             box-shadow: 0 0 10px var(--accent-glow);
         }
-
+        
         /* ===== CAROUSEL ===== */
         .carousel { 
             display: flex; 
@@ -757,11 +665,23 @@
             scrollbar-width: thin;
             scrollbar-color: var(--accent) rgba(255, 255, 255, 0.05);
         }
-        .carousel::-webkit-scrollbar { height: 6px; }
-        .carousel::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 10px; margin: 0 4px; }
-        .carousel::-webkit-scrollbar-thumb { background: linear-gradient(90deg, var(--accent), var(--accent-hover)); border-radius: 10px; }
-        .carousel::-webkit-scrollbar-thumb:hover { background: linear-gradient(90deg, var(--accent-hover), var(--accent)); box-shadow: 0 0 10px var(--accent-glow); }
-
+        .carousel::-webkit-scrollbar { 
+            height: 6px; 
+        }
+        .carousel::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 10px; 
+            margin: 0 4px;
+        }
+        .carousel::-webkit-scrollbar-thumb { 
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover)); 
+            border-radius: 10px; 
+        }
+        .carousel::-webkit-scrollbar-thumb:hover { 
+            background: linear-gradient(90deg, var(--accent-hover), var(--accent)); 
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        
         .card {
             min-width: 130px;
             max-width: 130px;
@@ -780,9 +700,15 @@
             border-color: rgba(255, 42, 117, 0.5);
             box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow);
         }
-        .card:active { transform: scale(0.97); }
+        .card:active {
+            transform: scale(0.97);
+        }
         .card.coming-soon { opacity: 0.5; cursor: not-allowed; }
-        .card.coming-soon:hover { transform: none; box-shadow: none; border-color: transparent; }
+        .card.coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
+        }
         .card.coming-soon:active { transform: none; border-color: transparent; }
         .card img { 
             width: 100%; 
@@ -790,7 +716,9 @@
             object-fit: cover; 
             transition: all 0.4s ease; 
         }
-        .card:hover img { transform: scale(1.08); }
+        .card:hover img {
+            transform: scale(1.08);
+        }
         .card-overlay {
             position: absolute; 
             bottom: 0; 
@@ -815,7 +743,9 @@
             text-shadow: 1px 1px 3px #000; 
             transition: all 0.3s ease;
         }
-        .card:hover .card-title { color: var(--accent); }
+        .card:hover .card-title {
+            color: var(--accent);
+        }
         .card-rating { 
             font-size: 11px; 
             color: var(--rating-color); 
@@ -854,7 +784,11 @@
             animation: fadeIn 0.4s ease-out;
             padding-bottom: calc(20px + var(--safe-bottom));
         }
-        .details-content-wrapper { position: relative; z-index: 2; max-width: 100%; }
+        .details-content-wrapper { 
+            position: relative; 
+            z-index: 2; 
+            max-width: 100%; 
+        }
         .details-header { 
             display: flex; 
             flex-direction: column; 
@@ -906,6 +840,7 @@
             flex: 1;
             padding-top: 85px;
         }
+        
         .close-details { 
             font-size: 20px; 
             cursor: pointer; 
@@ -935,6 +870,7 @@
             border-color: var(--accent); 
             transform: rotate(90deg) scale(0.95);
         }
+        
         .meta-tags { 
             display: flex; 
             flex-wrap: wrap; 
@@ -953,26 +889,35 @@
             transition: all 0.3s ease;
             animation: fadeInScale 0.3s ease backwards;
         }
-        .tag:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+        .tag:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.12);
+        }
         .tag.rating { 
             background: rgba(255, 215, 0, 0.15); 
             color: var(--rating-color); 
             border: 1px solid rgba(255, 215, 0, 0.3); 
             font-weight: 700;
         }
-        .tag.rating:hover { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+        .tag.rating:hover {
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
         .tag.popularity { 
             background: rgba(255, 69, 0, 0.15); 
             color: #ff6b33; 
             border: 1px solid rgba(255, 69, 0, 0.3); 
         }
-        .tag.popularity:hover { box-shadow: 0 0 15px rgba(255, 69, 0, 0.3); }
+        .tag.popularity:hover {
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.3);
+        }
         .tag.pro-data { 
             background: rgba(255, 42, 117, 0.15); 
             color: #ff7aa5; 
             border: 1px solid rgba(255, 42, 117, 0.4); 
         }
-        .tag.pro-data:hover { box-shadow: 0 0 15px var(--accent-glow); }
+        .tag.pro-data:hover {
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
 
         .details-info-content {
             padding: 0 16px;
@@ -985,7 +930,10 @@
             line-height: 1.5; 
             transition: all 0.3s ease;
         }
-        .extra-info-text:hover { color: #fff; transform: translateX(5px); }
+        .extra-info-text:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
         .extra-info-text span { color: #fff; font-weight: 500; }
 
         #det-title {
@@ -1041,10 +989,14 @@
         }
 
         /* ===== CAST SECTION ===== */
-        .cast-section { margin: 20px 0; animation: fadeIn 0.6s ease; }
+        .cast-section { 
+            margin: 20px 0;
+            animation: fadeIn 0.6s ease; 
+        }
         .cast-scroll { 
             display: flex; 
             gap: 12px; 
+            overflow-x: auto; 
             padding: 0 16px 10px;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
@@ -1059,7 +1011,9 @@
             transition: all 0.3s ease;
             animation: fadeInScale 0.4s ease backwards;
         }
-        .cast-item:hover { transform: translateY(-5px); }
+        .cast-item:hover {
+            transform: translateY(-5px);
+        }
         .cast-img { 
             width: 65px; 
             height: 65px; 
@@ -1085,7 +1039,9 @@
             margin-bottom: 1px; 
             transition: all 0.3s ease;
         }
-        .cast-item:hover .cast-name { color: var(--accent); }
+        .cast-item:hover .cast-name {
+            color: var(--accent);
+        }
         .cast-char { 
             font-size: 9px; 
             color: var(--text-sec); 
@@ -1094,7 +1050,7 @@
             white-space: nowrap; 
         }
 
-        /* ===== EPISODES WITH VERIFICATION ===== */
+        /* ===== EPISODES ===== */
         .episodes-section-title {
             padding: 0 16px;
             margin: 20px 0 15px;
@@ -1124,19 +1080,16 @@
             transform: translateX(8px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
         }
-        .episode-card:active { transform: scale(0.98) translateX(5px); }
+        .episode-card:active { 
+            transform: scale(0.98) translateX(5px);
+        }
         .episode-card.unavailable {
-            opacity: 0.35;
+            opacity: 0.4;
             cursor: not-allowed;
             pointer-events: none;
-            filter: grayscale(0.6);
         }
         .episode-card.checking {
             opacity: 0.7;
-            border-color: rgba(255,255,255,0.1);
-        }
-        .episode-card.available {
-            border-left: 3px solid #4ade80;
         }
         .episode-card img { 
             width: 110px; 
@@ -1145,7 +1098,9 @@
             flex-shrink: 0;
             transition: all 0.4s ease;
         }
-        .episode-card:hover img { transform: scale(1.05); }
+        .episode-card:hover img {
+            transform: scale(1.05);
+        }
         .episode-info {
             padding: 10px 12px;
             display: flex;
@@ -1165,15 +1120,13 @@
             gap: 6px;
         }
         .episode-status-icon {
-            font-size: 12px;
-            width: 16px;
-            height: 16px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 10px;
         }
         .episode-status-icon.available { color: #4ade80; }
-        .episode-status-icon.checking { color: var(--accent); animation: spin 1s linear infinite; }
+        .episode-status-icon.checking { 
+            color: var(--accent); 
+            animation: spin 1s linear infinite;
+        }
         .episode-status-icon.unavailable { color: #ef4444; }
         .episode-title {
             font-size: 13px;
@@ -1184,7 +1137,9 @@
             text-overflow: ellipsis;
             transition: all 0.3s ease;
         }
-        .episode-card:hover .episode-title { color: var(--accent); }
+        .episode-card:hover .episode-title {
+            color: var(--accent);
+        }
         .episode-rating {
             font-size: 10px;
             color: var(--rating-color);
@@ -1202,16 +1157,59 @@
             overflow: hidden;
             line-height: 1.4;
         }
-        .episode-locked-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            opacity: 0.3;
-            z-index: 2;
+        
+        /* ===== EPISODE CHECKING OVERLAY ===== */
+        .episode-checking-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
         }
-
+        .episode-checking-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        .checking-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        .checking-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .checking-subtext {
+            font-size: 12px;
+            color: var(--text-sec);
+        }
+        .checking-progress {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .checking-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            animation: shimmer 1.5s infinite;
+        }
+        
         /* ===== PLAYER EMBEDDED ===== */
         #player-container {
             display: none;
@@ -1222,7 +1220,7 @@
         .player-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
             background: #000;
             border-radius: 12px;
             overflow: hidden;
@@ -1242,6 +1240,7 @@
             height: 100%;
             border: none;
         }
+        /* Estilos cuando el player está en pantalla completa */
         .player-wrapper:fullscreen {
             border-radius: 0;
             padding-bottom: 0;
@@ -1314,8 +1313,15 @@
             text-align: center;
             animation: fadeIn 0.5s ease 0.3s both;
         }
-        .fullscreen-hint span { color: var(--accent); }
-        @media (max-width: 768px) { .fullscreen-hint { display: none; } }
+        .fullscreen-hint span {
+            color: var(--accent);
+        }
+        /* Ocultar hint en móvil */
+        @media (max-width: 768px) {
+            .fullscreen-hint {
+                display: none;
+            }
+        }
 
         /* ===== FOOTER ===== */
         .main-footer {
@@ -1350,10 +1356,15 @@
             color: white;
             transition: all 0.3s ease;
         }
-        .footer-logo:hover { transform: scale(1.05); }
+        .footer-logo:hover {
+            transform: scale(1.05);
+        }
         .footer-logo img { height: 24px; filter: brightness(0) invert(1); opacity: 0.9; transition: all 0.3s ease; }
-        .footer-logo:hover img { filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow)); }
+        .footer-logo:hover img {
+            filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--accent-glow));
+        }
         .footer-logo span { font-weight: 800; font-size: 16px; }
+
         .footer-social {
             display: flex;
             align-items: center;
@@ -1375,7 +1386,10 @@
             box-shadow: 0 5px 15px rgba(255, 42, 117, 0.3);
         }
         .footer-social svg { width: 16px; height: 16px; fill: white; transition: all 0.3s ease; }
-        .footer-social:hover svg { fill: var(--accent); }
+        .footer-social:hover svg {
+            fill: var(--accent);
+        }
+
         .footer-collabs {
             display: flex;
             align-items: center;
@@ -1404,6 +1418,7 @@
             filter: grayscale(0%) brightness(1);
             transform: scale(1.1);
         }
+
         .footer-disclaimer {
             font-size: 10px;
             color: #555;
@@ -1429,6 +1444,7 @@
             box-sizing: border-box;
             animation: fadeIn 0.3s ease;
         }
+
         .language-card {
             background: rgba(25, 26, 31, 0.95);
             border: 1px solid var(--glass-border);
@@ -1445,24 +1461,28 @@
         .language-card:hover {
             box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 40px rgba(255, 42, 117, 0.3);
         }
+
         .language-card h3 {
             color: var(--accent);
             margin: 10px 0 15px;
             font-size: 22px;
             font-weight: 800;
         }
+
         .language-card p {
             color: #e0e0e0;
             line-height: 1.6;
             font-size: 13px;
             margin-bottom: 10px;
         }
+
         .warning-icon {
             font-size: 45px;
             margin-bottom: 10px;
             filter: drop-shadow(0 0 10px var(--accent-glow));
             animation: float 2s ease-in-out infinite;
         }
+
         .close-warning {
             position: absolute;
             top: 15px;
@@ -1478,24 +1498,39 @@
             justify-content: center;
             border-radius: 50%;
         }
-        .close-warning:hover { color: white; background: rgba(255,255,255,0.1); transform: rotate(90deg); }
+        .close-warning:hover {
+            color: white; 
+            background: rgba(255,255,255,0.1);
+            transform: rotate(90deg);
+        }
         .close-warning:active { color: white; background: rgba(255,255,255,0.1); }
+
         .footer-msg {
             margin-top: 20px;
             font-size: 12px !important;
             color: var(--text-sec) !important;
         }
         .footer-msg strong { color: var(--accent); }
+
         .coming-soon-episodes {
             text-align: center;
             padding: 40px 20px;
             color: var(--text-sec);
             animation: fadeIn 0.5s ease;
         }
-        .coming-soon-episodes h3 { color: var(--accent); font-size: 20px; margin-bottom: 12px; }
-        .coming-soon-episodes p { font-size: 13px; max-width: 280px; margin: 0 auto; line-height: 1.6; }
+        .coming-soon-episodes h3 {
+            color: var(--accent);
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .coming-soon-episodes p {
+            font-size: 13px;
+            max-width: 280px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
-        /* ===== BOTTOM NAV ===== */
+        /* ===== BOTTOM NAV (MOBILE) ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -1522,15 +1557,25 @@
             color: var(--text-sec);
             border-radius: 12px;
         }
-        .bottom-nav-item:hover { background: rgba(255,255,255,0.05); }
+        .bottom-nav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
         .bottom-nav-item.active { 
             color: var(--accent); 
             background: rgba(255, 42, 117, 0.1);
         }
         .bottom-nav-item:active { transform: scale(0.95); }
-        .bottom-nav-icon { font-size: 20px; transition: all 0.3s ease; }
-        .bottom-nav-item:hover .bottom-nav-icon { transform: translateY(-3px); }
-        .bottom-nav-label { font-size: 10px; font-weight: 500; }
+        .bottom-nav-icon {
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        .bottom-nav-item:hover .bottom-nav-icon {
+            transform: translateY(-3px);
+        }
+        .bottom-nav-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
 
         /* ===== SKELETON LOADING ===== */
         .skeleton-card {
@@ -1551,8 +1596,18 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
             animation: shimmer 1.5s infinite;
         }
-        .skeleton-img { width: 100%; height: 195px; background: #252532; }
-        .skeleton-text { height: 40px; background: #252532; margin-top: 2px; }
+        .skeleton-img {
+            width: 100%;
+            height: 195px;
+            background: #252532;
+        }
+        .skeleton-text {
+            height: 40px;
+            background: #252532;
+            margin-top: 2px;
+        }
+        
+        /* Episode skeleton */
         .episode-skeleton {
             background: rgba(20, 21, 28, 0.8);
             border-radius: 12px;
@@ -1572,7 +1627,12 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
             animation: shimmer 1.5s infinite;
         }
-        .episode-skeleton-img { width: 110px; height: 75px; background: #252532; flex-shrink: 0; }
+        .episode-skeleton-img {
+            width: 110px;
+            height: 75px;
+            background: #252532;
+            flex-shrink: 0;
+        }
         .episode-skeleton-text {
             flex: 1;
             padding: 15px;
@@ -1581,14 +1641,23 @@
             gap: 8px;
             justify-content: center;
         }
-        .episode-skeleton-line { height: 12px; background: #252532; border-radius: 4px; }
+        .episode-skeleton-line {
+            height: 12px;
+            background: #252532;
+            border-radius: 4px;
+        }
         .episode-skeleton-line.short { width: 40%; }
         .episode-skeleton-line.medium { width: 70%; }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== TABLET & DESKTOP ===== */
         @media (min-width: 768px) {
             body { padding-bottom: 0; }
-            nav { padding: 15px 40px; flex-wrap: nowrap; position: relative; }
+            
+            nav { 
+                padding: 15px 40px; 
+                flex-wrap: nowrap;
+                position: relative;
+            }
             .logo-container img { height: 38px; }
             .nav-right { width: auto; gap: 15px; justify-content: flex-end; }
             .search-input { max-width: 250px; flex: none; }
@@ -1596,41 +1665,110 @@
             .user-counter { display: flex; }
             .g_id_signin { transform: none; }
             .bottom-nav { display: none; }
-            .hero { height: 70vh; padding: 0 60px 50px; align-items: center; }
+            
+            .hero {
+                height: 70vh;
+                padding: 0 60px 50px;
+                align-items: center;
+            }
             .hero-title { font-size: 52px; }
-            .hero-desc { font-size: 15px; -webkit-line-clamp: 3; max-width: 600px; }
-            .lang-switcher-container { position: fixed; top: 90px; right: 30px; }
-            .lang-switcher { width: 90px; height: 38px; }
-            .lang-switcher-thumb { width: 42px; height: 32px; }
-            .lang-switcher.english .lang-switcher-thumb { transform: translateX(42px); }
-            .current-lang-indicator { top: 20px; left: 60px; padding: 8px 14px; }
+            .hero-desc { 
+                font-size: 15px; 
+                -webkit-line-clamp: 3;
+                max-width: 600px;
+            }
+            
+            .lang-switcher-container {
+                position: fixed;
+                top: 90px;
+                right: 30px;
+            }
+            .lang-switcher {
+                width: 90px;
+                height: 38px;
+            }
+            .lang-switcher-thumb {
+                width: 42px;
+                height: 32px;
+            }
+            .lang-switcher.english .lang-switcher-thumb {
+                transform: translateX(42px);
+            }
+            .current-lang-indicator {
+                top: 20px;
+                left: 60px;
+                padding: 8px 14px;
+            }
             .current-lang-indicator .flag-big { font-size: 20px; }
             .current-lang-indicator .lang-text { font-size: 12px; }
-            .brands-row { padding: 0 60px; margin-top: -25px; overflow-x: visible; flex-wrap: wrap; justify-content: center; }
-            .brand-item { min-width: 80px; height: 48px; }
+            
+            .brands-row { 
+                padding: 0 60px; 
+                margin-top: -25px;
+                overflow-x: visible;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .brand-item {
+                min-width: 80px;
+                height: 48px;
+            }
+            
             .section-container { padding: 0 60px 50px; }
             .section-title { font-size: 18px; }
-            .card, .skeleton-card { min-width: 170px; max-width: 170px; }
+            
+            .card, .skeleton-card {
+                min-width: 170px;
+                max-width: 170px;
+            }
             .card img, .skeleton-img { height: 255px; }
+            
             .details-hero { height: 50vh; }
-            .details-poster-container { margin-top: -100px; padding: 0 60px; }
+            .details-poster-container {
+                margin-top: -100px;
+                padding: 0 60px;
+            }
             .details-poster { width: 180px; }
             .details-info-header { padding-top: 110px; }
             #det-title { font-size: 32px; }
-            .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title { padding-left: 60px; padding-right: 60px; }
-            .episodes-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-            .episode-card img, .episode-skeleton-img { width: 130px; height: 90px; }
+            
+            .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title {
+                padding-left: 60px;
+                padding-right: 60px;
+            }
+            
+            .episodes-grid { 
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            }
+            .episode-card img {
+                width: 130px;
+                height: 90px;
+            }
+            .episode-skeleton-img {
+                width: 130px;
+                height: 90px;
+            }
+            
             .main-footer { padding: 40px 60px; }
             .footer-top { justify-content: space-between; }
-            .verify-indicator { top: 70px; right: 30px; }
         }
+
         @media (min-width: 1200px) {
             .hero { height: 80vh; padding: 0 100px 60px; }
             .hero-title { font-size: 65px; }
+            
             .brands-row, .section-container { padding-left: 100px; padding-right: 100px; }
-            .details-poster-container, .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title { padding-left: 100px; padding-right: 100px; }
-            .card, .skeleton-card { min-width: 190px; max-width: 190px; }
+            .details-poster-container, .meta-tags, .details-info-content, .cast-scroll, .episodes-grid, .episodes-section-title {
+                padding-left: 100px;
+                padding-right: 100px;
+            }
+            
+            .card, .skeleton-card {
+                min-width: 190px;
+                max-width: 190px;
+            }
             .card img, .skeleton-img { height: 285px; }
+            
             .details-poster { width: 220px; }
             .details-poster-container { margin-top: -120px; }
             .details-info-header { padding-top: 130px; }
@@ -1638,27 +1776,11 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
+<base target="_blank">
+<base target="_blank">
 </head>
 <body>
-
-    <!-- LOADING SCREEN -->
-    <div id="loading-screen">
-        <img class="loading-logo" src="https://i.imgur.com/XAHG8BW.png" alt="ToonCloud+">
-        <div class="loading-title">ToonCloud+ TV</div>
-        <div class="loading-subtitle" id="loading-subtitle">Verificando contenido disponible...</div>
-        <div class="loading-progress-container">
-            <div class="loading-progress-bar" id="loading-progress-bar"></div>
-        </div>
-        <div class="loading-spinner" id="loading-spinner"></div>
-        <div class="loading-status" id="loading-status">Iniciando verificacion...</div>
-        <div class="loading-stats" id="loading-stats"></div>
-    </div>
-
-    <!-- Verification Status Indicator -->
-    <div id="verify-indicator" class="verify-indicator hidden">
-        <div class="v-spinner" id="v-spinner"></div>
-        <span id="v-text">Verificando...</span>
-    </div>
 
     <!-- Overlay de transicion de idioma -->
     <div id="lang-transition-overlay" class="lang-transition-overlay">
@@ -1666,15 +1788,25 @@
         <div class="lang-transition-text" id="transition-text">Cambiando a Espanol...</div>
         <div class="lang-transition-subtext" id="transition-subtext">Cargando contenido</div>
     </div>
+    
+    <!-- Overlay de verificacion de episodios -->
+    <div id="episode-checking-overlay" class="episode-checking-overlay">
+        <div class="checking-spinner"></div>
+        <div class="checking-text" id="checking-text">Verificando episodios disponibles...</div>
+        <div class="checking-subtext" id="checking-subtext">Esto puede tomar unos segundos</div>
+        <div class="checking-progress">
+            <div class="checking-progress-bar" id="checking-progress-bar" style="width: 0%"></div>
+        </div>
+    </div>
 
     <div id="language-warning" class="language-modal">
         <div class="language-card">
-            <span class="close-warning" onclick="closeWarning()">&#10005;</span>
-            <div class="warning-icon">&#127760;</div>
-            <h3 id="warn-title">&#161;Hola Comunidad Hispana!</h3>
+            <span class="close-warning" onclick="closeWarning()">X</span>
+            <div class="warning-icon">🌐</div>
+            <h3 id="warn-title">¡Hola Comunidad Hispana!</h3>
             <p id="warn-text">Queremos pedirles disculpas: por el momento, la mayoria de nuestras series solo estan disponibles en su <strong>idioma original (ingles)</strong>.</p>
             <p id="warn-subtext">Estamos trabajando duro y en las proximas actualizaciones activaremos la opcion de <strong>lenguaje espanol</strong> para que todos puedan disfrutar por igual.</p>
-            <p class="footer-msg">&#161;Gracias por su paciencia! <br> <strong>Equipo ToonCloud+ TV</strong></p>
+            <p class="footer-msg">¡Gracias por su paciencia! <br> <strong>Equipo ToonCloud+ TV</strong></p>
             <button class="btn" onclick="closeWarning()">Entendido</button>
         </div>
     </div>
@@ -1682,17 +1814,19 @@
     <div class="adblock-banner" id="adblock-banner">
         <span data-i18n="adblock_text">Recomendado: Instala uBlock para bloquear anuncios</span>
         <a href="https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh?hl=es" target="_blank" data-i18n="adblock_btn">Instalar</a>
-        <div class="close-banner" onclick="closeBanner()">&#10005;</div>
+        <div class="close-banner" onclick="closeBanner()">X</div>
     </div>
 
     <nav>
         <div class="logo-container"><img src="https://i.imgur.com/XAHG8BW.png" onclick="location.reload()"></div>
         <div class="nav-right">
             <div class="user-counter">
-                <span class="planet">&#127758;</span>
+                <span class="planet">🌍</span>
                 <span id="active-users">0</span>
             </div>
+
             <input type="text" id="search-bar" class="search-input" placeholder="Buscar..." oninput="searchSeries()">
+            
             <div id="auth-container" class="auth-container">
                 <div id="g_id_onload"
                      data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com"
@@ -1706,7 +1840,7 @@
 
     <div id="profile-modal" class="profile-modal">
         <div class="profile-card">
-            <span style="position:absolute; right:15px; top:15px; cursor:pointer; font-size:20px; color: var(--text-sec); width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all 0.3s ease;" onclick="closeProfile()">&#10005;</span>
+            <span style="position:absolute; right:15px; top:15px; cursor:pointer; font-size:20px; color: var(--text-sec); width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition:all 0.3s ease;" onclick="closeProfile()">X</span>
             <h3 style="margin:5px 0 15px; font-size: 20px; font-weight: 700;">Mi Perfil</h3>
             <img id="profile-preview" src="" alt="Avatar">
             <input type="text" id="profile-name" class="profile-input" placeholder="Tu Nombre">
@@ -1721,9 +1855,10 @@
             <span class="flag-big" id="current-flag"></span>
             <div class="lang-text">
                 <span>EN</span>
-                <span id="current-lang-name">ESPA&#209;OL</span>
+                <span id="current-lang-name">ESPAÑOL</span>
             </div>
         </div>
+        
         <div class="lang-switcher-container">
             <span class="lang-switcher-label">IDIOMA</span>
             <div class="lang-switcher" id="lang-switcher" onclick="toggleLanguage()">
@@ -1734,6 +1869,7 @@
                 <div class="lang-switcher-thumb"></div>
             </div>
         </div>
+        
         <div class="hero-content">
             <h1 id="hero-title" class="hero-title">ToonCloud+</h1>
             <div id="hero-meta" class="hero-meta"></div>
@@ -1773,13 +1909,14 @@
     </div>
 
     <div id="favorites-section" class="section-container" style="display: none;">
-        <h2 class="section-title" data-i18n="my_favorites">&#10084;&#65039; Favoritos</h2>
+        <h2 class="section-title" data-i18n="my_favorites">❤️ Favoritos</h2>
         <div id="favorites-carousel" class="carousel"></div>
     </div>
 
     <div class="section-container">
         <h2 id="section-title" class="section-title" data-i18n="suggested">Series Sugeridas</h2>
         <div id="carousel" class="carousel">
+            <!-- Skeleton loading cards -->
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div></div>
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div></div>
             <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text"></div></div>
@@ -1789,21 +1926,22 @@
         </div>
     </div>
 
+    <!-- Bottom Navigation (Mobile Only) -->
     <div class="bottom-nav">
         <div class="bottom-nav-item active" onclick="scrollToSection('hero')">
-            <span class="bottom-nav-icon">&#127968;</span>
+            <span class="bottom-nav-icon">🏠</span>
             <span class="bottom-nav-label">Inicio</span>
         </div>
         <div class="bottom-nav-item" onclick="scrollToSection('favorites-section')">
-            <span class="bottom-nav-icon">&#10084;&#65039;</span>
+            <span class="bottom-nav-icon">❤️</span>
             <span class="bottom-nav-label">Favoritos</span>
         </div>
         <div class="bottom-nav-item" onclick="document.getElementById('search-bar').focus()">
-            <span class="bottom-nav-icon">&#128269;</span>
+            <span class="bottom-nav-icon">🔍</span>
             <span class="bottom-nav-label">Buscar</span>
         </div>
         <div class="bottom-nav-item" onclick="toggleLanguage()">
-            <span class="bottom-nav-icon">&#127760;</span>
+            <span class="bottom-nav-icon">🌐</span>
             <span class="bottom-nav-label">Idioma</span>
         </div>
     </div>
@@ -1820,20 +1958,22 @@
                     @tooncloudtv
                 </a>
             </div>
+
             <div class="footer-collabs">
                 <span>Power By &amp; Collaboration</span>
                 <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="TMDB" class="collab-logo" title="Datos por The Movie Database">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png" alt="GitHub" class="collab-logo" title="Hospedado en GitHub">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/UBlock_Origin_logo.svg/1024px-UBlock_Origin_logo.svg.png" alt="uBlock" class="collab-logo" title="Bloqueo de anuncios recomendado">
             </div>
+
             <div class="footer-disclaimer">
-                <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un indice de contenido multimedia. No alojamos, almacenamos ni subimos ningun archivo de video en nuestros servidores. Todo el contenido visualizado es proporcionado por servicios de terceros totalmente ajenos a nosotros. El uso de esta plataforma es responsabilidad del usuario final.
+                <strong>Descargo de responsabilidad:</strong> ToonCloud+ es un índice de contenido multimedia. No alojamos, almacenamos ni subimos ningún archivo de video en nuestros servidores. Todo el contenido visualizado es proporcionado por servicios de terceros totalmente ajenos a nosotros. El uso de esta plataforma es responsabilidad del usuario final.
             </div>
         </div>
     </footer>
-
+    
     <div id="details-screen">
-        <span class="close-details" onclick="closeDetails()">&#10005;</span>
+        <span class="close-details" onclick="closeDetails()">X</span>
         <div class="details-content-wrapper">
             <div class="details-header">
                 <div class="details-hero" id="details-hero-bg"></div>
@@ -1845,7 +1985,9 @@
                     </div>
                 </div>
             </div>
+            
             <div id="det-meta" class="meta-tags"></div>
+            
             <div class="details-info-content">
                 <div id="det-extra-info" style="margin-bottom: 15px; padding: 12px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
                     <div class="extra-info-text" id="det-creators"></div>
@@ -1855,1440 +1997,1326 @@
                 <p id="det-desc"></p>
                 <div class="action-row">
                     <select id="season-select" class="lang-select" onchange="loadEpisodes()"></select>
-                    <button id="fav-btn" class="btn" onclick="toggleFavorite()">&#10084;&#65039; Favorito</button>
+                    <button id="fav-btn" class="btn" onclick="toggleFavorite()">❤️ Favorito</button>
                 </div>
             </div>
-            <div id="player-container">
-                <div class="player-header-embedded">
-                    <span class="player-title-embedded" id="player-title">Reproduciendo...</span>
-                    <div class="close-player-btn-embedded" onclick="closePlayer()">&#10005;</div>
-                </div>
-                <div class="player-wrapper">
-                    <iframe id="main-iframe" src="" allowfullscreen></iframe>
-                </div>
-                <div class="fullscreen-hint">&#128161; Haz clic en el boton <span>&#9974;</span> del reproductor para pantalla completa</div>
-            </div>
+            
+            <!-- Player embebido (se muestra dentro de details-screen) -->
+    <div id="player-container">
+        <div class="player-header-embedded">
+            <span class="player-title-embedded" id="player-title">Reproduciendo...</span>
+            <div class="close-player-btn-embedded" onclick="closePlayer()">✕</div>
+        </div>
+        <div class="player-wrapper">
+            <iframe id="main-iframe" src="" allowfullscreen></iframe>
+        </div>
+        <div class="fullscreen-hint">💡 Haz clic en el botón <span>⛶</span> del reproductor para pantalla completa</div>
+    </div>
+            
             <div class="cast-section">
                 <h3 class="section-title" data-i18n="cast" style="padding: 0 16px;">Reparto</h3>
                 <div id="cast-list" class="cast-scroll"></div>
             </div>
+            
             <h2 class="section-title episodes-section-title" data-i18n="episodes">Episodios</h2>
             <div id="episodes-list" class="episodes-grid"></div>
         </div>
     </div>
 
-<script>
+    
 
-// ============================================================
-// TOONCLOUD+ TV v2.0 - SISTEMA DE VERIFICACION DINAMICA
-// ============================================================
+    <script>
+        // --- IDs de IMDb para contenido en espanol ---
+        const SPANISH_IMDB_IDS = ['tt0419326', 'tt0760437', 'tt2293002', 'tt1192169', 'tt1622696', 'tt0206512', 'tt0112197', 'tt0101188', 'tt0115200', 'tt28058460', 'tt1641384', 'tt1942683', 'tt0112175', 'tt0063939', 'tt0235923', 'tt2580046', 'tt13914146', 'tt2548200', 'tt0247729', 'tt0096697', 'tt9165462', 'tt4859164', 'tt13303478', 'tt0283808', 'tt0118375', 'tt0121955', 'tt0154061', 'tt0149460', 'tt0320808', 'tt0465327', 'tt1213218', 'tt0165052', 'tt15837206', 'tt0852863', 'tt0312255', 'tt7745956', 'tt2341339', 'tt0293737', 'tt0126170', 'tt2950342', 'tt3718778', 'tt3807022', 'tt0338580', 'tt1173427', 'tt15560792', 'tt0397306', 'tt7658402', 'tt6741278', 'tt0101084', 'tt0083475', 'tt5531466', 'tt0092345', 'tt2455514', 'tt0119282', 'tt0074053', 'tt4215734', 'tt8456094', 'tt0063950', 'tt0182576', 'tt1722512', 'tt0220880', 'tt0376390', 'tt1660055', 'tt0318233', 'tt2455546', 'tt11198220', 'tt0850642', 'tt13089270', 'tt0147746', 'tt1626038', 'tt0775372', 'tt0352090', 'tt8741368', 'tt0053502', 'tt0294097', 'tt0167743', 'tt0772145', 'tt0473584', 'tt0115228', 'tt1877889', 'tt0106115', 'tt0423621', 'tt0433278', 'tt0105941', 'tt6524350', 'tt0131664', 'tt3061046', 'tt5363918', 'tt0343314', 'tt0118266', 'tt3052798', 'tt1659175', 'tt15125616', 'tt8235236', 'tt10611608', 'tt8050740', 'tt0398417', 'tt0259141', 'tt1291662', 'tt7713450', 'tt0497310', 'tt10364808', 'tt0170996', 'tt1140100', 'tt0111970', 'tt4437732', 'tt0108684', 'tt11351236', 'tt0451461', 'tt0419348', 'tt1178180', 'tt8543208', 'tt0275137', 'tt0361201', 'tt0118289', 'tt0419315', 'tt0366005', 'tt0055683', 'tt0387714', 'tt0292800', 'tt0784896', 'tt0353115', 'tt8036272', 'tt0454349', 'tt15061770', 'tt9073898', 'tt1195935', 'tt8129006', 'tt0040361', 'tt0108783', 'tt9636800', 'tt6317068', 'tt3398228', 'tt0101081', 'tt0816401', 'tt0312109', 'tt0112064', 'tt0184111', 'tt1636691', 'tt7736544', 'tt7736558', 'tt0386176', 'tt1865718', 'tt1600757', 'tt1726839', 'tt3874544', 'tt1821680', 'tt0115157', 'tt1621748', 'tt0103359', 'tt0122355', 'tt1305826', 'tt7042146', 'tt2758770', 'tt1710308', 'tt0429305', 'tt0407398', 'tt0278866', 'tt1236429', 'tt0439349', 'tt0775407', 'tt0762067', 'tt0449545', 'tt0487849', 'tt0487813', 'tt0233041', 'tt0756522', 'tt0417299', 'tt0421482', 'tt0121220', 'tt0126158', 'tt3648112', 'tt1236429', 'tt1432142', 'tt0449545', 'tt0086815', 'tt0362350', 'tt0482870', 'tt0278238', 'tt2861424', 'tt0149460'];
 
-const SPANISH_IMDB_IDS = ['tt0419326','tt0760437','tt2293002','tt1192169','tt1622696','tt0206512','tt0112197','tt0101188','tt0115200','tt28058460','tt1641384','tt1942683','tt0112175','tt0063939','tt0235923','tt2580046','tt13914146','tt2548200','tt0247729','tt0096697','tt9165462','tt4859164','tt13303478','tt0283808','tt0118375','tt0121955','tt0154061','tt0149460','tt0320808','tt0465327','tt1213218','tt0165052','tt15837206','tt0852863','tt0312255','tt7745956','tt2341339','tt0293737','tt0126170','tt2950342','tt3718778','tt3807022','tt0338580','tt1173427','tt15560792','tt0397306','tt7658402','tt6741278','tt0101084','tt0083475','tt5531466','tt0092345','tt2455514','tt0119282','tt0074053','tt4215734','tt8456094','tt0063950','tt0182576','tt1722512','tt0220880','tt0376390','tt1660055','tt0318233','tt2455546','tt11198220','tt0850642','tt13089270','tt0147746','tt1626038','tt0775372','tt0352090','tt8741368','tt0053502','tt0294097','tt0167743','tt0772145','tt0473584','tt0115228','tt1877889','tt0106115','tt0423621','tt0433278','tt0105941','tt6524350','tt0131664','tt3061046','tt5363918','tt0343314','tt0118266','tt3052798','tt1659175','tt15125616','tt8235236','tt10611608','tt8050740','tt0398417','tt0259141','tt1291662','tt7713450','tt0497310','tt10364808','tt0170996','tt1140100','tt0111970','tt4437732','tt0108684','tt11351236','tt0451461','tt0419348','tt1178180','tt8543208','tt0275137','tt0361201','tt0118289','tt0419315','tt0366005','tt0055683','tt0387714','tt0292800','tt0784896','tt0353115','tt8036272','tt0454349','tt15061770','tt9073898','tt1195935','tt8129006','tt0040361','tt0108783','tt9636800','tt6317068','tt3398228','tt0101081','tt0816401','tt0312109','tt0112064','tt0184111','tt1636691','tt7736544','tt7736558','tt0386176','tt1865718','tt1600757','tt1726839','tt3874544','tt1821680','tt0115157','tt1621748','tt0103359','tt0122355','tt1305826','tt7042146','tt2758770','tt1710308','tt0429305','tt0407398','tt0278866','tt1236429','tt0439349','tt0775407','tt0762067','tt0449545','tt0487849','tt0487813','tt0233041','tt0756522','tt0417299','tt0421482','tt0121220','tt0126158','tt3648112','tt1432142','tt0086815','tt0362350','tt0482870','tt0278238','tt2861424'];
+        // Mapeo de TMDB ID a IMDb ID para series en espanol
+        let tmdbToImdbMap = {};
+        
+        // Cache de disponibilidad de episodios
+        let episodeAvailabilityCache = {};
+        
+        // Estado de verificacion de episodios
+        let isCheckingEpisodes = false;
 
-const ENGLISH_IDS = [40075,387,4686,2085,557,47035,6673,50035,7736,1878,35094,46759,18123,926,652,64228,418,1068,8379,552,18351,34891,2304,3934,31499,234,2309,79,1647,618,4627,17572,607,28624,1769,346,17463,656,288,1877,4630,33835,604,2355,733,274382,897,4229,2405,55924,47480,676,127445,14705,9907,30778,21086,94075,12225,76004,32605,65763,670,537,7821,3022,232869,296764,126824,68073,64228,12454,17194,3022,504,384,588,657,2745,10821,3579,1567,2009,4630,2129,178,1643,1848,1960,246,3809,1346,3031,10219,6046,3527,9921,3854,15641,7330,18352,5559,18828,18848,33623,39107,46358,46262,46928,61520,46879,55924,57532,60306,57748,61330,61923,84587,177,3611,606,4350,2723,2660,4246,1720,255,446,6618,10548,7048,6040,15260,32118,31109,33428,31132,2641,679,1878];
-
-const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzZiYmZlMmNiNzdjOWIyNzliOWVkNDc4OWY5NjcxYSIsIm5iZiI6MTc3MDE4OTU4MS4yMTYsInN1YiI6IjY5ODJmMzBkMjM1MmM2MzEzNTM4MzdjNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IEXOBTsDACDo_m6DUt_hqfRvtosp1hLmvv93jNALnKU';
-
-let tmdbToImdbMap = {};
-let db = [];
-let currentLang = 'es-MX';
-let selectedShow = null;
-let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
-let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || [];
-let verificationCancelled = false;
-
-const translations = {
-    'es-MX': {
-        all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar...', episodes: 'Episodios',
-        season: 'Temp.', chapter: 'Ep.', results: 'Resultados: ', cast: 'Reparto', status: 'Estado',
-        my_favorites: '&#10084;&#65039; Favoritos', save_fav: '&#10084;&#65039; Favorito', remove_fav: '&#128148; Quitar',
-        creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duracion:',
-        adblock_text: 'Recomendado: Instala uBlock para bloquear anuncios', adblock_btn: 'Instalar',
-        coming_soon: 'Prox.', no_episodes: 'No hay episodios disponibles.',
-        coming_soon_msg: 'Estamos trabajando para traer esta serie muy pronto.',
-        checking_episodes: 'Verificando episodios...', episode_available: '&#10003;', episode_unavailable: '&#10007;', episode_checking: '&#x27F3;',
-        loading_verify: 'Verificando contenido disponible...', loading_series: 'series verificadas', loading_ready: '&#161;Listo! Cargando...',
-        verify_running: 'Verificando...', verify_done: 'disponibles',
-        service_error: 'Servicio de video temporalmente no disponible. Intenta recargar.'
-    },
-    'en-US': {
-        all: 'ALL', suggested: 'Suggested Series', search: 'Search...', episodes: 'Episodes',
-        season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Cast', status: 'Status',
-        my_favorites: '&#10084;&#65039; Favorites', save_fav: '&#10084;&#65039; Favorite', remove_fav: '&#128148; Remove',
-        creator: 'Created by:', networks: 'Networks:', runtime: 'Runtime:',
-        adblock_text: 'Recommended: Install uBlock to block ads', adblock_btn: 'Install',
-        coming_soon: 'Soon', no_episodes: 'No episodes available.',
-        coming_soon_msg: 'We are working to bring this series very soon.',
-        checking_episodes: 'Checking episodes...', episode_available: '&#10003;', episode_unavailable: '&#10007;', episode_checking: '&#x27F3;',
-        loading_verify: 'Checking available content...', loading_series: 'series verified', loading_ready: 'Ready! Loading...',
-        verify_running: 'Verifying...', verify_done: 'available',
-        service_error: 'Video service temporarily unavailable. Please try reloading.'
-    }
-};
-
-// ============================================================
-// MODULO: AvailabilityChecker
-// Verificacion dinamica de contenido via iframe oculto
-// ============================================================
-const AvailabilityChecker = {
-    queue: [],
-    active: 0,
-    maxConcurrent: 5,
-    results: new Map(),          // Cache RAM-only (se pierde al recargar)
-    episodeResults: new Map(),   // Cache de episodios RAM-only
-    totalChecked: 0,
-    totalAvailable: 0,
-    totalFailed: 0,
-    onProgress: null,            // Callback para progreso
-    onSeriesVerified: null,      // Callback cuando una serie se verifica
-    cancelled: false,
-
-    // Verificar una serie (usando S1E1 como proxy)
-    async checkSeries(imdbId) {
-        const cacheKey = `series_${imdbId}`;
-        if (this.results.has(cacheKey)) {
-            return this.results.get(cacheKey);
-        }
-        const result = await this.checkEpisode(imdbId, 1, 1, 8000);
-        this.results.set(cacheKey, result);
-        if (result) { this.totalAvailable++; } else { this.totalFailed++; }
-        this.totalChecked++;
-        return result;
-    },
-
-    // Verificar un episodio especifico via iframe oculto
-    async checkEpisode(imdbId, season, episode, timeoutMs = 5000) {
-        const cacheKey = `${imdbId}_${season}_${episode}`;
-        if (this.episodeResults.has(cacheKey)) {
-            return this.episodeResults.get(cacheKey);
-        }
-
-        const embedUrl = `https://embed69.org/f/${imdbId}-${season}x${episode.toString().padStart(2, '0')}`;
-
-        return new Promise((resolve) => {
-            // Si esta cancelado, resolver inmediatamente
-            if (this.cancelled) { resolve(false); return; }
-
-            const testIframe = document.createElement('iframe');
-            testIframe.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:none;';
-            testIframe.src = embedUrl;
-            testIframe.sandbox = 'allow-scripts allow-same-origin';
-
-            let resolved = false;
-            const timeout = setTimeout(() => {
-                if (!resolved) {
-                    resolved = true;
-                    cleanup();
-                    // En timeout, asumimos NO disponible
-                    this.episodeResults.set(cacheKey, false);
-                    resolve(false);
-                }
-            }, timeoutMs);
-
-            const cleanup = () => {
-                clearTimeout(timeout);
-                if (testIframe.parentNode) {
-                    testIframe.parentNode.removeChild(testIframe);
-                }
-            };
-
-            testIframe.onload = () => {
-                if (!resolved && !this.cancelled) {
-                    resolved = true;
-                    cleanup();
-                    // El iframe cargo = probablemente hay contenido
-                    this.episodeResults.set(cacheKey, true);
-                    resolve(true);
-                }
-            };
-
-            testIframe.onerror = () => {
-                if (!resolved) {
-                    resolved = true;
-                    cleanup();
-                    this.episodeResults.set(cacheKey, false);
-                    resolve(false);
-                }
-            };
-
-            // Fallback: si el iframe tarda mucho en disparar onload,
-            // verificamos periodicamente si el documento esta listo
-            const checkInterval = setInterval(() => {
-                if (resolved || this.cancelled) {
-                    clearInterval(checkInterval);
-                    return;
-                }
-                try {
-                    if (testIframe.contentDocument && testIframe.contentDocument.readyState === 'complete') {
-                        resolved = true;
-                        clearInterval(checkInterval);
-                        clearTimeout(timeout);
-                        cleanup();
-                        this.episodeResults.set(cacheKey, true);
-                        resolve(true);
-                    }
-                } catch (e) {
-                    // Cross-origin error = no podemos leer, pero el iframe cargo
-                    clearInterval(checkInterval);
-                    if (!resolved) {
-                        resolved = true;
-                        clearTimeout(timeout);
-                        cleanup();
-                        this.episodeResults.set(cacheKey, true);
-                        resolve(true);
-                    }
-                }
-            }, 500);
-
-            document.body.appendChild(testIframe);
-        });
-    },
-
-    // Procesar cola de verificaciones con pool de 5 slots
-    async processQueue() {
-        while (this.queue.length > 0 && !this.cancelled) {
-            if (this.active >= this.maxConcurrent) {
-                await new Promise(r => setTimeout(r, 100));
-                continue;
-            }
-
-            const task = this.queue.shift();
-            this.active++;
-
-            task().then(() => {
-                this.active--;
-            }).catch(() => {
-                this.active--;
-            });
-
-            // Pequena pausa para no saturar
-            await new Promise(r => setTimeout(r, 50));
-        }
-    },
-
-    // Agregar tarea a la cola
-    enqueue(task) {
-        this.queue.push(task);
-    },
-
-    // Verificar multiples series en lotes
-    async checkSeriesBatch(imdbIds, onSeriesDone) {
-        this.cancelled = false;
-        const results = [];
-        const batchSize = 5;
-
-        for (let i = 0; i < imdbIds.length; i += batchSize) {
-            if (this.cancelled) break;
-
-            const batch = imdbIds.slice(i, i + batchSize);
-            const promises = batch.map(async (imdbId) => {
-                const isAvailable = await this.checkSeries(imdbId);
-                if (onSeriesDone && isAvailable) {
-                    onSeriesDone(imdbId);
-                }
-                return { imdbId, available: isAvailable };
-            });
-
-            const batchResults = await Promise.all(promises);
-            results.push(...batchResults);
-
-            // Pequena pausa entre lotes
-            if (i + batchSize < imdbIds.length) {
-                await new Promise(r => setTimeout(r, 100));
-            }
-        }
-
-        return results;
-    },
-
-    // Verificar episodios de una temporada
-    async checkSeasonEpisodes(imdbId, season, episodes, onEpisodeDone, onProgressUpdate) {
-        this.cancelled = false;
-        const results = [];
-        const batchSize = 5;
-        let completed = 0;
-
-        for (let i = 0; i < episodes.length; i += batchSize) {
-            if (this.cancelled) break;
-
-            const batch = episodes.slice(i, i + batchSize);
-            const promises = batch.map(async (ep) => {
-                const isAvailable = await this.checkEpisode(imdbId, season, ep.episode_number, 4000);
-                completed++;
-                if (onEpisodeDone) {
-                    onEpisodeDone(ep, isAvailable);
-                }
-                if (onProgressUpdate) {
-                    onProgressUpdate(completed, episodes.length);
-                }
-                return { ...ep, isAvailable };
-            });
-
-            const batchResults = await Promise.all(promises);
-            results.push(...batchResults);
-        }
-
-        return results;
-    },
-
-    // Cancelar todas las verificaciones pendientes
-    cancelAll() {
-        this.cancelled = true;
-        this.queue = [];
-    },
-
-    // Resetear estado
-    reset() {
-        this.cancelled = false;
-        this.queue = [];
-        this.active = 0;
-    },
-
-    // Obtener estadisticas
-    getStats() {
-        return {
-            checked: this.totalChecked,
-            available: this.totalAvailable,
-            failed: this.totalFailed
-        };
-    },
-
-    // Verificar si hay error masivo en el servicio
-    hasServiceError() {
-        if (this.totalChecked < 10) return false;
-        const failRate = this.totalFailed / this.totalChecked;
-        return failRate > 0.5;
-    }
-};
-
-// ============================================================
-// MODULO: CatalogLoader
-// Carga progresiva de series con verificacion
-// ============================================================
-const CatalogLoader = {
-    async loadSpanishShows(onFirstBatch, onSeriesVerified) {
-        const shows = [];
-        const shuffledIds = shuffleArray([...SPANISH_IMDB_IDS]);
-        const t = translations[currentLang];
-
-        // FASE 1: Cargar datos TMDB + verificar disponibilidad en paralelo
-        // Priorizar las primeras 8 series para mostrar rapido
-        const priorityCount = 8;
-        const priorityIds = shuffledIds.slice(0, priorityCount);
-        const remainingIds = shuffledIds.slice(priorityCount);
-
-        updateLoadingStatus(t.loading_verify, 10);
-
-        // Cargar datos TMDB de las prioritarias
-        const priorityShows = await this.fetchBatch(priorityIds);
-        updateLoadingStatus(`${priorityShows.length} series cargadas, verificando...`, 25);
-
-        // Verificar disponibilidad en embed69 (lo mas rapido posible)
-        const verifiedPriority = [];
-        for (const show of priorityShows) {
-            if (show && show.id) {
-                const imdbId = tmdbToImdbMap[show.id];
-                if (imdbId) {
-                    const isAvail = await AvailabilityChecker.checkSeries(imdbId);
-                    if (isAvail) {
-                        verifiedPriority.push(show);
-                        if (onSeriesVerified) onSeriesVerified(show);
-                    }
-                }
-            }
-            // Actualizar progreso
-            const progress = 25 + Math.round((verifiedPriority.length / priorityShows.length) * 25);
-            updateLoadingStatus(`Verificando series... ${verifiedPriority.length} disponibles`, progress);
-        }
-
-        shows.push(...verifiedPriority);
-
-        // Mostrar primer lote rapidamente
-        if (onFirstBatch && shows.length > 0) {
-            onFirstBatch(shows);
-        }
-
-        // FASE 2: Cargar el resto (esperar a que termine todo)
-        if (remainingIds.length > 0) {
-            await this.loadRemainingSpanish(remainingIds, shows, onSeriesVerified);
-        }
-
-        return shows;
-    },
-
-    async loadRemainingSpanish(remainingIds, showsArray, onSeriesVerified) {
-        const chunkSize = 8;
-        const total = remainingIds.length;
-
-        for (let i = 0; i < remainingIds.length; i += chunkSize) {
-            if (AvailabilityChecker.cancelled) break;
-
-            const countBefore = showsArray.length;
-            const chunk = remainingIds.slice(i, i + chunkSize);
-            const chunkShows = await this.fetchBatch(chunk);
-
-            for (const show of chunkShows) {
-                if (show && show.id) {
-                    const imdbId = tmdbToImdbMap[show.id];
-                    if (imdbId) {
-                        const isAvail = await AvailabilityChecker.checkSeries(imdbId);
-                        if (isAvail) {
-                            showsArray.push(show);
-                            if (onSeriesVerified) onSeriesVerified(show);
-                        }
-                    }
-                }
-            }
-
-            // Actualizar UI si no hay busqueda activa
-            const searchInput = document.getElementById('search-bar').value;
-            const activeFilter = document.querySelector('.brand-item.active');
-            const t = translations[currentLang];
-            const newShows = showsArray.slice(countBefore);
-
-            if (newShows.length > 0 && activeFilter && activeFilter.innerText.trim() === t.all && searchInput === "") {
-                Renderer.appendCarousel(newShows);
-            }
-
+        // --- FUNCION PARA CARGAR SERIES EN ESPAÑOL CON CARGA PROGRESIVA ---
+        async function loadSpanishShows() {
+            const shows = [];
+            const shuffledIds = shuffleArray([...SPANISH_IMDB_IDS]);
+            
+            // Cargar primeros 12 IDs inicialmente (para mostrar rapido)
+            const initialIds = shuffledIds.slice(0, 12);
+            const remainingIds = shuffledIds.slice(12);
+            
+            // Cargar los iniciales en paralelo
+            const initialPromises = initialIds.map(imdbId => fetchSpanishShow(imdbId));
+            const initialResults = await Promise.all(initialPromises);
+            const validInitial = initialResults.filter(s => s !== null);
+            shows.push(...validInitial);
+            
+            // Actualizar UI con contenido inicial
             updateNetworkCounts();
-
-            // Actualizar progreso de pantalla de carga
-            const progress = 60 + Math.round(((i + chunkSize) / total) * 35);
-            const stats = AvailabilityChecker.getStats();
-            updateLoadingStatus(`${stats.available} ${t.verify_done}`, Math.min(progress, 95));
-
-            // Actualizar indicador de verificacion
-            updateVerifyIndicator(`${stats.available} ${t.verify_done} &#10003;`);
-
-            if (i + chunkSize < remainingIds.length) {
-                await new Promise(r => setTimeout(r, 150));
+            if (shows.length > 0) {
+                setHero(shows[Math.floor(Math.random() * Math.min(shows.length, 5))]);
+                renderCarousel(shows);
             }
+            
+            // Cargar el resto en chunks de 8
+            loadRemainingSpanish(remainingIds, shows);
+            
+            return shows;
         }
-
-        // Ocultar indicador cuando termine
-        setTimeout(() => hideVerifyIndicator(), 3000);
-    },
-
-    async fetchBatch(imdbIds) {
-        const shows = [];
-        const promises = imdbIds.map(id => this.fetchSpanishShow(id));
-        const results = await Promise.all(promises);
-        return results.filter(s => s !== null);
-    },
-
-    async fetchSpanishShow(imdbId) {
-        try {
-            const findResponse = await fetch(`https://api.themoviedb.org/3/find/${imdbId}?external_source=imdb_id&language=${currentLang}`, {
-                headers: { Authorization: `Bearer ${TOKEN}` }
-            });
-            const findData = await findResponse.json();
-
-            if (findData.tv_results && findData.tv_results.length > 0) {
-                const basicShow = findData.tv_results[0];
-                tmdbToImdbMap[basicShow.id] = imdbId;
-
-                const detailResponse = await fetch(`https://api.themoviedb.org/3/tv/${basicShow.id}?language=${currentLang}&append_to_response=credits`, {
+        
+        // Funcion auxiliar para cargar una serie en espanol
+        async function fetchSpanishShow(imdbId) {
+            try {
+                const findResponse = await fetch(`https://api.themoviedb.org/3/find/${imdbId}?external_source=imdb_id&language=${currentLang}`, {
                     headers: { Authorization: `Bearer ${TOKEN}` }
                 });
-                const fullShow = await detailResponse.json();
-
-                if (fullShow && fullShow.id) {
-                    return fullShow;
+                const findData = await findResponse.json();
+                
+                if (findData.tv_results && findData.tv_results.length > 0) {
+                    const basicShow = findData.tv_results[0];
+                    tmdbToImdbMap[basicShow.id] = imdbId;
+                    
+                    const detailResponse = await fetch(`https://api.themoviedb.org/3/tv/${basicShow.id}?language=${currentLang}&append_to_response=credits`, {
+                        headers: { Authorization: `Bearer ${TOKEN}` }
+                    });
+                    const fullShow = await detailResponse.json();
+                    
+                    if (fullShow && fullShow.id) {
+                        return fullShow;
+                    }
+                }
+            } catch (error) {
+                console.error(`Error loading show ${imdbId}:`, error);
+            }
+            return null;
+        }
+        
+        // Cargar series restantes en chunks
+        async function loadRemainingSpanish(remainingIds, showsArray) {
+            const chunkSize = 8;
+            
+            for (let i = 0; i < remainingIds.length; i += chunkSize) {
+                const chunk = remainingIds.slice(i, i + chunkSize);
+                const promises = chunk.map(imdbId => fetchSpanishShow(imdbId));
+                
+                const results = await Promise.all(promises);
+                const validResults = results.filter(s => s !== null);
+                
+                showsArray.push(...validResults);
+                db = showsArray; // Actualizar db global
+                
+                updateNetworkCounts();
+                
+                // Solo agregar al carousel si no hay busqueda activa y estamos en "Todos"
+                const searchInput = document.getElementById('search-bar').value;
+                const activeFilter = document.querySelector('.brand-item.active');
+                const t = translations[currentLang];
+                
+                if (activeFilter && activeFilter.innerText.trim() === t.all && searchInput === "" && validResults.length > 0) {
+                    appendCarousel(validResults);
+                }
+                
+                // Pequeña pausa entre chunks para no saturar
+                if (i + chunkSize < remainingIds.length) {
+                    await new Promise(r => setTimeout(r, 200));
                 }
             }
-        } catch (error) {
-            console.error(`Error loading show ${imdbId}:`, error);
-        }
-        return null;
-    },
-
-    async loadEnglishShows(onFirstBatch) {
-        const shuffledIds = shuffleArray([...ENGLISH_IDS]);
-        const initialIds = shuffledIds.slice(0, 15);
-        const remainingIds = shuffledIds.slice(15);
-
-        const initialFetchs = initialIds.map(id =>
-            fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, {
-                headers: { Authorization: `Bearer ${TOKEN}` }
-            }).then(r => r.json()).catch(() => null)
-        );
-
-        const initialDb = await Promise.all(initialFetchs);
-        const validInitial = initialDb.filter(item => item && item.id);
-
-        if (onFirstBatch && validInitial.length > 0) {
-            onFirstBatch(validInitial);
         }
 
-        // Cargar resto (esperar a que termine)
-        await this.loadRemainingEnglish(remainingIds);
-        return validInitial;
-    },
+        function hasSpanishContent(tmdbId) {
+            return tmdbToImdbMap[tmdbId] !== undefined;
+        }
 
-    async loadRemainingEnglish(ids) {
-        const chunkSize = 10;
-        const total = ids.length;
+        function getImdbId(tmdbId) {
+            return tmdbToImdbMap[tmdbId] || null;
+        }
 
-        for (let i = 0; i < ids.length; i += chunkSize) {
-            const countBefore = db.length;
-            const chunk = ids.slice(i, i + chunkSize);
-            const fetchs = chunk.map(id =>
-                fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, {
-                    headers: { Authorization: `Bearer ${TOKEN}` }
-                }).then(r => r.json()).catch(() => null)
-            );
+        function closeWarning() {
+            const warning = document.getElementById('language-warning');
+            warning.style.opacity = '0';
+            setTimeout(() => { warning.style.display = 'none'; }, 400);
+            localStorage.setItem('language_warning_seen', 'true');
+        }
 
-            const results = await Promise.all(fetchs);
-            const validResults = results.filter(item => item && item.id);
-
-            db.push(...validResults);
-            updateNetworkCounts();
-
-            const searchInput = document.getElementById('search-bar').value;
-            const activeFilter = document.querySelector('.brand-item.active');
-            const t = translations[currentLang];
-
-            if (validResults.length > 0 && activeFilter && activeFilter.innerText.trim() === t.all && searchInput === "") {
-                Renderer.appendCarousel(validResults);
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('language_warning_seen') === 'true') {
+                const warning = document.getElementById('language-warning');
+                if(warning) warning.style.display = 'none';
             }
+        });
 
-            // Actualizar progreso de pantalla de carga
-            const progress = 50 + Math.round(((i + chunkSize) / total) * 45);
-            updateLoadingStatus(`Loading series... ${db.length} loaded`, Math.min(progress, 95));
+        function closeBanner() {
+            const banner = document.getElementById('adblock-banner');
+            banner.style.marginTop = `-${banner.offsetHeight}px`;
+            banner.style.opacity = '0';
+            setTimeout(() => { banner.style.display = 'none'; }, 300);
+            localStorage.setItem('adblock_banner_hidden', 'true');
         }
-    }
-};
 
-// ============================================================
-// MODULO: Renderer
-// Renderizado de UI con estados de verificacion
-// ============================================================
-const Renderer = {
-    renderCarousel(list) {
-        const carousel = document.getElementById('carousel');
-        const t = translations[currentLang];
-        carousel.innerHTML = list.map((s, index) => this.createCardHTML(s, index, t)).join('');
-    },
+        if(localStorage.getItem('adblock_banner_hidden') === 'true') {
+            document.getElementById('adblock-banner').style.display = 'none';
+        }
 
-    appendCarousel(newItems) {
-        const carousel = document.getElementById('carousel');
-        const t = translations[currentLang];
-        const html = newItems.map((s, index) => this.createCardHTML(s, index, t)).join('');
-        carousel.insertAdjacentHTML('beforeend', html);
-    },
+        let currentUser = JSON.parse(localStorage.getItem('tooncloud_user')) || null;
+        let favoriteShows = JSON.parse(localStorage.getItem('tooncloud_favorites')) || []; 
 
-    createCardHTML(s, index, t) {
-        const staggerClass = `stagger-${(index % 8) + 1}`;
-        return `
-            <div class="card ${staggerClass}" onclick="openDetails(${s.id})">
-                <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
-                <div class="card-overlay">
-                    <div class="card-title">${s.name}</div>
-                    <div class="card-rating">&#11088; ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
-                </div>
-            </div>
-        `;
-    },
+        function decodeJwtResponse(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
 
-    renderFavorites() {
-        const favSection = document.getElementById('favorites-section');
-        const favCarousel = document.getElementById('favorites-carousel');
+        function handleCredentialResponse(response) {
+            const responsePayload = decodeJwtResponse(response.credential);
+            currentUser = { id: responsePayload.sub, name: responsePayload.name, avatar: response.picture };
+            localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
+            updateAuthUI();
+        }
 
-        if (favoriteShows.length === 0) {
-            favSection.style.display = 'none';
-        } else {
-            favSection.style.display = 'block';
-            favCarousel.innerHTML = favoriteShows.map((s, index) => {
+        function updateAuthUI() {
+            const authContainer = document.getElementById('auth-container');
+            if (currentUser) {
+                authContainer.innerHTML = `<img src="${currentUser.avatar}" class="nav-avatar" title="${currentUser.name}" onclick="openProfile()">`;
+                const heroTitle = document.getElementById('hero-title');
+                if(heroTitle.innerText === "ToonCloud+") { heroTitle.innerText = `Hola, ${currentUser.name.split(' ')[0]}`; }
+            } else {
+                authContainer.innerHTML = `
+                    <div id="g_id_onload" data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
+                    <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="filled_black" data-size="medium"></div>
+                `;
+                if(typeof google !== 'undefined') {
+                    google.accounts.id.initialize({ client_id: "108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com", callback: handleCredentialResponse });
+                    google.accounts.id.renderButton(authContainer.querySelector('.g_id_signin'), { theme: "filled_black", size: "medium", type: "icon", shape: "circle" });
+                }
+            }
+        }
+
+        function openProfile() {
+            if(!currentUser) return;
+            document.getElementById('profile-name').value = currentUser.name;
+            document.getElementById('profile-avatar-url').value = currentUser.avatar;
+            document.getElementById('profile-preview').src = currentUser.avatar;
+            document.getElementById('profile-modal').style.display = 'flex';
+        }
+
+        function closeProfile() { document.getElementById('profile-modal').style.display = 'none'; }
+
+        function saveProfile() {
+            currentUser.name = document.getElementById('profile-name').value || currentUser.name;
+            currentUser.avatar = document.getElementById('profile-avatar-url').value || currentUser.avatar;
+            localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
+            document.getElementById('profile-preview').src = currentUser.avatar;
+            updateAuthUI(); closeProfile();
+        }
+
+        function logout() { currentUser = null; localStorage.removeItem('tooncloud_user'); updateAuthUI(); closeProfile(); }
+
+        const TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMzZiYmZlMmNiNzdjOWIyNzliOWVkNDc4OWY5NjcxYSIsIm5iZiI6MTc3MDE4OTU4MS4yMTYsInN1YiI6IjY5ODJmMzBkMjM1MmM2MzEzNTM4MzdjNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IEXOBTsDACDo_m6DUt_hqfRvtosp1hLmvv93jNALnKU';
+        
+        const ENGLISH_IDS = [40075, 387, 4686, 2085, 557, 47035, 6673, 50035, 7736, 1878, 35094, 46759, 18123, 926, 652, 64228, 418, 1068, 8379, 552, 18351, 34891, 2304, 3934, 31499, 234, 2309, 79, 1647, 618, 4627, 17572, 607, 28624, 1769, 346, 17463, 656, 288, 1877, 4630, 33835, 604, 2355, 733, 274382, 897, 4229, 2405, 55924, 47480, 676, 127445, 14705, 9907, 30778, 21086, 94075, 12225, 76004, 32605, 65763, 670, 537, 7821, 3022, 232869, 296764, 126824, 68073, 64228, 12454, 17194, 3022, 504, 384, 588, 657, 2745, 10821, 3579, 1567, 2009, 4630, 2129, 178, 1643, 1848, 1960, 246, 3809, 1346, 3031, 10219, 6046, 3527, 9921, 3854, 15641, 7330, 18352, 5559, 18828, 18848, 33623, 39107, 46358, 46262, 46928, 61520, 46879, 55924, 57532, 60306, 57748, 61330, 61923, 84587, 177, 3611, 606, 4350, 2723, 2660, 4246, 1720, 255, 446, 6618, 10548, 7048, 6040, 15260, 32118, 31109, 33428, 31132, 2641, 679, 1878];
+
+        let db = [];
+        let currentLang = 'es-MX';
+        let selectedShow = null;
+
+        const translations = {
+            'es-MX': { all: 'TODOS', suggested: 'Series Sugeridas', search: 'Buscar...', episodes: 'Episodios', season: 'Temp.', chapter: 'Ep.', results: 'Resultados: ', cast: 'Reparto', status: 'Estado', my_favorites: '❤️ Favoritos', save_fav: '❤️ Favorito', remove_fav: '💔 Quitar', creator: 'Creado por:', networks: 'Cadenas:', runtime: 'Duracion:', adblock_text: 'Recomendado: Instala uBlock para bloquear anuncios', adblock_btn: 'Instalar', coming_soon: 'Prox.', no_episodes: 'No hay episodios disponibles.', coming_soon_msg: 'Estamos trabajando para traer esta serie muy pronto.', checking_episodes: 'Verificando episodios...', episode_available: '✓', episode_unavailable: '✗', episode_checking: '⟳' },
+            'en-US': { all: 'ALL', suggested: 'Suggested Series', search: 'Search...', episodes: 'Episodes', season: 'Season', chapter: 'Ep.', results: 'Results: ', cast: 'Cast', status: 'Status', my_favorites: '❤️ Favorites', save_fav: '❤️ Favorite', remove_fav: '💔 Remove', creator: 'Created by:', networks: 'Networks:', runtime: 'Runtime:', adblock_text: 'Recommended: Install uBlock to block ads', adblock_btn: 'Install', coming_soon: 'Soon', no_episodes: 'No episodes available.', coming_soon_msg: 'We are working to bring this series very soon.', checking_episodes: 'Checking episodes...', episode_available: '✓', episode_unavailable: '✗', episode_checking: '⟳' }
+        };
+
+        function updateCounter() {
+            const weightedNumbers = [0,0,1,1,2,2,3,3,4,4,5,6,7,8];
+            document.getElementById('active-users').innerText = weightedNumbers[Math.floor(Math.random() * weightedNumbers.length)];
+            setTimeout(updateCounter, Math.floor(Math.random() * (60000 - 20000 + 1)) + 20000);
+        }
+
+        function updateNetworkCounts() {
+            document.getElementById('cnt-all').innerText = db.length;
+            document.getElementById('cnt-cn').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('cartoon network'))).length;
+            document.getElementById('cnt-nick').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('nickelodeon'))).length;
+            document.getElementById('cnt-disney').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('disney'))).length;
+            document.getElementById('cnt-dk').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('discovery'))).length;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        async function init() {
+            updateAuthUI();
+            renderFavorites();
+            
+            const isSpanish = currentLang === 'es-MX';
+            
+            if (isSpanish) {
+                // Carga progresiva para espanol
+                db = await loadSpanishShows();
+            } else {
+                const shuffledIds = shuffleArray([...ENGLISH_IDS]);
+                const initialIds = shuffledIds.slice(0, 15);
+                const remainingIds = shuffledIds.slice(15);
+
+                const initialFetchs = initialIds.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
+                let initialDb = await Promise.all(initialFetchs);
+                db = initialDb.filter(item => item && item.id);
+                
+                fetchRemaining(remainingIds);
+            }
+            
+            updateNetworkCounts();
+            updateUI(); 
+            if (db.length > 0 && document.getElementById('hero-title').innerText === 'ToonCloud+') {
+                setHero(db[Math.floor(Math.random() * Math.min(db.length, 5))]); 
+            }
+            if (!isSpanish) {
+                renderCarousel(db);
+            }
+            updateCounter();
+        }
+
+        async function fetchRemaining(ids) {
+            const chunkSize = 10;
+            for (let i = 0; i < ids.length; i += chunkSize) {
+                const chunk = ids.slice(i, i + chunkSize);
+                const fetchs = chunk.map(id => fetch(`https://api.themoviedb.org/3/tv/${id}?language=${currentLang}&append_to_response=credits`, { headers: { Authorization: `Bearer ${TOKEN}` } }).then(r => r.json()).catch(() => null));
+                
+                const results = await Promise.all(fetchs);
+                const validResults = results.filter(item => item && item.id);
+                
+                db.push(...validResults);
+                updateNetworkCounts();
+                
+                const searchInput = document.getElementById('search-bar').value;
+                const activeFilter = document.querySelector('.brand-item.active');
+                const t = translations[currentLang];
+                
+                if (activeFilter && activeFilter.innerText.trim() === t.all && searchInput === "") {
+                    appendCarousel(validResults);
+                }
+            }
+        }
+
+        function appendCarousel(newItems) {
+            const carousel = document.getElementById('carousel');
+            const t = translations[currentLang];
+            const isSpanish = currentLang === 'es-MX';
+            
+            const html = newItems.map((s, index) => {
+                const hasContent = !isSpanish || hasSpanishContent(s.id);
+                const comingSoonBadge = (!hasContent && isSpanish) ? '<span class="card-coming-soon">' + t.coming_soon + '</span>' : '';
+                const cardClass = (!hasContent && isSpanish) ? 'card coming-soon' : 'card';
+                const onclick = (!hasContent && isSpanish) ? '' : `onclick="openDetails(${s.id})"`;
                 const staggerClass = `stagger-${(index % 8) + 1}`;
+                
                 return `
-                    <div class="card ${staggerClass}" onclick="openDetails(${s.id})">
+                <div class="${cardClass} ${staggerClass}" ${onclick}>
+                    ${comingSoonBadge}
+                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
+                    <div class="card-overlay">
+                        <div class="card-title">${s.name}</div>
+                        <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
+                    </div>
+                </div>
+            `}).join('');
+            
+            carousel.insertAdjacentHTML('beforeend', html);
+        }
+
+        function updateUI() {
+            const t = translations[currentLang];
+            document.getElementById('search-bar').placeholder = t.search;
+            document.querySelectorAll('[data-i18n]').forEach(el => { if(t[el.getAttribute('data-i18n')]) el.innerText = t[el.getAttribute('data-i18n')]; });
+            if(selectedShow) updateFavButtonUI();
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'es-MX' ? 'en-US' : 'es-MX';
+            changeLanguage(newLang);
+        }
+
+        function changeLanguage(newLang) {
+            if (newLang === currentLang) return;
+            
+            const overlay = document.getElementById('lang-transition-overlay');
+            const text = document.getElementById('transition-text');
+            const subtext = document.getElementById('transition-subtext');
+            const switcher = document.getElementById('lang-switcher');
+            const currentLangName = document.getElementById('current-lang-name');
+            
+            if (newLang === 'es-MX') {
+                text.textContent = 'Cambiando a Espanol...';
+                subtext.textContent = 'Cargando contenido';
+            } else {
+                text.textContent = 'Switching to English...';
+                subtext.textContent = 'Loading content';
+            }
+            
+            overlay.classList.add('active');
+            switcher.classList.add('changing');
+            
+            setTimeout(() => {
+                currentLang = newLang;
+                
+                if (currentLang === 'en-US') {
+                    switcher.classList.add('english');
+                    currentLangName.textContent = 'ENGLISH';
+                } else {
+                    switcher.classList.remove('english');
+                    currentLangName.textContent = 'ESPAÑOL';
+                }
+                
+                init().then(() => {
+                    setTimeout(() => {
+                        overlay.classList.remove('active');
+                        switcher.classList.remove('changing');
+                    }, 500);
+                });
+            }, 600);
+        }
+
+        function renderCarousel(list) {
+            const carousel = document.getElementById('carousel');
+            const t = translations[currentLang];
+            const isSpanish = currentLang === 'es-MX';
+            
+            carousel.innerHTML = list.map((s, index) => {
+                const hasContent = !isSpanish || hasSpanishContent(s.id);
+                const comingSoonBadge = (!hasContent && isSpanish) ? '<span class="card-coming-soon">' + t.coming_soon + '</span>' : '';
+                const cardClass = (!hasContent && isSpanish) ? 'card coming-soon' : 'card';
+                const onclick = (!hasContent && isSpanish) ? '' : `onclick="openDetails(${s.id})"`;
+                const staggerClass = `stagger-${(index % 8) + 1}`;
+                
+                return `
+                <div class="${cardClass} ${staggerClass}" ${onclick}>
+                    ${comingSoonBadge}
+                    <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
+                    <div class="card-overlay">
+                        <div class="card-title">${s.name}</div>
+                        <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function renderFavorites() {
+            const favSection = document.getElementById('favorites-section');
+            const favCarousel = document.getElementById('favorites-carousel');
+            const t = translations[currentLang];
+            const isSpanish = currentLang === 'es-MX';
+            
+            if (favoriteShows.length === 0) {
+                favSection.style.display = 'none';
+            } else {
+                favSection.style.display = 'block';
+                favCarousel.innerHTML = favoriteShows.map((s, index) => {
+                    const hasContent = !isSpanish || hasSpanishContent(s.id);
+                    const comingSoonBadge = (!hasContent && isSpanish) ? '<span class="card-coming-soon">' + t.coming_soon + '</span>' : '';
+                    const cardClass = (!hasContent && isSpanish) ? 'card coming-soon' : 'card';
+                    const onclick = (!hasContent && isSpanish) ? '' : `onclick="openDetails(${s.id})"`;
+                    const staggerClass = `stagger-${(index % 8) + 1}`;
+                    
+                    return `
+                    <div class="${cardClass} ${staggerClass}" ${onclick}>
+                        ${comingSoonBadge}
                         <img src="${s.poster_path ? 'https://image.tmdb.org/t/p/w342'+s.poster_path : 'https://via.placeholder.com/160x240'}" loading="lazy">
                         <div class="card-overlay">
                             <div class="card-title">${s.name}</div>
-                            <div class="card-rating">&#11088; ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
+                            <div class="card-rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : 'N/A'}</div>
                         </div>
                     </div>
-                `;
-            }).join('');
+                `}).join('');
+            }
         }
-    },
 
-    renderEpisodeSkeletons(count) {
-        const container = document.getElementById('episodes-list');
-        container.innerHTML = Array(count).fill(0).map(() => `
-            <div class="episode-skeleton">
-                <div class="episode-skeleton-img"></div>
-                <div class="episode-skeleton-text">
-                    <div class="episode-skeleton-line short"></div>
-                    <div class="episode-skeleton-line medium"></div>
-                </div>
-            </div>
-        `).join('');
-    },
+        function toggleFavorite() {
+            if (!selectedShow) return;
+            const index = favoriteShows.findIndex(f => f.id === selectedShow.id);
+            if (index > -1) { favoriteShows.splice(index, 1); } 
+            else { favoriteShows.unshift(selectedShow); }
+            localStorage.setItem('tooncloud_favorites', JSON.stringify(favoriteShows));
+            updateFavButtonUI(); renderFavorites();
+        }
 
-    renderEpisodesChecking(episodes, seasonNum, t) {
-        const container = document.getElementById('episodes-list');
-        container.innerHTML = episodes.map((ep, index) => `
-            <div class="episode-card checking" id="ep-card-${ep.episode_number}" style="animation-delay: ${index * 0.05}s">
-                <img src="${ep.still_path ? 'https://image.tmdb.org/t/p/w300'+ep.still_path : (selectedShow.backdrop_path ? 'https://image.tmdb.org/t/p/w300'+selectedShow.backdrop_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen')}" loading="lazy">
-                <div class="episode-info">
-                    <div class="episode-number">
-                        <span class="episode-status-icon checking" id="ep-status-${ep.episode_number}">${t.episode_checking}</span>
-                        ${t.chapter} ${ep.episode_number}
+        function updateFavButtonUI() {
+            const btn = document.getElementById('fav-btn');
+            const isFav = favoriteShows.some(f => f.id === selectedShow.id);
+            const t = translations[currentLang];
+            if (isFav) {
+                btn.innerHTML = t.remove_fav;
+                btn.style.background = 'transparent';
+                btn.style.border = '2px solid var(--accent)';
+                btn.style.color = 'var(--accent)';
+            } else {
+                btn.innerHTML = t.save_fav;
+                btn.style.background = 'linear-gradient(45deg, var(--accent), var(--accent-hover))';
+                btn.style.border = 'none';
+                btn.style.color = '#fff';
+            }
+        }
+
+        function searchSeries() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            document.getElementById('section-title').innerText = query ? translations[currentLang].results + query : translations[currentLang].suggested;
+            renderCarousel(db.filter(s => s.name.toLowerCase().includes(query)));
+        }
+
+        function setHero(s) {
+            if(!s) return;
+            document.getElementById('hero').style.backgroundImage = `url(https://image.tmdb.org/t/p/original${s.backdrop_path})`;
+            document.getElementById('hero-title').innerText = currentUser ? `Hola, ${currentUser.name.split(' ')[0]}` : s.name;
+            document.getElementById('hero-desc').innerText = s.overview || "";
+            document.getElementById('hero-meta').innerHTML = `
+                <span class="rating">⭐ ${s.vote_average ? s.vote_average.toFixed(1) : ''}</span>
+                <span>${s.first_air_date ? s.first_air_date.split('-')[0] : ''}</span>
+                <span>${s.number_of_seasons ? s.number_of_seasons + 'T' : ''}</span>
+            `;
+        }
+
+        function scrollToSection(id) {
+            // Cerrar el player al navegar a otra sección (especialmente al home)
+            if (id === 'hero') {
+                closePlayer();
+                closeDetails();
+            }
+
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        async function openDetails(id) {
+            // Cerrar cualquier player abierto previamente al abrir una nueva serie
+            closePlayer();
+
+            selectedShow = db.find(s => s.id == id) || favoriteShows.find(s => s.id == id);
+            if (!selectedShow) return;
+            
+            const t = translations[currentLang];
+            const isSpanish = currentLang === 'es-MX';
+            const detailsScreen = document.getElementById('details-screen');
+            
+            // Verificar si tiene contenido en espanol
+            if (isSpanish && !hasSpanishContent(selectedShow.id)) {
+                // Mostrar mensaje de proximamente en lugar de abrir detalles
+                alert('Esta serie estara disponible proximamente en espanol.');
+                return;
+            }
+            
+            // Set hero background
+            const heroBg = document.getElementById('details-hero-bg');
+            if(selectedShow.backdrop_path) {
+                heroBg.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${selectedShow.backdrop_path})`;
+            } else {
+                heroBg.style.backgroundImage = 'none';
+                heroBg.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
+            }
+
+            document.getElementById('det-title').innerText = selectedShow.name;
+            document.getElementById('det-tagline').innerText = selectedShow.tagline || '';
+            document.getElementById('det-desc').innerText = selectedShow.overview || 'Sin descripcion disponible.';
+            document.getElementById('det-poster').src = selectedShow.poster_path ? `https://image.tmdb.org/t/p/w500${selectedShow.poster_path}` : 'https://via.placeholder.com/500x750';
+            updateFavButtonUI(); 
+
+            const creators = selectedShow.created_by && selectedShow.created_by.length > 0 ? selectedShow.created_by.map(c => c.name).join(', ') : 'Desconocido';
+            const networks = selectedShow.networks ? selectedShow.networks.map(n => n.name).join(', ') : 'N/A';
+            const runTime = selectedShow.episode_run_time && selectedShow.episode_run_time.length > 0 ? `${selectedShow.episode_run_time[0]} min` : 'N/A';
+            document.getElementById('det-creators').innerHTML = `${t.creator} <span>${creators}</span>`;
+            document.getElementById('det-networks').innerHTML = `${t.networks} <span>${networks}</span>`;
+            document.getElementById('det-runtime').innerHTML = `${t.runtime} <span>${runTime}</span>`;
+
+            const year = selectedShow.first_air_date ? selectedShow.first_air_date.split('-')[0] : 'N/A';
+            const genres = selectedShow.genres ? selectedShow.genres.slice(0,3).map(g => g.name).join(', ') : '';
+            const status = selectedShow.in_production ? (isSpanish ? "En Emision" : "In Production") : (isSpanish ? "Finalizada" : "Ended");
+            const isHot = Math.round(selectedShow.popularity) > 800 ? '🔥' : '';
+            const totalEps = selectedShow.number_of_episodes ? `${selectedShow.number_of_episodes} Eps` : '';
+            const lang = selectedShow.original_language ? selectedShow.original_language.toUpperCase() : '';
+
+            document.getElementById('det-meta').innerHTML = `
+                <span class="tag rating">⭐ ${selectedShow.vote_average.toFixed(1)}</span>
+                ${isHot ? '<span class="tag popularity">🔥</span>' : ''}
+                <span class="tag pro-data">${totalEps}</span>
+                <span class="tag">${year}</span>
+                <span class="tag">${status}</span>
+                ${genres ? `<span class="tag">${genres}</span>` : ''}
+            `;
+
+            const castContainer = document.getElementById('cast-list');
+            if (selectedShow.credits && selectedShow.credits.cast && selectedShow.credits.cast.length > 0) {
+                castContainer.innerHTML = selectedShow.credits.cast.slice(0, 15).map((actor, index) => `
+                    <div class="cast-item" style="animation-delay: ${index * 0.05}s">
+                        <img class="cast-img" src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185'+actor.profile_path : 'https://via.placeholder.com/100?text=No+Img'}" loading="lazy">
+                        <div class="cast-name">${actor.name}</div>
+                        <div class="cast-char">${actor.character}</div>
                     </div>
-                    <div class="episode-title" id="ep-title-${ep.episode_number}">${ep.name}</div>
-                    ${ep.overview ? `<div class="episode-overview">${ep.overview}</div>` : ''}
-                </div>
-            </div>
-        `).join('');
-    },
+                `).join('');
+                document.querySelector('.cast-section').style.display = 'block';
+            } else { document.querySelector('.cast-section').style.display = 'none'; }
 
-    updateEpisodeStatus(ep, isAvailable, seasonNum, t) {
-        const card = document.getElementById(`ep-card-${ep.episode_number}`);
-        const statusEl = document.getElementById(`ep-status-${ep.episode_number}`);
-        if (!card || !statusEl) return;
-
-        if (isAvailable) {
-            card.classList.remove('checking');
-            card.classList.add('available');
-            card.setAttribute('onclick', `playEpisode(${seasonNum}, ${ep.episode_number}, '${ep.name.replace(/'/g, "\\'")}')`);
-            statusEl.className = 'episode-status-icon available';
-            statusEl.innerHTML = t.episode_available;
-        } else {
-            card.classList.remove('checking');
-            card.classList.add('unavailable');
-            card.removeAttribute('onclick');
-            statusEl.className = 'episode-status-icon unavailable';
-            statusEl.innerHTML = t.episode_unavailable;
+            const select = document.getElementById('season-select');
+            select.innerHTML = selectedShow.seasons.filter(se => se.season_number > 0).map(se => `<option value="${se.season_number}">${t.season} ${se.season_number}</option>`).join('');
+            
+            detailsScreen.style.display = 'block'; 
+            document.body.style.overflow = 'hidden';
+            
+            if(select.options.length > 0) {
+                // Cargar episodios con verificacion de disponibilidad
+                await loadEpisodesWithCheck();
+            } else {
+                showNoEpisodesMessage();
+            }
         }
-    },
 
-    renderVerifiedEpisodes(episodes, seasonNum, t) {
-        const container = document.getElementById('episodes-list');
-        const availableEpisodes = episodes.filter(ep => ep.isAvailable);
-
-        if (availableEpisodes.length === 0) {
-            container.innerHTML = `
+        function showNoEpisodesMessage() {
+            const t = translations[currentLang];
+            document.getElementById('episodes-list').innerHTML = `
                 <div class="coming-soon-episodes">
-                    <h3>&#9203; ${t.coming_soon}</h3>
+                    <h3>⏳ ${t.coming_soon}</h3>
                     <p>${t.no_episodes}</p>
                 </div>
             `;
-            return;
         }
 
-        container.innerHTML = episodes.map((ep, index) => {
-            const statusIcon = ep.isAvailable ?
-                `<span class="episode-status-icon available">${t.episode_available}</span>` :
-                `<span class="episode-status-icon unavailable">${t.episode_unavailable}</span>`;
-            const cardClass = ep.isAvailable ? 'episode-card available' : 'episode-card unavailable';
-            const onclick = ep.isAvailable ? `onclick="playEpisode(${seasonNum}, ${ep.episode_number}, '${ep.name.replace(/'/g, "\\'")}')"` : '';
+        // Funcion para verificar disponibilidad de un episodio en embed69
+        async function checkEpisodeAvailability(imdbId, season, episode) {
+            const cacheKey = `${imdbId}-${season}-${episode}`;
+            
+            // Verificar cache primero
+            if (episodeAvailabilityCache[cacheKey] !== undefined) {
+                return episodeAvailabilityCache[cacheKey];
+            }
+            
+            const embedUrl = `https://embed69.org/f/${imdbId}-${season}x${episode.toString().padStart(2, '0')}`;
+            
+            try {
+                // Intentar hacer una peticion HEAD para verificar si el recurso existe
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(embedUrl, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                // Si no hay error, asumimos que esta disponible
+                episodeAvailabilityCache[cacheKey] = true;
+                return true;
+                
+            } catch (error) {
+                // Si hay error, el episodio probablemente no esta disponible
+                // Pero como usamos no-cors, no podemos estar 100% seguros
+                // Asi que intentamos con un metodo alternativo
+                
+                // Metodo alternativo: intentar cargar en un iframe oculto
+                return new Promise((resolve) => {
+                    const testIframe = document.createElement('iframe');
+                    testIframe.style.position = 'absolute';
+                    testIframe.style.width = '1px';
+                    testIframe.style.height = '1px';
+                    testIframe.style.opacity = '0';
+                    testIframe.style.pointerEvents = 'none';
+                    testIframe.src = embedUrl;
+                    
+                    let resolved = false;
+                    
+                    const timeout = setTimeout(() => {
+                        if (!resolved) {
+                            resolved = true;
+                            document.body.removeChild(testIframe);
+                            // Asumimos disponible si no hay error inmediato
+                            episodeAvailabilityCache[cacheKey] = true;
+                            resolve(true);
+                        }
+                    }, 3000);
+                    
+                    testIframe.onerror = () => {
+                        if (!resolved) {
+                            resolved = true;
+                            clearTimeout(timeout);
+                            document.body.removeChild(testIframe);
+                            episodeAvailabilityCache[cacheKey] = false;
+                            resolve(false);
+                        }
+                    };
+                    
+                    testIframe.onload = () => {
+                        if (!resolved) {
+                            resolved = true;
+                            clearTimeout(timeout);
+                            document.body.removeChild(testIframe);
+                            episodeAvailabilityCache[cacheKey] = true;
+                            resolve(true);
+                        }
+                    };
+                    
+                    document.body.appendChild(testIframe);
+                });
+            }
+        }
 
-            return `
+        // Funcion para cargar episodios con verificacion de disponibilidad
+        async function loadEpisodesWithCheck() {
+            const seasonNum = document.getElementById('season-select').value;
+            if(!seasonNum) return;
+            
+            const t = translations[currentLang];
+            const isSpanish = currentLang === 'es-MX';
+            const imdbId = isSpanish ? getImdbId(selectedShow.id) : null;
+            
+            try {
+                const res = await fetch(`https://api.themoviedb.org/3/tv/${selectedShow.id}/season/${seasonNum}?language=${currentLang}`, { 
+                    headers: { Authorization: `Bearer ${TOKEN}` } 
+                });
+                const data = await res.json();
+                
+                if(data.episodes && data.episodes.length > 0) {
+                    // Mostrar skeletons mientras verificamos
+                    renderEpisodeSkeletons(data.episodes.length);
+                    
+                    // Si es espanol, verificar disponibilidad de cada episodio
+                    if (isSpanish && imdbId) {
+                        const episodesWithAvailability = await Promise.all(
+                            data.episodes.map(async (ep, index) => {
+                                // Verificar disponibilidad con delay escalonado para no saturar
+                                await new Promise(r => setTimeout(r, index * 100));
+                                const isAvailable = await checkEpisodeAvailability(imdbId, seasonNum, ep.episode_number);
+                                return { ...ep, isAvailable };
+                            })
+                        );
+                        
+                        renderEpisodesWithAvailability(episodesWithAvailability, seasonNum, t, isSpanish);
+                    } else {
+                        // Para ingles, mostrar todos sin verificacion
+                        renderEpisodes(data.episodes, seasonNum, t, isSpanish);
+                    }
+                } else {
+                    showNoEpisodesMessage();
+                }
+            } catch (error) {
+                console.error('Error loading episodes:', error);
+                showNoEpisodesMessage();
+            }
+        }
+
+        function renderEpisodeSkeletons(count) {
+            const container = document.getElementById('episodes-list');
+            container.innerHTML = Array(count).fill(0).map(() => `
+                <div class="episode-skeleton">
+                    <div class="episode-skeleton-img"></div>
+                    <div class="episode-skeleton-text">
+                        <div class="episode-skeleton-line short"></div>
+                        <div class="episode-skeleton-line medium"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEpisodes(episodes, seasonNum, t, isSpanish) {
+            const container = document.getElementById('episodes-list');
+            container.innerHTML = episodes.map((ep, index) => `
+                <div class="episode-card" onclick="playEpisode(${seasonNum}, ${ep.episode_number}, '${ep.name.replace(/'/g, "\\'")}')" style="animation-delay: ${index * 0.05}s">
+                    <img src="${ep.still_path ? 'https://image.tmdb.org/t/p/w300'+ep.still_path : (selectedShow.backdrop_path ? 'https://image.tmdb.org/t/p/w300'+selectedShow.backdrop_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen')}" loading="lazy">
+                    <div class="episode-info">
+                        <div class="episode-number">${t.chapter} ${ep.episode_number}</div>
+                        <div class="episode-title">${ep.name}</div>
+                        ${!isSpanish ? `<div class="episode-rating">⭐ ${ep.vote_average ? ep.vote_average.toFixed(1) : '-'}</div>` : ''}
+                        ${ep.overview ? `<div class="episode-overview">${ep.overview}</div>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEpisodesWithAvailability(episodes, seasonNum, t, isSpanish) {
+            const container = document.getElementById('episodes-list');
+            const availableEpisodes = episodes.filter(ep => ep.isAvailable);
+            
+            if (availableEpisodes.length === 0) {
+                showNoEpisodesMessage();
+                return;
+            }
+            
+            container.innerHTML = episodes.map((ep, index) => {
+                const statusIcon = ep.isAvailable ? 
+                    `<span class="episode-status-icon available" title="Disponible">${t.episode_available}</span>` : 
+                    `<span class="episode-status-icon unavailable" title="No disponible">${t.episode_unavailable}</span>`;
+                const cardClass = ep.isAvailable ? 'episode-card' : 'episode-card unavailable';
+                const onclick = ep.isAvailable ? `onclick="playEpisode(${seasonNum}, ${ep.episode_number}, '${ep.name.replace(/'/g, "\\'")}')"` : '';
+                
+                return `
                 <div class="${cardClass}" ${onclick} style="animation-delay: ${index * 0.05}s">
                     <img src="${ep.still_path ? 'https://image.tmdb.org/t/p/w300'+ep.still_path : (selectedShow.backdrop_path ? 'https://image.tmdb.org/t/p/w300'+selectedShow.backdrop_path : 'https://via.placeholder.com/300x169?text=Sin+Imagen')}" loading="lazy">
                     <div class="episode-info">
                         <div class="episode-number">${statusIcon} ${t.chapter} ${ep.episode_number}</div>
                         <div class="episode-title">${ep.name}</div>
+                        ${!isSpanish ? `<div class="episode-rating">⭐ ${ep.vote_average ? ep.vote_average.toFixed(1) : '-'}</div>` : ''}
                         ${ep.overview ? `<div class="episode-overview">${ep.overview}</div>` : ''}
                     </div>
                 </div>
-            `;
-        }).join('');
-    }
-};
-
-// ============================================================
-// FUNCIONES DE UI - LOADING SCREEN Y VERIFICACION
-// ============================================================
-
-function updateLoadingStatus(text, percent) {
-    const statusEl = document.getElementById('loading-status');
-    const progressEl = document.getElementById('loading-progress-bar');
-    const statsEl = document.getElementById('loading-stats');
-    if (statusEl) statusEl.innerHTML = text;
-    if (progressEl) progressEl.style.width = percent + '%';
-    const stats = AvailabilityChecker.getStats();
-    if (statsEl) statsEl.innerHTML = `${stats.available} disponibles / ${stats.checked} verificadas`;
-}
-
-function hideLoadingScreen() {
-    const screen = document.getElementById('loading-screen');
-    if (screen) screen.classList.add('hidden');
-}
-
-function updateVerifyIndicator(text) {
-    const indicator = document.getElementById('verify-indicator');
-    const textEl = document.getElementById('v-text');
-    const spinner = document.getElementById('v-spinner');
-    if (indicator && textEl) {
-        indicator.classList.remove('hidden');
-        textEl.innerHTML = text;
-        if (spinner) spinner.style.display = 'none';
-    }
-}
-
-function hideVerifyIndicator() {
-    const indicator = document.getElementById('verify-indicator');
-    if (indicator) indicator.classList.add('hidden');
-}
-
-function showVerifySpinner(text) {
-    const indicator = document.getElementById('verify-indicator');
-    const textEl = document.getElementById('v-text');
-    const spinner = document.getElementById('v-spinner');
-    if (indicator && textEl) {
-        indicator.classList.remove('hidden');
-        textEl.innerHTML = text;
-        if (spinner) spinner.style.display = 'block';
-    }
-}
-
-// ============================================================
-// FUNCIONES DE AUTENTICACION
-// ============================================================
-
-function decodeJwtResponse(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-}
-
-function handleCredentialResponse(response) {
-    const responsePayload = decodeJwtResponse(response.credential);
-    currentUser = { id: responsePayload.sub, name: responsePayload.name, avatar: responsePayload.picture };
-    localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
-    updateAuthUI();
-}
-
-function updateAuthUI() {
-    const authContainer = document.getElementById('auth-container');
-    if (currentUser) {
-        authContainer.innerHTML = `<img src="${currentUser.avatar}" class="nav-avatar" title="${currentUser.name}" onclick="openProfile()">`;
-        const heroTitle = document.getElementById('hero-title');
-        if(heroTitle.innerText === "ToonCloud+") { heroTitle.innerText = `Hola, ${currentUser.name.split(' ')[0]}`; }
-    } else {
-        authContainer.innerHTML = `
-            <div id="g_id_onload" data-client_id="108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
-            <div class="g_id_signin" data-type="icon" data-shape="circle" data-theme="filled_black" data-size="medium"></div>
-        `;
-        if(typeof google !== 'undefined') {
-            google.accounts.id.initialize({ client_id: "108165251824-2hqmkr9a0vnvlt4psuuiudeqkv95sgd1.apps.googleusercontent.com", callback: handleCredentialResponse });
-            google.accounts.id.renderButton(authContainer.querySelector('.g_id_signin'), { theme: "filled_black", size: "medium", type: "icon", shape: "circle" });
-        }
-    }
-}
-
-function openProfile() {
-    if(!currentUser) return;
-    document.getElementById('profile-name').value = currentUser.name;
-    document.getElementById('profile-avatar-url').value = currentUser.avatar;
-    document.getElementById('profile-preview').src = currentUser.avatar;
-    document.getElementById('profile-modal').style.display = 'flex';
-}
-
-function closeProfile() { document.getElementById('profile-modal').style.display = 'none'; }
-
-function saveProfile() {
-    currentUser.name = document.getElementById('profile-name').value || currentUser.name;
-    currentUser.avatar = document.getElementById('profile-avatar-url').value || currentUser.avatar;
-    localStorage.setItem('tooncloud_user', JSON.stringify(currentUser));
-    document.getElementById('profile-preview').src = currentUser.avatar;
-    updateAuthUI(); closeProfile();
-}
-
-function logout() { currentUser = null; localStorage.removeItem('tooncloud_user'); updateAuthUI(); closeProfile(); }
-
-// ============================================================
-// FUNCIONES DE FAVORITOS
-// ============================================================
-
-function toggleFavorite() {
-    if (!selectedShow) return;
-    const index = favoriteShows.findIndex(f => f.id === selectedShow.id);
-    if (index > -1) { favoriteShows.splice(index, 1); }
-    else { favoriteShows.unshift(selectedShow); }
-    localStorage.setItem('tooncloud_favorites', JSON.stringify(favoriteShows));
-    updateFavButtonUI(); Renderer.renderFavorites();
-}
-
-function updateFavButtonUI() {
-    const btn = document.getElementById('fav-btn');
-    const isFav = favoriteShows.some(f => f.id === selectedShow.id);
-    const t = translations[currentLang];
-    if (isFav) {
-        btn.innerHTML = t.remove_fav;
-        btn.style.background = 'transparent';
-        btn.style.border = '2px solid var(--accent)';
-        btn.style.color = 'var(--accent)';
-    } else {
-        btn.innerHTML = t.save_fav;
-        btn.style.background = 'linear-gradient(45deg, var(--accent), var(--accent-hover))';
-        btn.style.border = 'none';
-        btn.style.color = '#fff';
-    }
-}
-
-// ============================================================
-// FUNCIONES DE BUSQUEDA Y FILTROS
-// ============================================================
-
-function searchSeries() {
-    const query = document.getElementById('search-bar').value.toLowerCase();
-    document.getElementById('section-title').innerText = query ? translations[currentLang].results + query : translations[currentLang].suggested;
-    Renderer.renderCarousel(db.filter(s => s.name.toLowerCase().includes(query)));
-}
-
-function filterByNetwork(name, el) {
-    document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    Renderer.renderCarousel(db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes(name.toLowerCase()))));
-}
-
-function resetFilter(el) {
-    document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    Renderer.renderCarousel(db);
-}
-
-// ============================================================
-// HERO Y UTILIDADES
-// ============================================================
-
-function setHero(s) {
-    if(!s) return;
-    document.getElementById('hero').style.backgroundImage = `url(https://image.tmdb.org/t/p/original${s.backdrop_path})`;
-    document.getElementById('hero-title').innerText = currentUser ? `Hola, ${currentUser.name.split(' ')[0]}` : s.name;
-    document.getElementById('hero-desc').innerText = s.overview || "";
-    document.getElementById('hero-meta').innerHTML = `
-        <span class="rating">&#11088; ${s.vote_average ? s.vote_average.toFixed(1) : ''}</span>
-        <span>${s.first_air_date ? s.first_air_date.split('-')[0] : ''}</span>
-        <span>${s.number_of_seasons ? s.number_of_seasons + 'T' : ''}</span>
-    `;
-}
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function updateCounter() {
-    const weightedNumbers = [0,0,1,1,2,2,3,3,4,4,5,6,7,8];
-    document.getElementById('active-users').innerText = weightedNumbers[Math.floor(Math.random() * weightedNumbers.length)];
-    setTimeout(updateCounter, Math.floor(Math.random() * (60000 - 20000 + 1)) + 20000);
-}
-
-function updateNetworkCounts() {
-    document.getElementById('cnt-all').innerText = db.length;
-    document.getElementById('cnt-cn').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('cartoon network'))).length;
-    document.getElementById('cnt-nick').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('nickelodeon'))).length;
-    document.getElementById('cnt-disney').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('disney'))).length;
-    document.getElementById('cnt-dk').innerText = db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes('discovery'))).length;
-}
-
-function scrollToSection(id) {
-    if (id === 'hero') { closePlayer(); closeDetails(); }
-    const element = document.getElementById(id);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-}
-
-// ============================================================
-// FUNCIONES DE IDIOMA
-// ============================================================
-
-function toggleLanguage() {
-    const newLang = currentLang === 'es-MX' ? 'en-US' : 'es-MX';
-    changeLanguage(newLang);
-}
-
-function changeLanguage(newLang) {
-    if (newLang === currentLang) return;
-
-    const overlay = document.getElementById('lang-transition-overlay');
-    const text = document.getElementById('transition-text');
-    const subtext = document.getElementById('transition-subtext');
-    const switcher = document.getElementById('lang-switcher');
-
-    if (newLang === 'es-MX') {
-        text.textContent = 'Cambiando a Espanol...';
-        subtext.textContent = 'Cargando contenido';
-    } else {
-        text.textContent = 'Switching to English...';
-        subtext.textContent = 'Loading content';
-    }
-
-    overlay.classList.add('active');
-    switcher.classList.add('changing');
-
-    // Cancelar verificaciones actuales
-    AvailabilityChecker.cancelAll();
-
-    setTimeout(() => {
-        currentLang = newLang;
-
-        if (currentLang === 'en-US') {
-            switcher.classList.add('english');
-        } else {
-            switcher.classList.remove('english');
+            `}).join('');
         }
 
-        location.reload();
-    }, 600);
-}
+        async function loadEpisodes() {
+            // Usar la nueva funcion con verificacion
+            await loadEpisodesWithCheck();
+        }
 
-function updateUI() {
-    const t = translations[currentLang];
-    document.getElementById('search-bar').placeholder = t.search;
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        if(t[el.getAttribute('data-i18n')]) el.innerHTML = t[el.getAttribute('data-i18n')];
-    });
-    if(selectedShow) updateFavButtonUI();
-}
+        // Detectar si es dispositivo móvil
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   (window.innerWidth <= 768);
+        }
 
-// ============================================================
-// DETAILS SCREEN Y EPISODIOS
-// ============================================================
+        // Entrar en pantalla completa
+        function enterFullscreen(element) {
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
 
-function hasSpanishContent(tmdbId) {
-    return tmdbToImdbMap[tmdbId] !== undefined;
-}
+        // Salir de pantalla completa
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
 
-function getImdbId(tmdbId) {
-    return tmdbToImdbMap[tmdbId] || null;
-}
+        function playEpisode(s, e, title) {
+            const isSpanish = currentLang === 'es-MX';
+            const epTitle = title || `Episodio ${e}`;
+            const mobile = isMobile();
 
-async function openDetails(id) {
-    closePlayer();
+            document.getElementById('player-title').innerText = `${selectedShow.name} - ${epTitle}`;
 
-    selectedShow = db.find(s => s.id == id) || favoriteShows.find(s => s.id == id);
-    if (!selectedShow) return;
+            // Mostrar el player en la página de detalles
+            const playerContainer = document.getElementById('player-container');
+            const playerWrapper = document.querySelector('.player-wrapper');
 
-    const t = translations[currentLang];
-    const isSpanish = currentLang === 'es-MX';
+            if (isSpanish) {
+                const imdbId = getImdbId(selectedShow.id);
+                if (imdbId) {
+                    const embedUrl = `https://embed69.org/f/${imdbId}-${s}x${e.toString().padStart(2, '0')}`;
+                    document.getElementById('main-iframe').src = embedUrl;
+                    playerContainer.style.display = 'block';
 
-    if (isSpanish && !hasSpanishContent(selectedShow.id)) {
-        alert('Esta serie estara disponible proximamente en espanol.');
-        return;
-    }
-
-    const heroBg = document.getElementById('details-hero-bg');
-    if(selectedShow.backdrop_path) {
-        heroBg.style.backgroundImage = `url(https://image.tmdb.org/t/p/original${selectedShow.backdrop_path})`;
-    } else {
-        heroBg.style.backgroundImage = 'none';
-        heroBg.style.background = 'linear-gradient(135deg, #1a1a2e, #16213e)';
-    }
-
-    document.getElementById('det-title').innerText = selectedShow.name;
-    document.getElementById('det-tagline').innerText = selectedShow.tagline || '';
-    document.getElementById('det-desc').innerText = selectedShow.overview || 'Sin descripcion disponible.';
-    document.getElementById('det-poster').src = selectedShow.poster_path ? `https://image.tmdb.org/t/p/w500${selectedShow.poster_path}` : 'https://via.placeholder.com/500x750';
-    updateFavButtonUI();
-
-    const creators = selectedShow.created_by && selectedShow.created_by.length > 0 ? selectedShow.created_by.map(c => c.name).join(', ') : 'Desconocido';
-    const networks = selectedShow.networks ? selectedShow.networks.map(n => n.name).join(', ') : 'N/A';
-    const runTime = selectedShow.episode_run_time && selectedShow.episode_run_time.length > 0 ? `${selectedShow.episode_run_time[0]} min` : 'N/A';
-    document.getElementById('det-creators').innerHTML = `${t.creator} <span>${creators}</span>`;
-    document.getElementById('det-networks').innerHTML = `${t.networks} <span>${networks}</span>`;
-    document.getElementById('det-runtime').innerHTML = `${t.runtime} <span>${runTime}</span>`;
-
-    const year = selectedShow.first_air_date ? selectedShow.first_air_date.split('-')[0] : 'N/A';
-    const genres = selectedShow.genres ? selectedShow.genres.slice(0,3).map(g => g.name).join(', ') : '';
-    const status = selectedShow.in_production ? (isSpanish ? "En Emision" : "In Production") : (isSpanish ? "Finalizada" : "Ended");
-    const isHot = Math.round(selectedShow.popularity) > 800 ? '&#128293;' : '';
-    const totalEps = selectedShow.number_of_episodes ? `${selectedShow.number_of_episodes} Eps` : '';
-
-    document.getElementById('det-meta').innerHTML = `
-        <span class="tag rating">&#11088; ${selectedShow.vote_average.toFixed(1)}</span>
-        ${isHot ? '<span class="tag popularity">&#128293;</span>' : ''}
-        <span class="tag pro-data">${totalEps}</span>
-        <span class="tag">${year}</span>
-        <span class="tag">${status}</span>
-        ${genres ? `<span class="tag">${genres}</span>` : ''}
-    `;
-
-    const castContainer = document.getElementById('cast-list');
-    if (selectedShow.credits && selectedShow.credits.cast && selectedShow.credits.cast.length > 0) {
-        castContainer.innerHTML = selectedShow.credits.cast.slice(0, 15).map((actor, index) => `
-            <div class="cast-item" style="animation-delay: ${index * 0.05}s">
-                <img class="cast-img" src="${actor.profile_path ? 'https://image.tmdb.org/t/p/w185'+actor.profile_path : 'https://via.placeholder.com/100?text=No+Img'}" loading="lazy">
-                <div class="cast-name">${actor.name}</div>
-                <div class="cast-char">${actor.character}</div>
-            </div>
-        `).join('');
-        document.querySelector('.cast-section').style.display = 'block';
-    } else { document.querySelector('.cast-section').style.display = 'none'; }
-
-    const select = document.getElementById('season-select');
-    select.innerHTML = selectedShow.seasons.filter(se => se.season_number > 0).map(se => `<option value="${se.season_number}">${t.season} ${se.season_number}</option>`).join('');
-
-    document.getElementById('details-screen').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-
-    if(select.options.length > 0) {
-        await loadEpisodes();
-    } else {
-        showNoEpisodesMessage();
-    }
-}
-
-function closeDetails() {
-    // Cancelar verificaciones de episodios al salir
-    AvailabilityChecker.cancelAll();
-    document.getElementById('details-screen').style.display = 'none';
-    document.body.style.overflow = 'auto';
-    closePlayer();
-}
-
-function showNoEpisodesMessage() {
-    const t = translations[currentLang];
-    document.getElementById('episodes-list').innerHTML = `
-        <div class="coming-soon-episodes">
-            <h3>&#9203; ${t.coming_soon}</h3>
-            <p>${t.no_episodes}</p>
-        </div>
-    `;
-}
-
-// ============================================================
-// CARGA DE EPISODIOS CON VERIFICACION
-// ============================================================
-
-async function loadEpisodes() {
-    const seasonNum = document.getElementById('season-select').value;
-    if(!seasonNum) return;
-
-    const t = translations[currentLang];
-    const isSpanish = currentLang === 'es-MX';
-    const imdbId = isSpanish ? getImdbId(selectedShow.id) : null;
-
-    try {
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${selectedShow.id}/season/${seasonNum}?language=${currentLang}`, {
-            headers: { Authorization: `Bearer ${TOKEN}` }
-        });
-        const data = await res.json();
-
-        if(data.episodes && data.episodes.length > 0) {
-            if (isSpanish && imdbId) {
-                // Mostrar skeletons + estados de verificacion
-                Renderer.renderEpisodesChecking(data.episodes, seasonNum, t);
-                showVerifySpinner(t.checking_episodes);
-
-                // Verificar episodios en lotes
-                AvailabilityChecker.reset();
-                const verifiedEpisodes = await AvailabilityChecker.checkSeasonEpisodes(
-                    imdbId,
-                    parseInt(seasonNum),
-                    data.episodes,
-                    (ep, isAvail) => {
-                        Renderer.updateEpisodeStatus(ep, isAvail, seasonNum, t);
-                    },
-                    (completed, total) => {
-                        updateVerifyIndicator(`${t.checking_episodes} ${completed}/${total}`);
+                    // En móvil, abrir en pantalla completa automáticamente
+                    if (mobile) {
+                        setTimeout(() => {
+                            playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            enterFullscreen(playerWrapper);
+                        }, 300);
+                    } else {
+                        // En desktop, scroll suave al player
+                        setTimeout(() => {
+                            playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
                     }
-                );
-
-                hideVerifyIndicator();
-
-                // Si no hay episodios disponibles, mostrar mensaje
-                const anyAvailable = verifiedEpisodes.some(ep => ep.isAvailable);
-                if (!anyAvailable) {
-                    showNoEpisodesMessage();
+                } else {
+                    alert('Episodio no disponible');
                 }
             } else {
-                // Ingles: mostrar todos sin verificacion
-                Renderer.renderVerifiedEpisodes(data.episodes.map(ep => ({...ep, isAvailable: true})), seasonNum, t);
-            }
-        } else {
-            showNoEpisodesMessage();
-        }
-    } catch (error) {
-        console.error('Error loading episodes:', error);
-        showNoEpisodesMessage();
-    }
-}
+                document.getElementById('main-iframe').src = `https://www.vidking.net/embed/tv/${selectedShow.id}/${s}/${e}?color=ff2a75&autoPlay=true&nextEpisode=true&episodeSelector=true`;
+                playerContainer.style.display = 'block';
 
-// ============================================================
-// PLAYER
-// ============================================================
-
-function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-           (window.innerWidth <= 768);
-}
-
-function enterFullscreen(element) {
-    if (element.requestFullscreen) { element.requestFullscreen(); }
-    else if (element.webkitRequestFullscreen) { element.webkitRequestFullscreen(); }
-    else if (element.msRequestFullscreen) { element.msRequestFullscreen(); }
-}
-
-function exitFullscreen() {
-    if (document.exitFullscreen) { document.exitFullscreen(); }
-    else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
-    else if (document.msExitFullscreen) { document.msExitFullscreen(); }
-}
-
-function playEpisode(s, e, title) {
-    const isSpanish = currentLang === 'es-MX';
-    const epTitle = title || `Episodio ${e}`;
-    const mobile = isMobile();
-
-    document.getElementById('player-title').innerText = `${selectedShow.name} - ${epTitle}`;
-
-    const playerContainer = document.getElementById('player-container');
-    const playerWrapper = document.querySelector('.player-wrapper');
-
-    if (isSpanish) {
-        const imdbId = getImdbId(selectedShow.id);
-        if (imdbId) {
-            const embedUrl = `https://embed69.org/f/${imdbId}-${s}x${e.toString().padStart(2, '0')}`;
-            document.getElementById('main-iframe').src = embedUrl;
-            playerContainer.style.display = 'block';
-
-            if (mobile) {
-                setTimeout(() => {
-                    playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    enterFullscreen(playerWrapper);
-                }, 300);
-            } else {
-                setTimeout(() => { playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
-            }
-        } else {
-            alert('Episodio no disponible');
-        }
-    } else {
-        document.getElementById('main-iframe').src = `https://www.vidking.net/embed/tv/${selectedShow.id}/${s}/${e}?color=ff2a75&autoPlay=true&nextEpisode=true&episodeSelector=true`;
-        playerContainer.style.display = 'block';
-
-        if (mobile) {
-            setTimeout(() => {
-                playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                enterFullscreen(playerWrapper);
-            }, 300);
-        } else {
-            setTimeout(() => { playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
-        }
-    }
-}
-
-function closePlayer() {
-    exitFullscreen();
-    document.getElementById('player-container').style.display = 'none';
-    document.getElementById('main-iframe').src = "";
-}
-
-// ============================================================
-// BANNERS Y MODALES
-// ============================================================
-
-function closeWarning() {
-    const warning = document.getElementById('language-warning');
-    warning.style.opacity = '0';
-    setTimeout(() => { warning.style.display = 'none'; }, 400);
-    localStorage.setItem('language_warning_seen', 'true');
-}
-
-function closeBanner() {
-    const banner = document.getElementById('adblock-banner');
-    banner.style.marginTop = `-${banner.offsetHeight}px`;
-    banner.style.opacity = '0';
-    setTimeout(() => { banner.style.display = 'none'; }, 300);
-    localStorage.setItem('adblock_banner_hidden', 'true');
-}
-
-// ============================================================
-// INICIALIZACION PRINCIPAL
-// ============================================================
-
-async function init() {
-    updateAuthUI();
-    Renderer.renderFavorites();
-    updateUI();
-
-    const isSpanish = currentLang === 'es-MX';
-    const t = translations[currentLang];
-
-    if (isSpanish) {
-        // ESPANOL: Carga con verificacion obligatoria
-        AvailabilityChecker.reset();
-
-        db = await CatalogLoader.loadSpanishShows(
-            // onFirstBatch: mostrar las primeras series verificadas
-            (firstShows) => {
-                updateLoadingStatus(`${firstShows.length} series listas...`, 60);
-                db = firstShows;
-                updateNetworkCounts();
-                if (firstShows.length > 0) {
-                    setHero(firstShows[Math.floor(Math.random() * firstShows.length)]);
-                    Renderer.renderCarousel(firstShows);
-                }
-            },
-            // onSeriesVerified: callback por serie verificada
-            (show) => {
-                // Las series se agregan al array y se muestran via streaming
-            }
-        );
-
-        // Todo termino: ocultar pantalla de carga
-        updateLoadingStatus(t.loading_ready, 100);
-        hideLoadingScreen();
-        updateVerifyIndicator(`${AvailabilityChecker.getStats().available} ${t.verify_done} &#10003;`);
-
-    } else {
-        // INGLES: Carga normal sin verificacion
-        updateLoadingStatus('Loading series...', 30);
-
-        db = await CatalogLoader.loadEnglishShows(
-            (firstShows) => {
-                updateLoadingStatus('Loading more series...', 50);
-                db = firstShows;
-                updateNetworkCounts();
-                Renderer.renderCarousel(firstShows);
-            }
-        );
-
-        updateNetworkCounts();
-        if (db.length > 0) {
-            setHero(db[Math.floor(Math.random() * Math.min(db.length, 5))]);
-            Renderer.renderCarousel(db);
-        }
-        updateLoadingStatus('Ready!', 100);
-        hideLoadingScreen();
-    }
-
-    updateCounter();
-}
-
-// Mostrar warning de idioma solo la primera vez
-window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('language_warning_seen') === 'true') {
-        const warning = document.getElementById('language-warning');
-        if(warning) warning.style.display = 'none';
-    }
-    if(localStorage.getItem('adblock_banner_hidden') === 'true') {
-        document.getElementById('adblock-banner').style.display = 'none';
-    }
-});
-
-// ============================================================
-// TOONCLOUD+ TV - SISTEMA DE ADBLOCK NATIVO
-// ============================================================
-(function() {
-    'use strict';
-
-    const WHITELIST_DOMAINS = [
-        'embed69.org', 'vidking.net', 'themoviedb.org', 'image.tmdb.org',
-        'imgur.com', 'google.com', 'accounts.google.com', 'gstatic.com',
-        'googleusercontent.com', 'googleapis.com', 'github.com',
-        'wikipedia.org', 'wikimedia.org'
-    ];
-
-    const BLOCKED_PATTERNS = [
-        'doubleclick', 'googleads', 'googlesyndication', 'facebook.com/tr',
-        'analytics', 'tracker', 'popunder', 'adsco.re', 'popads', 'propeller',
-        'adsystem', 'adservice', 'googletagmanager', 'googletagservices',
-        'amazon-adsystem', 'ads-twitter', 'ads.linkedin', 'outbrain', 'taboola',
-        'adroll', 'criteo', 'quantserve', 'scorecardresearch', 'hotjar',
-        'mixpanel', 'segment.io', 'pixel', 'beacon', 'telemetry', 'metrics'
-    ];
-
-    const AD_SELECTORS = [
-        '[id*="ad-"]', '[class*="ad-"]', '.adsbygoogle', '.adsbox', '.ad-container',
-        '[id*="google_ads"]', '[class*="google-ad"]', '[data-ad-slot]', '[data-ad-client]',
-        'iframe[src*="googleadservices"]', 'iframe[src*="doubleclick"]', 'iframe[src*="facebook.com/tr"]'
-    ];
-
-    // A. INTERCEPTACION DE window.open
-    try {
-        const originalOpen = window.open;
-        let blockedPopups = 0;
-
-        window.open = function(url, target, features) {
-            if (!url) return originalOpen.apply(this, arguments);
-            const urlString = url.toString().toLowerCase();
-
-            const isWhitelisted = WHITELIST_DOMAINS.some(domain => urlString.includes(domain.toLowerCase()));
-            if (isWhitelisted) return originalOpen.apply(this, arguments);
-
-            const isBlocked = BLOCKED_PATTERNS.some(pattern => urlString.includes(pattern.toLowerCase()));
-            if (isBlocked) { blockedPopups++; console.log('[ToonCloud AdBlock] Popup bloqueado:', urlString.substring(0, 80)); return null; }
-
-            if (urlString.startsWith('http') && !urlString.includes(window.location.hostname)) {
-                blockedPopups++;
-                console.log('[ToonCloud AdBlock] Popup externo bloqueado:', urlString.substring(0, 80));
-                return null;
-            }
-            return originalOpen.apply(this, arguments);
-        };
-        window.open.prototype = originalOpen.prototype;
-    } catch (e) { console.error('[ToonCloud AdBlock] Error window.open:', e); }
-
-    // B. PROTECCION CONTRA REDIRECCIONES FORZADAS
-    try {
-        let lastNavigationTime = 0;
-        const NAVIGATION_COOLDOWN = 2000;
-        let userInitiatedNavigation = false;
-
-        const markUserInteraction = () => { userInitiatedNavigation = true; };
-        document.addEventListener('click', markUserInteraction, true);
-        document.addEventListener('touchstart', markUserInteraction, true);
-        document.addEventListener('keydown', markUserInteraction, true);
-
-        const originalAssign = window.location.assign;
-        const originalReplace = window.location.replace;
-        const originalHrefSetter = Object.getOwnPropertyDescriptor(window.Location.prototype, 'href').set;
-
-        const checkNavigation = (url) => {
-            const now = Date.now();
-            const urlString = (url || '').toString().toLowerCase();
-            if (now - lastNavigationTime < NAVIGATION_COOLDOWN && !userInitiatedNavigation) {
-                console.log('[ToonCloud AdBlock] Redireccion bloqueada (rate limit)');
-                return false;
-            }
-            if (urlString && urlString.startsWith('http')) {
-                const isWhitelisted = WHITELIST_DOMAINS.some(d => urlString.includes(d));
-                const isBlocked = BLOCKED_PATTERNS.some(p => urlString.includes(p));
-                if (isBlocked && !isWhitelisted) {
-                    console.log('[ToonCloud AdBlock] Redireccion bloqueada:', urlString.substring(0, 80));
-                    return false;
+                // En móvil, abrir en pantalla completa automáticamente
+                if (mobile) {
+                    setTimeout(() => {
+                        playerWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        enterFullscreen(playerWrapper);
+                    }, 300);
+                } else {
+                    // En desktop, scroll suave al player
+                    setTimeout(() => {
+                        playerContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 }
             }
-            lastNavigationTime = now;
-            userInitiatedNavigation = false;
-            return true;
-        };
+        }
 
-        window.location.assign = function(url) { if (checkNavigation(url)) return originalAssign.apply(this, arguments); };
-        window.location.replace = function(url) { if (checkNavigation(url)) return originalReplace.apply(this, arguments); };
-        Object.defineProperty(window.location, 'href', {
-            set: function(url) { if (checkNavigation(url)) return originalHrefSetter.apply(this, arguments); },
-            get: function() { return window.location.toString(); }
-        });
+        function closeDetails() { 
+            document.getElementById('details-screen').style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+        }
+        
+        function closePlayer() { 
+            // Salir de pantalla completa si está activa
+            exitFullscreen();
+            document.getElementById('player-container').style.display = 'none'; 
+            document.getElementById('main-iframe').src = ""; 
+        }
+        
+        function filterByNetwork(name, el) {
+            document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active');
+            renderCarousel(db.filter(s => s.networks && s.networks.some(n => n.name.toLowerCase().includes(name.toLowerCase()))));
+        }
 
-        window.addEventListener('beforeunload', (e) => {
-            if (!userInitiatedNavigation) {
-                e.preventDefault(); e.returnValue = '';
-                console.log('[ToonCloud AdBlock] beforeunload bloqueado');
-                return '';
+        function resetFilter(el) { 
+            document.querySelectorAll('.brand-item').forEach(b => b.classList.remove('active')); 
+            el.classList.add('active'); 
+            renderCarousel(db); 
+        }
+
+
+        // ============================================
+        // TOONCLOUD+ TV - SISTEMA DE ADBLOCK NATIVO
+        // ============================================
+        (function() {
+            'use strict';
+
+            // Configuración de dominios permitidos (lista blanca)
+            const WHITELIST_DOMAINS = [
+                'embed69.org',
+                'vidking.net',
+                'themoviedb.org',
+                'image.tmdb.org',
+                'imgur.com',
+                'google.com',
+                'accounts.google.com',
+                'gstatic.com',
+                'googleusercontent.com',
+                'googleapis.com',
+                'github.com',
+                'wikipedia.org',
+                'wikimedia.org'
+            ];
+
+            // Patrones de publicidad/tracking para bloquear
+            const BLOCKED_PATTERNS = [
+                'doubleclick',
+                'googleads',
+                'googlesyndication',
+                'facebook.com/tr',
+                'analytics',
+                'tracker',
+                'popunder',
+                'adsco.re',
+                'popads',
+                'propeller',
+                'adsystem',
+                'adservice',
+                'googletagmanager',
+                'googletagservices',
+                'amazon-adsystem',
+                'ads-twitter',
+                'ads.linkedin',
+                'outbrain',
+                'taboola',
+                'adroll',
+                'criteo',
+                'quantserve',
+                'scorecardresearch',
+                'hotjar',
+                'mixpanel',
+                'segment.io',
+                'pixel',
+                'beacon',
+                'telemetry',
+                'metrics'
+            ];
+
+            // Selectores CSS para ocultar elementos de publicidad
+            const AD_SELECTORS = [
+                '[id*="ad-"]',
+                '[class*="ad-"]',
+                '.adsbygoogle',
+                '.adsbox',
+                '.ad-container',
+                '[id*="google_ads"]',
+                '[class*="google-ad"]',
+                '[data-ad-slot]',
+                '[data-ad-client]',
+                'iframe[src*="googleadservices"]',
+                'iframe[src*="doubleclick"]',
+                'iframe[src*="facebook.com/tr"]'
+            ];
+
+            // ============================================
+            // A. INTERCEPTACIÓN DE window.open
+            // ============================================
+            try {
+                const originalOpen = window.open;
+                let blockedPopups = 0;
+
+                window.open = function(url, target, features) {
+                    // Si no hay URL, permitir (comportamiento normal)
+                    if (!url) {
+                        return originalOpen.apply(this, arguments);
+                    }
+
+                    const urlString = url.toString().toLowerCase();
+
+                    // Verificar si la URL está en la lista blanca
+                    const isWhitelisted = WHITELIST_DOMAINS.some(domain => 
+                        urlString.includes(domain.toLowerCase())
+                    );
+
+                    if (isWhitelisted) {
+                        console.log('[ToonCloud AdBlock] ✅ Popup permitido (whitelist):', urlString);
+                        return originalOpen.apply(this, arguments);
+                    }
+
+                    // Verificar si la URL contiene patrones bloqueados
+                    const isBlocked = BLOCKED_PATTERNS.some(pattern => 
+                        urlString.includes(pattern.toLowerCase())
+                    );
+
+                    if (isBlocked) {
+                        blockedPopups++;
+                        console.log('[ToonCloud AdBlock] 🚫 Popup bloqueado (patrón ad):', urlString);
+                        return null;
+                    }
+
+                    // Bloquear URLs externas no confiables
+                    if (urlString.startsWith('http') && !urlString.includes(window.location.hostname)) {
+                        blockedPopups++;
+                        console.log('[ToonCloud AdBlock] 🚫 Popup externo bloqueado:', urlString);
+                        return null;
+                    }
+
+                    // Permitir el resto
+                    return originalOpen.apply(this, arguments);
+                };
+
+                // Preservar propiedades del original
+                window.open.prototype = originalOpen.prototype;
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en interceptación window.open:', e);
             }
-        });
-    } catch (e) { console.error('[ToonCloud AdBlock] Error redirecciones:', e); }
 
-    // C. OBSERVADOR DE DOM
-    try {
-        const PROTECTED_IFRAMES = ['main-iframe'];
-        const PROTECTED_DOMAINS = ['embed69.org', 'vidking.net'];
+            // ============================================
+            // B. PROTECCIÓN CONTRA REDIRECCIONES FORZADAS
+            // ============================================
+            try {
+                let lastNavigationTime = 0;
+                const NAVIGATION_COOLDOWN = 2000; // 2 segundos
+                let userInitiatedNavigation = false;
 
-        const shouldRemoveElement = (element) => {
-            if (!element || element.nodeType !== 1) return false;
-            if (element.id && PROTECTED_IFRAMES.includes(element.id)) return false;
-            if (element.tagName === 'IFRAME') {
-                const src = (element.src || '').toLowerCase();
-                if (PROTECTED_DOMAINS.some(d => src.includes(d))) return false;
-                if (BLOCKED_PATTERNS.some(p => src.includes(p))) { element.remove(); return true; }
-            }
-            if (element.tagName === 'SCRIPT') {
-                const src = (element.src || '').toLowerCase();
-                if (src && BLOCKED_PATTERNS.some(p => src.includes(p))) { element.remove(); return true; }
-            }
-            if (element.hasAttribute && (element.hasAttribute('data-ad-slot') || element.hasAttribute('data-ad-client') ||
-                (element.id && element.id.toLowerCase().includes('google_ads')) ||
-                (element.className && element.className.toString().toLowerCase().includes('adsbygoogle')))) {
-                element.remove(); return true;
-            }
-            return false;
-        };
+                // Detectar interacciones del usuario
+                const markUserInteraction = () => { userInitiatedNavigation = true; };
+                document.addEventListener('click', markUserInteraction, true);
+                document.addEventListener('touchstart', markUserInteraction, true);
+                document.addEventListener('keydown', markUserInteraction, true);
 
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                mutation.addedNodes.forEach((node) => {
-                    if (node.nodeType === 1) {
-                        shouldRemoveElement(node);
-                        if (node.querySelectorAll) {
-                            [...node.querySelectorAll('iframe'), ...node.querySelectorAll('script')].forEach(el => shouldRemoveElement(el));
+                // Interceptar cambios de location
+                const originalAssign = window.location.assign;
+                const originalReplace = window.location.replace;
+                const originalHrefSetter = Object.getOwnPropertyDescriptor(window.Location.prototype, 'href').set;
+
+                const checkNavigation = (url) => {
+                    const now = Date.now();
+                    const urlString = (url || '').toString().toLowerCase();
+
+                    // Rate limiting
+                    if (now - lastNavigationTime < NAVIGATION_COOLDOWN && !userInitiatedNavigation) {
+                        console.log('[ToonCloud AdBlock] 🚫 Redirección bloqueada (rate limit)');
+                        return false;
+                    }
+
+                    // Verificar si es redirección a dominio externo sospechoso
+                    if (urlString && urlString.startsWith('http')) {
+                        const isWhitelisted = WHITELIST_DOMAINS.some(d => urlString.includes(d));
+                        const isBlocked = BLOCKED_PATTERNS.some(p => urlString.includes(p));
+
+                        if (isBlocked && !isWhitelisted) {
+                            console.log('[ToonCloud AdBlock] 🚫 Redirección bloqueada (dominio sospechoso):', urlString);
+                            return false;
                         }
                     }
+
+                    lastNavigationTime = now;
+                    userInitiatedNavigation = false;
+                    return true;
+                };
+
+                window.location.assign = function(url) {
+                    if (checkNavigation(url)) {
+                        return originalAssign.apply(this, arguments);
+                    }
+                };
+
+                window.location.replace = function(url) {
+                    if (checkNavigation(url)) {
+                        return originalReplace.apply(this, arguments);
+                    }
+                };
+
+                Object.defineProperty(window.location, 'href', {
+                    set: function(url) {
+                        if (checkNavigation(url)) {
+                            return originalHrefSetter.apply(this, arguments);
+                        }
+                    },
+                    get: function() {
+                        return window.location.toString();
+                    }
                 });
-            });
-        });
-        observer.observe(document.documentElement, { childList: true, subtree: true });
-    } catch (e) { console.error('[ToonCloud AdBlock] Error MutationObserver:', e); }
 
-    // D. LIMPIEZA CSS
-    try {
-        const style = document.createElement('style');
-        style.id = 'tooncloud-adblock-css';
-        style.textContent = `
-            ${AD_SELECTORS.join(', ')} {
-                display: none !important; visibility: hidden !important; opacity: 0 !important;
-                pointer-events: none !important; height: 0 !important; width: 0 !important;
-                min-height: 0 !important; min-width: 0 !important; position: absolute !important; left: -9999px !important;
+                // Detectar beforeunload sospechoso
+                window.addEventListener('beforeunload', (e) => {
+                    if (!userInitiatedNavigation) {
+                        e.preventDefault();
+                        e.returnValue = '';
+                        console.log('[ToonCloud AdBlock] 🚫 Intento de redirección beforeunload bloqueado');
+                        return '';
+                    }
+                });
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en protección de redirecciones:', e);
             }
-            div[style*="position: fixed"][style*="z-index: 999"], div[style*="position:fixed"][style*="z-index:999"] {
-                display: none !important;
+
+            // ============================================
+            // C. OBSERVADOR DE DOM (MutationObserver)
+            // ============================================
+            try {
+                const PROTECTED_IFRAMES = ['main-iframe'];
+                const PROTECTED_DOMAINS = ['embed69.org', 'vidking.net'];
+
+                const shouldRemoveElement = (element) => {
+                    if (!element || element.nodeType !== 1) return false;
+
+                    // No eliminar iframes protegidos por ID
+                    if (element.id && PROTECTED_IFRAMES.includes(element.id)) {
+                        return false;
+                    }
+
+                    // Verificar iframes
+                    if (element.tagName === 'IFRAME') {
+                        const src = (element.src || '').toLowerCase();
+
+                        // Nunca eliminar iframes de dominios protegidos
+                        if (PROTECTED_DOMAINS.some(d => src.includes(d))) {
+                            return false;
+                        }
+
+                        // Eliminar iframes con patrones bloqueados
+                        if (BLOCKED_PATTERNS.some(p => src.includes(p))) {
+                            console.log('[ToonCloud AdBlock] 🚫 Iframe bloqueado:', src.substring(0, 100));
+                            return true;
+                        }
+                    }
+
+                    // Verificar scripts
+                    if (element.tagName === 'SCRIPT') {
+                        const src = (element.src || '').toLowerCase();
+                        if (src && BLOCKED_PATTERNS.some(p => src.includes(p))) {
+                            console.log('[ToonCloud AdBlock] 🚫 Script bloqueado:', src.substring(0, 100));
+                            return true;
+                        }
+                    }
+
+                    // Verificar elementos con atributos de publicidad
+                    if (element.hasAttribute && (element.hasAttribute('data-ad-slot') || 
+                        element.hasAttribute('data-ad-client') ||
+                        (element.id && element.id.toLowerCase().includes('google_ads')) ||
+                        (element.className && element.className.toString().toLowerCase().includes('adsbygoogle')))) {
+                        console.log('[ToonCloud AdBlock] 🚫 Elemento de publicidad eliminado');
+                        return true;
+                    }
+
+                    return false;
+                };
+
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.nodeType === 1) { // Element node
+                                // Verificar el nodo mismo
+                                if (shouldRemoveElement(node)) {
+                                    node.remove();
+                                    return;
+                                }
+
+                                // Verificar hijos del nodo
+                                if (node.querySelectorAll) {
+                                    const iframes = node.querySelectorAll('iframe');
+                                    const scripts = node.querySelectorAll('script');
+
+                                    [...iframes, ...scripts].forEach(el => {
+                                        if (shouldRemoveElement(el)) {
+                                            el.remove();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+
+                observer.observe(document.documentElement, {
+                    childList: true,
+                    subtree: true
+                });
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en MutationObserver:', e);
             }
-            .popup-ad, .ad-popup, .popunder-overlay, [class*="popup"][class*="ad"], [id*="popup"][id*="ad"] {
-                display: none !important;
+
+            // ============================================
+            // D. LIMPIEZA CSS
+            // ============================================
+            try {
+                const style = document.createElement('style');
+                style.id = 'tooncloud-adblock-css';
+                style.textContent = `
+                    /* ToonCloud+ TV - AdBlock CSS */
+                    ${AD_SELECTORS.join(', ')} {
+                        display: none !important;
+                        visibility: hidden !important;
+                        opacity: 0 !important;
+                        pointer-events: none !important;
+                        height: 0 !important;
+                        width: 0 !important;
+                        min-height: 0 !important;
+                        min-width: 0 !important;
+                        position: absolute !important;
+                        left: -9999px !important;
+                    }
+
+                    /* Bloquear overlays fijos sospechosos */
+                    div[style*="position: fixed"][style*="z-index: 999"],
+                    div[style*="position:fixed"][style*="z-index:999"] {
+                        display: none !important;
+                    }
+
+                    /* Prevenir popups de anuncios comunes */
+                    .popup-ad, .ad-popup, .popunder-overlay,
+                    [class*="popup"][class*="ad"],
+                    [id*="popup"][id*="ad"] {
+                        display: none !important;
+                    }
+                `;
+
+                // Insertar al inicio del head para máxima prioridad
+                if (document.head) {
+                    document.head.insertBefore(style, document.head.firstChild);
+                } else {
+                    // Si head no está listo, esperar
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.head.insertBefore(style, document.head.firstChild);
+                    });
+                }
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en limpieza CSS:', e);
             }
-        `;
-        if (document.head) { document.head.insertBefore(style, document.head.firstChild); }
-        else { document.addEventListener('DOMContentLoaded', () => { document.head.insertBefore(style, document.head.firstChild); }); }
-    } catch (e) { console.error('[ToonCloud AdBlock] Error CSS:', e); }
 
-    // E. ANTI-CLICKSPAM
-    try {
-        const CLICK_COOLDOWN = 300;
-        let lastClickTime = 0;
-        let clickCount = 0;
-        let clickResetTimer = null;
+            // ============================================
+            // E. ANTI-CLICKSPAM
+            // ============================================
+            try {
+                const CLICK_COOLDOWN = 300; // 300ms entre clicks
+                let lastClickTime = 0;
+                let clickCount = 0;
+                let clickResetTimer = null;
 
-        document.addEventListener('click', (e) => {
-            const now = Date.now();
-            const timeSinceLastClick = now - lastClickTime;
-            if (timeSinceLastClick < CLICK_COOLDOWN) {
-                clickCount++;
-                if (clickCount >= 3) { e.preventDefault(); e.stopPropagation(); return false; }
-            } else { clickCount = 1; }
-            lastClickTime = now;
-            clearTimeout(clickResetTimer);
-            clickResetTimer = setTimeout(() => { clickCount = 0; }, 1000);
-        }, true);
-    } catch (e) { console.error('[ToonCloud AdBlock] Error clickspam:', e); }
+                document.addEventListener('click', (e) => {
+                    const now = Date.now();
+                    const timeSinceLastClick = now - lastClickTime;
 
-    // F. PROTECCION ADICIONAL
-    try {
-        const originalAlert = window.alert;
-        let alertCount = 0;
-        const MAX_ALERTS = 3;
-        const ALERT_RESET_TIME = 5000;
+                    // Detectar clicks rápidos consecutivos
+                    if (timeSinceLastClick < CLICK_COOLDOWN) {
+                        clickCount++;
 
-        window.alert = function(message) {
-            alertCount++;
-            setTimeout(() => { alertCount = 0; }, ALERT_RESET_TIME);
-            if (alertCount > MAX_ALERTS) { console.log('[ToonCloud AdBlock] Alert bloqueado:', message); return; }
-            return originalAlert.apply(this, arguments);
-        };
+                        // Si hay 3+ clicks rápidos, probablemente es spam
+                        if (clickCount >= 3) {
+                            console.log('[ToonCloud AdBlock] 🚫 Click-spam detectado y bloqueado');
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return false;
+                        }
+                    } else {
+                        clickCount = 1;
+                    }
 
-        window.addEventListener('message', (e) => {
-            const origin = e.origin.toLowerCase();
-            const isBlockedOrigin = BLOCKED_PATTERNS.some(p => origin.includes(p));
-            if (isBlockedOrigin) { e.stopImmediatePropagation(); }
-        }, true);
-    } catch (e) { console.error('[ToonCloud AdBlock] Error proteccion adicional:', e); }
+                    lastClickTime = now;
 
-    console.log('[ToonCloud AdBlock] Sistema de bloqueo inicializado');
-    console.log('[ToonCloud AdBlock] Dominios protegidos: embed69.org, vidking.net');
-})();
+                    // Resetear contador después de un tiempo
+                    clearTimeout(clickResetTimer);
+                    clickResetTimer = setTimeout(() => {
+                        clickCount = 0;
+                    }, 1000);
 
-// Iniciar la aplicacion
-init();
-</script>
+                }, true);
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en anti-clickspam:', e);
+            }
+
+            // ============================================
+            // F. PROTECCIÓN ADICIONAL
+            // ============================================
+            try {
+                // Bloquear window.alert y window.confirm de anuncios
+                // pero preservar funcionalidad del sitio
+                const originalAlert = window.alert;
+                const originalConfirm = window.confirm;
+
+                let alertCount = 0;
+                const MAX_ALERTS = 3;
+                const ALERT_RESET_TIME = 5000;
+
+                window.alert = function(message) {
+                    alertCount++;
+
+                    // Resetear contador después de un tiempo
+                    setTimeout(() => { alertCount = 0; }, ALERT_RESET_TIME);
+
+                    // Si hay demasiados alerts seguidos, probablemente son anuncios
+                    if (alertCount > MAX_ALERTS) {
+                        console.log('[ToonCloud AdBlock] 🚫 Alert bloqueado (posible ad):', message);
+                        return;
+                    }
+
+                    return originalAlert.apply(this, arguments);
+                };
+
+                // Proteger contra redirecciones en iframes
+                window.addEventListener('message', (e) => {
+                    // Verificar origen del mensaje
+                    const origin = e.origin.toLowerCase();
+                    const isBlockedOrigin = BLOCKED_PATTERNS.some(p => origin.includes(p));
+
+                    if (isBlockedOrigin) {
+                        console.log('[ToonCloud AdBlock] 🚫 Mensaje bloqueado de origen:', origin);
+                        e.stopImmediatePropagation();
+                    }
+                }, true);
+
+            } catch (e) {
+                console.error('[ToonCloud AdBlock] Error en protección adicional:', e);
+            }
+
+            console.log('[ToonCloud AdBlock] ✅ Sistema de bloqueo de anuncios inicializado');
+            console.log('[ToonCloud AdBlock] 🛡️ Dominios protegidos: embed69.org, vidking.net');
+
+        })();
+        // ============================================
+        // FIN DEL SISTEMA DE ADBLOCK
+        // ============================================
+
+        init();
+    </script>
 </body>
 </html>
