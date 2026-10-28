@@ -49,7 +49,6 @@ h1,h2,h3,h4,p{margin:0}
 ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
 .ic{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ic.fill{fill:currentColor;stroke:none}
-@keyframes fade{from{opacity:0}}
 @keyframes sheet{from{opacity:0;transform:translateY(24px)}}
 
 /* Anuncios (bloqueo por CSS) */
@@ -207,6 +206,15 @@ iframe[src*="googleadservices"],iframe[src*="doubleclick"],iframe[src*="facebook
 .player-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .player-frame:fullscreen{aspect-ratio:auto;width:100vw;height:100vh}
 .player-frame:-webkit-full-screen{aspect-ratio:auto;width:100vw;height:100vh}
+.player-state{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:20px;text-align:center;background:radial-gradient(circle at 50% 35%,#1d1e28,#0b0c10 70%)}
+.spin{width:34px;height:34px;border:3px solid rgba(255,255,255,.12);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ps-soon{display:grid;justify-items:center;gap:8px;max-width:320px}
+.ps-soon .ic{width:42px;height:42px;color:var(--accent)}
+.ps-soon h4{margin:4px 0 0;font-size:17px;font-weight:600}
+.ps-soon p{color:var(--muted);font-size:13px;line-height:1.6}
+.ep.soon .ep-img{opacity:.45}
+.ep-badge{margin-left:8px;padding:1px 8px;border-radius:var(--r-pill);background:var(--accent-soft);color:#ff8db2;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .player-hint{padding:8px 14px;background:var(--surface);color:var(--muted);font-size:11px;text-align:center}
 @media(max-width:767px){.player-hint{display:none}}
 
@@ -239,16 +247,7 @@ iframe[src*="googleadservices"],iframe[src*="doubleclick"],iframe[src*="facebook
 .no-eps{grid-column:1/-1;padding:36px 16px;color:var(--muted);text-align:center}
 .no-eps h3{margin-bottom:8px;color:var(--accent);font-size:18px}
 
-/* ===== Modal y toast ===== */
-.modal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:fade .25s ease}
-.modal-card{position:relative;width:100%;max-width:380px;padding:30px 24px 24px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line-strong);text-align:center;box-shadow:0 30px 60px rgba(0,0,0,.6)}
-.modal-card .icon-btn{position:absolute;top:12px;right:12px}
-.modal-icon{font-size:42px;line-height:1}
-.modal-card h3{margin:10px 0 12px;color:var(--accent);font-size:20px;font-weight:700}
-.modal-card p{margin-bottom:10px;color:#d6d8de;font-size:13px;line-height:1.65}
-.modal-card .small{color:var(--muted);font-size:12px}
-.modal-card .small strong{color:var(--accent)}
-.modal-card .btn{width:100%;margin-top:8px}
+/* ===== Toast ===== */
 .toast{position:fixed;left:50%;bottom:calc(84px + var(--safe-b));z-index:300;max-width:calc(100% - 32px);padding:10px 18px;border-radius:var(--r-pill);background:#22232d;border:1px solid var(--line-strong);font-size:13px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translate(-50%,8px);transition:opacity .2s,transform .2s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 @media(min-width:768px){.toast{bottom:32px}}
@@ -268,6 +267,7 @@ iframe[src*="googleadservices"],iframe[src*="doubleclick"],iframe[src*="facebook
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
 </defs></svg>
 
 <div class="banner" id="banner" hidden>
@@ -379,6 +379,14 @@ iframe[src*="googleadservices"],iframe[src*="doubleclick"],iframe[src*="facebook
       </div>
       <div class="player-frame" id="player-frame">
         <iframe id="main-iframe" title="Reproductor" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; encrypted-media"></iframe>
+        <div class="player-state" id="player-state" hidden>
+          <div class="spin" id="ps-spin" hidden></div>
+          <div class="ps-soon" id="ps-soon" hidden>
+            <svg class="ic"><use href="#i-clock"/></svg>
+            <h4 data-i18n="soon_title">Próximamente disponible</h4>
+            <p data-i18n="soon_text">Este episodio todavía no está en el catálogo. ¡Vuelve pronto!</p>
+          </div>
+        </div>
       </div>
       <div class="player-hint" data-i18n="fs_hint">Usa el botón ⛶ del reproductor para pantalla completa</div>
     </div>
@@ -389,19 +397,6 @@ iframe[src*="googleadservices"],iframe[src*="doubleclick"],iframe[src*="facebook
     </section>
     <h3 class="section-title sub" data-i18n="episodes">Episodios</h3>
     <div class="eps" id="episodes-list"></div>
-  </div>
-</div>
-
-<!-- Aviso de idioma (primera visita) -->
-<div class="modal" id="language-warning" role="dialog" aria-modal="true" aria-labelledby="warn-title" hidden>
-  <div class="modal-card">
-    <button class="icon-btn" id="warn-x" type="button" aria-label="Cerrar"><svg class="ic" style="width:16px;height:16px"><use href="#i-close"/></svg></button>
-    <div class="modal-icon">🌐</div>
-    <h3 id="warn-title">¡Hola Comunidad Hispana!</h3>
-    <p>Queremos pedirles disculpas: por el momento, la mayoría de nuestras series solo están disponibles en su <strong>idioma original (inglés)</strong>.</p>
-    <p>Estamos trabajando duro y en las próximas actualizaciones activaremos la opción de <strong>lenguaje español</strong> para que todos puedan disfrutar por igual.</p>
-    <p class="small">¡Gracias por su paciencia!<br><strong>Equipo ToonCloud+ TV</strong></p>
-    <button class="btn" id="warn-ok" type="button">Entendido</button>
   </div>
 </div>
 
@@ -479,8 +474,8 @@ const CACHE_V = 2;
 const CACHE_TTL = 24 * 3600 * 1000;
 
 const T = {
-  'es-MX': { all:'TODOS', suggested:'Series sugeridas', search:'Buscar...', episodes:'Episodios', season:'Temp.', chapter:'Ep.', results:'Resultados: ', cast:'Reparto', my_favorites:'Favoritos', save_fav:'Favorito', remove_fav:'Quitar', creator:'Creado por:', networks:'Cadenas:', runtime:'Duración:', adblock_text:'Recomendado: instala uBlock para bloquear anuncios', adblock_btn:'Instalar', coming_soon:'Próx.', no_episodes:'No hay episodios disponibles.', unknown:'Desconocido', no_desc:'Sin descripción disponible.', in_production:'En emisión', ended:'Finalizada', soon_toast:'Esta serie estará disponible próximamente en español.', ep_unavailable:'Episodio no disponible', watch:'Ver ahora', loading:'Cargando la mejor selección de series...', empty:'No se encontraron series.', error:'No se pudo cargar el catálogo.', retry:'Reintentar', nav_home:'Inicio', nav_fav:'Favoritos', nav_search:'Buscar', nav_lang:'Idioma', no_favs:'Aún no tienes favoritos.', fs_hint:'Usa el botón ⛶ del reproductor para pantalla completa', seasons_short:'T', eps_word:'Eps', episode:'Episodio' },
-  'en-US': { all:'ALL', suggested:'Suggested series', search:'Search...', episodes:'Episodes', season:'Season', chapter:'Ep.', results:'Results: ', cast:'Cast', my_favorites:'Favorites', save_fav:'Favorite', remove_fav:'Remove', creator:'Created by:', networks:'Networks:', runtime:'Runtime:', adblock_text:'Recommended: install uBlock to block ads', adblock_btn:'Install', coming_soon:'Soon', no_episodes:'No episodes available.', unknown:'Unknown', no_desc:'No description available.', in_production:'In Production', ended:'Ended', soon_toast:'This series will be available in Spanish soon.', ep_unavailable:'Episode not available', watch:'Watch now', loading:'Loading the best selection of series...', empty:'No series found.', error:'Could not load the catalog.', retry:'Retry', nav_home:'Home', nav_fav:'Favorites', nav_search:'Search', nav_lang:'Language', no_favs:'You have no favorites yet.', fs_hint:'Use the player’s ⛶ button for fullscreen', seasons_short:'S', eps_word:'Eps', episode:'Episode' }
+  'es-MX': { all:'TODOS', suggested:'Series sugeridas', search:'Buscar...', episodes:'Episodios', season:'Temp.', chapter:'Ep.', results:'Resultados: ', cast:'Reparto', my_favorites:'Favoritos', save_fav:'Favorito', remove_fav:'Quitar', creator:'Creado por:', networks:'Cadenas:', runtime:'Duración:', adblock_text:'Recomendado: instala uBlock para bloquear anuncios', adblock_btn:'Instalar', coming_soon:'Próx.', no_episodes:'No hay episodios disponibles.', unknown:'Desconocido', no_desc:'Sin descripción disponible.', in_production:'En emisión', ended:'Finalizada', soon_toast:'Esta serie estará disponible próximamente en español.', ep_unavailable:'Episodio no disponible', soon_title:'Próximamente disponible', soon_text:'Este episodio todavía no está en el catálogo. ¡Vuelve pronto!', watch:'Ver ahora', loading:'Cargando la mejor selección de series...', empty:'No se encontraron series.', error:'No se pudo cargar el catálogo.', retry:'Reintentar', nav_home:'Inicio', nav_fav:'Favoritos', nav_search:'Buscar', nav_lang:'Idioma', no_favs:'Aún no tienes favoritos.', fs_hint:'Usa el botón ⛶ del reproductor para pantalla completa', seasons_short:'T', eps_word:'Eps', episode:'Episodio' },
+  'en-US': { all:'ALL', suggested:'Suggested series', search:'Search...', episodes:'Episodes', season:'Season', chapter:'Ep.', results:'Results: ', cast:'Cast', my_favorites:'Favorites', save_fav:'Favorite', remove_fav:'Remove', creator:'Created by:', networks:'Networks:', runtime:'Runtime:', adblock_text:'Recommended: install uBlock to block ads', adblock_btn:'Install', coming_soon:'Soon', no_episodes:'No episodes available.', unknown:'Unknown', no_desc:'No description available.', in_production:'In Production', ended:'Ended', soon_toast:'This series will be available in Spanish soon.', ep_unavailable:'Episode not available', soon_title:'Coming soon', soon_text:'This episode is not in the catalog yet. Check back soon!', watch:'Watch now', loading:'Loading the best selection of series...', empty:'No series found.', error:'Could not load the catalog.', retry:'Retry', nav_home:'Home', nav_fav:'Favorites', nav_search:'Search', nav_lang:'Language', no_favs:'You have no favorites yet.', fs_hint:'Use the player’s ⛶ button for fullscreen', seasons_short:'S', eps_word:'Eps', episode:'Episode' }
 };
 
 /* ---------- utilidades ---------- */
@@ -509,6 +504,8 @@ let loadGen = 0;
 let loadCtl = null;
 const view = { query: '', net: '' };
 const seasonCache = new Map();
+const availCache = new Map();        // 'tt…-1x03' -> true | false (solo español)
+let playToken = 0;
 const cacheMem = {};
 
 const t = () => T[lang];
@@ -786,14 +783,16 @@ async function loadEpisodes() {
 
 function renderEpisodes(episodes, season, show) {
   const L = t(), es = isEs();
+  const imdb = es ? tmdbToImdb[show.id] : null;
   {
     $('#episodes-list').innerHTML = episodes.map(ep => {
       const still = ep.still_path || show.backdrop_path;
       const title = ep.name || `${L.episode} ${ep.episode_number}`;
-      return `<div class="ep" data-s="${esc(season)}" data-e="${ep.episode_number}" data-title="${esc(title)}" role="button" tabindex="0">
+      const soon = es && availCache.get(`${imdb}-${season}x${ep.episode_number}`) === false;
+      return `<div class="ep${soon ? ' soon' : ''}" data-s="${esc(season)}" data-e="${ep.episode_number}" data-title="${esc(title)}" role="button" tabindex="0">
         <div class="ep-img">${still ? `<img src="${IMG}w300${still}" alt="" loading="lazy" decoding="async">` : '<div class="noimg"></div>'}</div>
         <div class="ep-info">
-          <div class="ep-num">${L.chapter} ${ep.episode_number}</div>
+          <div class="ep-num">${L.chapter} ${ep.episode_number}${soon ? `<span class="ep-badge">${L.coming_soon}</span>` : ''}</div>
           <div class="ep-title">${esc(title)}</div>
           ${!es ? `<div class="ep-rating">★ ${ep.vote_average ? ep.vote_average.toFixed(1) : '-'}</div>` : ''}
           ${ep.overview ? `<div class="ep-ov">${esc(ep.overview)}</div>` : ''}
@@ -815,29 +814,87 @@ function exitFullscreen() {
   try { const p = f && f.call(document); if (p && p.catch) p.catch(() => {}); } catch (e) {}
 }
 
-function playEpisode(s, e, title) {
+function setPlayerState(mode) {   // 'loading' | 'soon' | null
+  $('#player-state').hidden = !mode;
+  $('#ps-spin').hidden = mode !== 'loading';
+  $('#ps-soon').hidden = mode !== 'soon';
+}
+
+/* Pregunta a embed69 si el episodio existe. Devuelve true / false / null (no se pudo saber).
+   Si el servidor no permite leer la respuesta (CORS) o hay timeout, devuelve null y se carga el reproductor igual. */
+async function checkEpisode(url) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 7000);
+  try {
+    const r = await fetch(url, { signal: ctl.signal });
+    let txt = '';
+    if (r.body && r.body.getReader) {
+      const reader = r.body.getReader();
+      const { value } = await reader.read();
+      reader.cancel().catch(() => {});
+      txt = new TextDecoder().decode(value || new Uint8Array());
+    } else txt = await r.text();
+    if (txt.trimStart().startsWith('{')) { try { if (JSON.parse(txt).error) return false; } catch (e) {} }
+    return true;
+  } catch (e) {
+    console.info('[ToonCloud] No se pudo verificar el episodio (CORS o red):', e.message);
+    return null;
+  } finally { clearTimeout(timer); }
+}
+
+function markSoon(s, e) {
+  const el = $(`.ep[data-s="${s}"][data-e="${e}"]`);
+  if (!el || el.classList.contains('soon')) return;
+  el.classList.add('soon');
+  $('.ep-num', el).insertAdjacentHTML('beforeend', `<span class="ep-badge">${t().coming_soon}</span>`);
+}
+
+async function playEpisode(s, e, title) {
   if (!selected) return;
-  let url;
+  const token = ++playToken;
+  const iframe = $('#main-iframe');
+  let url, key = null;
   if (isEs()) {
     const imdb = tmdbToImdb[selected.id];
     if (!imdb) { toast(t().ep_unavailable); return; }
     url = `https://embed69.org/f/${imdb}-${s}x${pad(e)}`;
+    key = `${imdb}-${s}x${e}`;
   } else {
     url = `https://www.vidking.net/embed/tv/${selected.id}/${s}/${e}?color=ff2a75&autoPlay=true&nextEpisode=true&episodeSelector=true`;
   }
   $('#player-title').textContent = `${selected.name} - ${title || `${t().episode} ${e}`}`;
   const box = $('#player');
   box.hidden = false;
-  $('#main-iframe').src = url;
   $$('.ep.playing').forEach(x => x.classList.remove('playing'));
   const cur = $(`.ep[data-s="${s}"][data-e="${e}"]`);
   if (cur) cur.classList.add('playing');
   box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  if (isMobile()) enterFullscreen($('#player-frame'));   // dentro del gesto del usuario
+
+  if (key) {
+    let ok = availCache.get(key);
+    if (ok === undefined) {
+      iframe.src = 'about:blank';
+      setPlayerState('loading');
+      ok = await checkEpisode(url);
+      if (ok !== null) availCache.set(key, ok);
+      if (token !== playToken) return;            // el usuario eligió otro episodio o cerró
+    }
+    if (ok === false) {
+      iframe.src = 'about:blank';
+      setPlayerState('soon');
+      markSoon(s, e);
+      return;
+    }
+  }
+  setPlayerState(null);
+  iframe.src = url;
+  if (isMobile()) enterFullscreen($('#player-frame'));
 }
 
 function closePlayer() {
+  playToken++;
   exitFullscreen();
+  setPlayerState(null);
   $('#player').hidden = true;
   $('#main-iframe').src = 'about:blank';
   $$('.ep.playing').forEach(x => x.classList.remove('playing'));
@@ -892,7 +949,6 @@ function toast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
 }
-function closeWarning() { $('#language-warning').hidden = true; store.setRaw('language_warning_seen', 'true'); }
 function closeBanner() { $('#banner').hidden = true; store.setRaw('adblock_banner_hidden', 'true'); }
 
 /* Contador decorativo de usuarios (valor simulado) */
@@ -945,8 +1001,6 @@ $('#player-close').addEventListener('click', closePlayer);
 $('#season-select').addEventListener('change', loadEpisodes);
 $('#fav-btn').addEventListener('click', toggleFavorite);
 $('#banner-close').addEventListener('click', closeBanner);
-$('#warn-ok').addEventListener('click', closeWarning);
-$('#warn-x').addEventListener('click', closeWarning);
 
 $('.bottom-nav').addEventListener('click', e => {
   const b = e.target.closest('[data-go]');
@@ -963,14 +1017,13 @@ $('.bottom-nav').addEventListener('click', e => {
 
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
-  if (!$('#language-warning').hidden) closeWarning();
-  else if (!$('#details').hidden) closeDetails();
+  if (!$('#details').hidden) closeDetails();
 });
 
 /* ---------- inicio ---------- */
 store.del('tooncloud_user');   // sesión de Google ya no existe
 if (store.raw('adblock_banner_hidden') !== 'true') $('#banner').hidden = false;
-if (store.raw('language_warning_seen') !== 'true') $('#language-warning').hidden = false;
+store.del('language_warning_seen');
 
 // Rellena el mapa TMDB→IMDb desde la caché para que los favoritos salgan bien desde el primer pintado.
 { const c = readCache('es-MX'); if (c && c.shows) for (const k in c.shows) tmdbToImdb[c.shows[k].id] = k; }
